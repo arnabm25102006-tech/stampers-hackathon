@@ -40,7 +40,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: .8, delay: .2 }}
-          className="mt-8 text-6xl font-black leading-none text-white md:text-8xl lg:text-9xl"
+          className="mt-9 text-6xl font-black leading-none text-white md:text-8xl lg:text-9xl"
         >
           <span className="bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
             OPEN
