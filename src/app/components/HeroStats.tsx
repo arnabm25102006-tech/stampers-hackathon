@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 
 const stats = [
   {
-    number: "Exciting Goodies",
-    title: "Prize Pool",
+    number: "🎁",
+    title: "Exciting Goodies",
   },
   {
     number: "50+",
@@ -34,18 +34,26 @@ export default function HeroStats() {
             duration: 0.6,
           }}
           whileHover={{
-            y: -8,
-            scale: 1.03,
+            y: -10,
+            scale: 1.04,
           }}
-          className="rounded-3xl border border-yellow-500/20 bg-white/5 p-8 backdrop-blur-xl"
+          className="group relative overflow-hidden rounded-3xl border border-yellow-500/20 bg-white/5 p-8 backdrop-blur-2xl transition-all duration-300 hover:border-yellow-400/60 hover:shadow-[0_0_40px_rgba(250,204,21,0.18)]"
         >
-          <h2 className="text-4xl font-black text-yellow-400">
-            {item.number}
-          </h2>
+          {/* Background Glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-transparent to-orange-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-          <p className="mt-3 text-gray-300">
-            {item.title}
-          </p>
+          {/* Content */}
+          <div className="relative z-10 text-center">
+            <h2 className="bg-gradient-to-r from-yellow-200 via-yellow-400 to-orange-500 bg-clip-text text-4xl font-extrabold text-transparent md:text-5xl">
+              {item.number}
+            </h2>
+
+            <div className="mx-auto mt-4 h-[2px] w-12 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500" />
+
+            <p className="mt-4 text-base font-medium tracking-wide text-gray-300">
+              {item.title}
+            </p>
+          </div>
         </motion.div>
       ))}
     </div>
