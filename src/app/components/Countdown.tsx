@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const targetDate = new Date("2026-08-20T09:00:00").getTime();
+const targetDate = Date.now() + 3 * 24 * 60 * 60 * 1000;
 
 export default function Countdown() {
   const [mounted, setMounted] = useState(false);
