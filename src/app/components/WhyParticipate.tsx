@@ -15,7 +15,7 @@ const features = [
     icon: Trophy,
     title: "Win Exciting Prizes",
     description:
-      "Compete for a prize pool worth ₹50,000+, exclusive goodies, and national recognition.",
+      "Compete for a open challenge, exclusive goodies, and national recognition.",
   },
   {
     icon: Users,

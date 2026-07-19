@@ -1,9 +1,9 @@
 export default function Stats() {
   const stats = [
-    { title: "Participants", value: "500+" },
-    { title: "Teams", value: "100+" },
-    { title: "Prize Pool", value: "₹50K+" },
-    { title: "Mentors", value: "20+" },
+    { title: "Participants", value: "50+" },
+    { title: "Teams", value: "20+" },
+    { title: "Prize ", value: "Exciting Goodies" },
+   // { title: "Mentors", value: "20+" },
   ];
 
   return (

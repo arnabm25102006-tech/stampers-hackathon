@@ -29,9 +29,9 @@ export default function Hero() {
           transition={{ duration: .7 }}
           className="rounded-full border border-yellow-500/30 bg-yellow-500/10 px-6 py-2 backdrop-blur-xl"
         >
-          <p className="text-sm font-semibold uppercase tracking-[0.45em] text-yellow-300">
+          {/* <p className="text-sm font-semibold uppercase tracking-[0.45em] text-yellow-300">
             STAMPERS PRESENTS
-          </p>
+          </p> */}
         </motion.div>
 
         {/* Heading */}
