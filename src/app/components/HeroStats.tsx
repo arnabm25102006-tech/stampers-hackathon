@@ -4,15 +4,15 @@ import { motion } from "framer-motion";
 
 const stats = [
   {
-    number: "₹50K+",
+    number: "Exciting Goodies",
     title: "Prize Pool",
   },
   {
-    number: "500+",
+    number: "50+",
     title: "Participants",
   },
   {
-    number: "50+",
+    number: "10+",
     title: "Colleges",
   },
   {
