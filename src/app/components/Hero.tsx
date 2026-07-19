@@ -36,22 +36,34 @@ export default function Hero() {
 
         {/* Heading */}
 
-        <motion.h1
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: .8, delay: .2 }}
-          className="mt-20 text-6xl font-black leading-none text-white md:text-8xl lg:text-9xl"
-        >
-          <span className="bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
-            OPEN
-          </span>
+       <motion.h1
+  initial={{ opacity: 0, y: 60 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 0.2 }}
+  className="mt-20 text-center text-6xl font-black leading-[0.9] tracking-tight md:text-8xl lg:text-9xl"
+>
+  <span className="relative inline-block">
+    <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent blur-xl opacity-50">
+      OPEN
+    </span>
 
-          <br />
+    <span className="relative bg-gradient-to-r from-yellow-200 via-yellow-400 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(255,200,0,0.4)]">
+      OPEN
+    </span>
+  </span>
 
-          <span className="text-white">
-            INNOVATION
-          </span>
-        </motion.h1>
+  <br />
+
+  <span className="relative inline-block mt-2">
+    <span className="absolute inset-0 text-white blur-lg opacity-30">
+      INNOVATION
+    </span>
+
+    <span className="relative text-white">
+      INNOVATION
+    </span>
+  </span>
+</motion.h1>
 
         {/* Subtitle */}
 
