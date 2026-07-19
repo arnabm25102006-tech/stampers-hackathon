@@ -79,7 +79,7 @@ export default function Countdown() {
       {/* Section Heading */}
       <div className="mb-12 text-center">
         <p className="mb-4 text-sm font-semibold uppercase tracking-[0.45em] text-yellow-400">
-          Registration Ends In
+          Registration Starts In
         </p>
 
         <h2 className="bg-gradient-to-r from-white via-yellow-100 to-yellow-400 bg-clip-text text-4xl font-black text-transparent md:text-5xl">
