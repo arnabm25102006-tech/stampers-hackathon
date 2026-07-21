@@ -30,8 +30,8 @@ const stats = [
     color: "from-orange-400 to-red-500",
   },
   {
-    title: "Prize Pool",
-    value: "₹5,000+",
+    title: "Gift",
+    value: "₹Exclusive Goodies",
     icon: Trophy,
     color: "from-yellow-300 via-yellow-500 to-orange-500",
   },
@@ -611,55 +611,30 @@ export default function Countdown() {
     {/* Button */}
 
     <motion.a
+  href="/register" // Change to your registration page
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.96 }}
+  className="group mt-12 inline-flex items-center gap-4 rounded-full
+  bg-gradient-to-r
+  from-yellow-400
+  via-yellow-500
+  to-orange-500
+  px-10
+  py-5
+  text-xl
+  font-bold
+  text-black
+  shadow-[0_20px_60px_rgba(250,204,21,.35)]"
+>
+  Register Now
 
-      href="#register"
-
-      whileHover={{
-        scale: 1.05,
-      }}
-
-      whileTap={{
-        scale: .96,
-      }}
-
-      className="group mt-12 inline-flex items-center gap-4 rounded-full
-      bg-gradient-to-r
-      from-yellow-400
-      via-yellow-500
-      to-orange-500
-
-      px-10
-      py-5
-
-      text-xl
-      font-bold
-
-      text-black
-
-      shadow-[0_20px_60px_rgba(250,204,21,.35)]"
-
-    >
-
-      Register Now
-
-      <motion.div
-
-        animate={{
-          x: [0, 6, 0],
-        }}
-
-        transition={{
-          duration: 1,
-          repeat: Infinity,
-        }}
-
-      >
-
-        <ArrowRight size={24} />
-
-      </motion.div>
-
-    </motion.a>
+  <motion.div
+    animate={{ x: [0, 6, 0] }}
+    transition={{ duration: 1, repeat: Infinity }}
+  >
+    <ArrowRight size={24} />
+  </motion.div>
+</motion.a>
 
     {/* Bottom Text */}
 
@@ -771,15 +746,15 @@ export default function Countdown() {
       <div className="relative z-10">
 
         <p className="text-xs uppercase tracking-[0.35em] text-yellow-300">
-          PRIZE POOL
+          PRIZE 
         </p>
 
         <h2 className="mt-4 text-6xl font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
-          GOODIESsss
+          GOODIES
         </h2>
 
         <p className="mt-4 text-gray-300">
-           certificates and exclusive goodies.
+           certificates and exclusive goodies for the winners.
         </p>
 
       </div>
