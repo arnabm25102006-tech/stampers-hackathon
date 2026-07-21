@@ -1,6 +1,6 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Stats from "./components/Stats";
+
 import EventDetails from "./components/EventDetails";
 import Timeline from "./components/Timeline";
 import About from "./components/About";
@@ -16,7 +16,7 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
-      <Stats />
+      
       <EventDetails />
       <Timeline />
       <About />

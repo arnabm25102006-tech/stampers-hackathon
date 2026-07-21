@@ -90,26 +90,37 @@ export default function FloatingBackground() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(255,140,0,0.08),transparent_60%)]" />
 
       {/* Animated Gold Particles */}
-      {[...Array(20)].map((_, i) => (
-        <motion.span
-          key={i}
-          className="absolute h-1 w-1 rounded-full bg-yellow-300"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            opacity: [0.2, 1, 0.2],
-            scale: [1, 1.8, 1],
-            y: [0, -25, 0],
-          }}
-          transition={{
-            duration: 2 + Math.random() * 4,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-          }}
-        />
-      ))}
+
+{/* Animated Gold Particles */}
+
+{Array.from({ length: 20 }, (_, i) => {
+  const top = `${(i * 37) % 100}%`;
+  const left = `${(i * 53) % 100}%`;
+  const duration = 2 + (i % 5);
+  const delay = (i % 6) * 0.5;
+
+  return (
+    <motion.span
+      key={i}
+      className="absolute h-1 w-1 rounded-full bg-yellow-300"
+      style={{
+        top,
+        left,
+      }}
+      animate={{
+        opacity: [0.2, 1, 0.2],
+        scale: [1, 1.8, 1],
+        y: [0, -25, 0],
+      }}
+      transition={{
+        duration,
+        delay,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+    />
+  );
+})}
 
       {/* Mesh Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-transparent to-black opacity-70" />

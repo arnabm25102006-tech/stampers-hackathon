@@ -3,48 +3,44 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
 import {
   Users,
   Lightbulb,
   CreditCard,
   CheckCircle2,
-  ArrowRight,
   ArrowLeft,
+  ArrowRight,
+  Trophy,
+  Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 
 import { registerTeam } from "@/lib/register";
 
 export default function RegisterForm() {
 
-  /* ==========================================================
-      FORM STATE
-  ========================================================== */
-
-  const [loading, setLoading] = useState(false);
-
-  /* ==========================================================
-      MULTI STEP
-  ========================================================== */
+  /* =========================
+      STEP
+  ========================= */
 
   const [step, setStep] = useState(1);
 
   const totalSteps = 3;
 
   const nextStep = () => {
-    if (step < totalSteps) {
-      setStep(step + 1);
-    }
+    if (step < totalSteps) setStep(step + 1);
   };
 
   const prevStep = () => {
-    if (step > 1) {
-      setStep(step - 1);
-    }
+    if (step > 1) setStep(step - 1);
   };
 
-  /* ==========================================================
+  const [loading, setLoading] = useState(false);
+
+  /* =========================
       TEAM
-  ========================================================== */
+  ========================= */
 
   const [teamName, setTeamName] = useState("");
 
@@ -64,9 +60,9 @@ export default function RegisterForm() {
 
   const [members, setMembers] = useState("");
 
-  /* ==========================================================
+  /* =========================
       PROJECT
-  ========================================================== */
+  ========================= */
 
   const [projectName, setProjectName] = useState("");
 
@@ -80,164 +76,129 @@ export default function RegisterForm() {
 
   const [github, setGithub] = useState("");
 
-  /* ==========================================================
+  /* =========================
       PAYMENT
-  ========================================================== */
+  ========================= */
 
   const [transactionId, setTransactionId] = useState("");
 
-  /* ==========================================================
+  /* =========================
       SUBMIT
-  ========================================================== */
+  ========================= */
 
   async function handleSubmit(e: React.FormEvent) {
-
     e.preventDefault();
 
     try {
-
       setLoading(true);
 
       await registerTeam({
-
         teamName,
-
         college,
-
         leaderName,
-
         email,
-
         phone,
-
         department,
-
         year,
-
         teamSize,
-
         members,
-
         projectName,
-
         domain,
-
         problemStatement,
-
         solution,
-
         techStack,
-
         github,
-
         transactionId,
-
       });
 
       alert("Registration Successful!");
 
-      setTeamName("");
-
-      setCollege("");
-
-      setLeaderName("");
-
-      setEmail("");
-
-      setPhone("");
-
-      setDepartment("");
-
-      setYear(1);
-
-      setTeamSize("2");
-
-      setMembers("");
-
-      setProjectName("");
-
-      setDomain("");
-
-      setProblemStatement("");
-
-      setSolution("");
-
-      setTechStack("");
-
-      setGithub("");
-
-      setTransactionId("");
-
       setStep(1);
 
-    } catch (error: any) {
+    } catch (err: any) {
 
-      alert(
-
-        error?.message ||
-
-        JSON.stringify(error, null, 2) ||
-
-        "Registration Failed"
-
-      );
+      alert(err?.message || "Registration Failed");
 
     } finally {
 
       setLoading(false);
 
     }
-
   }
 
   return (
 
     <form
-
       onSubmit={handleSubmit}
-
-      className="relative mx-auto mt-16 max-w-7xl overflow-hidden"
-
+      className="relative mx-auto mt-20 max-w-7xl overflow-hidden"
     >
-{/* ==========================================================
+      {/* ==========================================================
     PREMIUM BACKGROUND
 ========================================================== */}
 
-<div className="absolute inset-0 -z-20 overflow-hidden">
+<div className="absolute inset-0 -z-30 overflow-hidden">
 
-  <div className="absolute left-1/2 top-0 h-[850px] w-[850px] -translate-x-1/2 rounded-full bg-yellow-500/10 blur-[180px]" />
+  <motion.div
+    animate={{
+      scale: [1, 1.15, 1],
+      opacity: [0.5, 0.8, 0.5],
+    }}
+    transition={{
+      duration: 12,
+      repeat: Infinity,
+    }}
+    className="absolute left-1/2 top-0 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-yellow-500/10 blur-[180px]"
+  />
 
-  <div className="absolute -right-32 bottom-0 h-[550px] w-[550px] rounded-full bg-orange-500/10 blur-[170px]" />
+  <motion.div
+    animate={{
+      y: [0, -60, 0],
+    }}
+    transition={{
+      duration: 9,
+      repeat: Infinity,
+    }}
+    className="absolute -right-32 bottom-0 h-[600px] w-[600px] rounded-full bg-orange-500/10 blur-[170px]"
+  />
 
-  <div className="absolute -left-32 top-1/2 h-[450px] w-[450px] rounded-full bg-cyan-500/5 blur-[160px]" />
+  <motion.div
+    animate={{
+      x: [0, 80, 0],
+    }}
+    transition={{
+      duration: 11,
+      repeat: Infinity,
+    }}
+    className="absolute -left-32 top-1/2 h-[500px] w-[500px] rounded-full bg-cyan-500/5 blur-[170px]"
+  />
 
 </div>
 
 <div
-  className="absolute inset-0 -z-10 opacity-[0.04]"
+  className="absolute inset-0 -z-20 opacity-[0.04]"
   style={{
     backgroundImage: `
       linear-gradient(to right,#ffffff 1px,transparent 1px),
       linear-gradient(to bottom,#ffffff 1px,transparent 1px)
     `,
-    backgroundSize: "42px 42px",
+    backgroundSize: "45px 45px",
   }}
 />
 
-<div className="relative overflow-hidden rounded-[42px] border border-yellow-500/20 bg-gradient-to-br from-[#101010]/95 via-[#090909]/95 to-black/95 p-12 backdrop-blur-3xl shadow-[0_0_120px_rgba(255,215,0,.12)]">
+<div className="relative overflow-hidden rounded-[42px] border border-yellow-500/20 bg-gradient-to-br from-[#0f0f0f]/95 via-[#090909]/95 to-black/95 p-10 md:p-14 backdrop-blur-3xl shadow-[0_0_120px_rgba(255,215,0,.12)]">
 
-<div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-yellow-400 to-transparent" />
+<div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-yellow-400 to-transparent"/>
 
-<div className="absolute -left-40 top-40 h-72 w-72 rounded-full bg-yellow-500/10 blur-[130px]" />
+<div className="absolute -left-40 top-40 h-72 w-72 rounded-full bg-yellow-500/10 blur-[130px]"/>
 
-<div className="absolute -right-32 bottom-20 h-72 w-72 rounded-full bg-orange-500/10 blur-[130px]" />
+<div className="absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-orange-500/10 blur-[140px]"/>
 
 <div
 className="pointer-events-none absolute inset-0 opacity-[0.03]"
 style={{
 backgroundImage:
 "radial-gradient(circle,#ffffff 1px,transparent 1px)",
-backgroundSize:"18px 18px",
+backgroundSize:"20px 20px",
 }}
 />
 
@@ -246,20 +207,15 @@ backgroundSize:"18px 18px",
 ========================================================== */}
 
 <motion.div
-
-initial={{opacity:0,y:30}}
-
+initial={{opacity:0,y:40}}
 animate={{opacity:1,y:0}}
-
-transition={{duration:.6}}
-
+transition={{duration:.8}}
 className="text-center"
-
 >
 
 <div className="inline-flex items-center gap-3 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-7 py-3 backdrop-blur-xl">
 
-<div className="h-2 w-2 rounded-full bg-yellow-400 animate-pulse"/>
+<Sparkles className="h-4 w-4 text-yellow-400"/>
 
 <span className="text-xs font-semibold uppercase tracking-[0.45em] text-yellow-400">
 
@@ -269,7 +225,7 @@ STAMPERS NATIONAL HACKATHON 2026
 
 </div>
 
-<h1 className="mt-10 text-5xl font-black leading-tight md:text-7xl">
+<h1 className="mt-10 text-5xl font-black leading-tight text-white md:text-7xl">
 
 Build.
 
@@ -277,7 +233,7 @@ Innovate.
 
 Win.
 
-<span className="mt-4 block bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-400 bg-clip-text text-transparent">
+<span className="mt-5 block bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-400 bg-clip-text text-transparent">
 
 Registration Portal
 
@@ -287,19 +243,19 @@ Registration Portal
 
 <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-zinc-400">
 
-India's premium student hackathon where innovators,
-developers and creators compete to solve real-world
-problems with cutting-edge technology.
+Join hundreds of innovators from across India.
+Create impactful solutions, collaborate with your
+team and compete for recognition, goodies and exciting rewards.
 
 </p>
 
 </motion.div>
 
 {/* ==========================================================
-    EVENT STATS
+    EVENT HIGHLIGHTS
 ========================================================== */}
 
-<div className="mt-14 grid gap-6 md:grid-cols-4">
+<div className="mt-16 grid gap-6 md:grid-cols-4">
 
 <div className="rounded-3xl border border-yellow-500/20 bg-black/40 p-6">
 
@@ -309,7 +265,7 @@ Registration
 
 </p>
 
-<p className="mt-2 text-2xl font-bold text-yellow-400">
+<p className="mt-3 text-2xl font-bold text-yellow-400">
 
 ₹20 / Member
 
@@ -325,9 +281,9 @@ Team Size
 
 </p>
 
-<p className="mt-2 text-2xl font-bold text-yellow-400">
+<p className="mt-3 text-2xl font-bold text-yellow-400">
 
-1 – 4 Members
+1–4 Members
 
 </p>
 
@@ -341,7 +297,7 @@ Mode
 
 </p>
 
-<p className="mt-2 text-2xl font-bold text-yellow-400">
+<p className="mt-3 text-2xl font-bold text-yellow-400">
 
 Online
 
@@ -353,13 +309,13 @@ Online
 
 <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
 
-Prize Pool
+Rewards
 
 </p>
 
-<p className="mt-2 text-2xl font-bold text-yellow-400">
+<p className="mt-3 text-2xl font-bold text-yellow-400">
 
-Goodies
+Certificates
 
 </p>
 
@@ -368,7 +324,7 @@ Goodies
 </div>
 
 {/* ==========================================================
-    STEP INDICATOR
+    PROGRESS BAR
 ========================================================== */}
 
 <div className="mt-16">
@@ -377,95 +333,61 @@ Goodies
 
 <div className="flex items-center gap-4">
 
-<div className={`flex h-14 w-14 items-center justify-center rounded-full border text-lg font-bold transition ${
+<div className={`flex h-14 w-14 items-center justify-center rounded-full transition ${
 step>=1
-?"border-yellow-400 bg-yellow-400 text-black"
-:"border-zinc-700 text-zinc-500"
+?"bg-yellow-400 text-black"
+:"bg-zinc-800 text-zinc-500"
 }`}>
 
-<Users size={22}/>
+<Users/>
 
 </div>
 
-<div>
+<span className="font-semibold text-white">
 
-<p className="text-white font-semibold">
+Team
 
-Team Details
-
-</p>
-
-<p className="text-sm text-zinc-500">
-
-Step 1
-
-</p>
+</span>
 
 </div>
-
-</div>
-
-<div className="h-[2px] flex-1 mx-6 bg-zinc-800"/>
 
 <div className="flex items-center gap-4">
 
-<div className={`flex h-14 w-14 items-center justify-center rounded-full border text-lg font-bold transition ${
+<div className={`flex h-14 w-14 items-center justify-center rounded-full transition ${
 step>=2
-?"border-yellow-400 bg-yellow-400 text-black"
-:"border-zinc-700 text-zinc-500"
+?"bg-yellow-400 text-black"
+:"bg-zinc-800 text-zinc-500"
 }`}>
 
-<Lightbulb size={22}/>
+<Lightbulb/>
 
 </div>
 
-<div>
-
-<p className="text-white font-semibold">
+<span className="font-semibold text-white">
 
 Project
 
-</p>
-
-<p className="text-sm text-zinc-500">
-
-Step 2
-
-</p>
+</span>
 
 </div>
-
-</div>
-
-<div className="h-[2px] flex-1 mx-6 bg-zinc-800"/>
 
 <div className="flex items-center gap-4">
 
-<div className={`flex h-14 w-14 items-center justify-center rounded-full border text-lg font-bold transition ${
+<div className={`flex h-14 w-14 items-center justify-center rounded-full transition ${
 step>=3
-?"border-yellow-400 bg-yellow-400 text-black"
-:"border-zinc-700 text-zinc-500"
+?"bg-yellow-400 text-black"
+:"bg-zinc-800 text-zinc-500"
 }`}>
 
-<CreditCard size={22}/>
+<CreditCard/>
 
 </div>
 
-<div>
-
-<p className="text-white font-semibold">
+<span className="font-semibold text-white">
 
 Payment
 
-</p>
-
-<p className="text-sm text-zinc-500">
-
-Step 3
-
-</p>
-
-</div>
+</span>
 
 </div>
 
@@ -474,34 +396,23 @@ Step 3
 <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
 
 <motion.div
-
 animate={{
-
 width:
-
 step===1
-
 ?"33%"
-
 :step===2
-
 ?"66%"
-
 :"100%"
-
 }}
-
 transition={{duration:.5}}
-
 className="h-full rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500"
-
 />
 
 </div>
 
 </div>
-    {/* ==========================================================
-    STEP 1 : TEAM INFORMATION
+{/* ==========================================================
+    STEP 1 : TEAM DETAILS
 ========================================================== */}
 
 <AnimatePresence mode="wait">
@@ -510,20 +421,20 @@ className="h-full rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 t
 
 <motion.div
 key="team"
-initial={{opacity:0,x:40}}
+initial={{opacity:0,x:50}}
 animate={{opacity:1,x:0}}
-exit={{opacity:0,x:-40}}
+exit={{opacity:0,x:-50}}
 transition={{duration:.45}}
-className="mt-14 rounded-[36px] border border-yellow-500/20 bg-gradient-to-br from-zinc-900/95 to-black p-10 shadow-[0_0_70px_rgba(255,215,0,.08)]"
+className="mt-16 rounded-[36px] border border-yellow-500/20 bg-gradient-to-br from-zinc-900/95 to-black p-10 shadow-[0_0_80px_rgba(255,215,0,.08)]"
 >
 
-<div className="mb-10">
+<div className="mb-12">
 
 <div className="inline-flex items-center gap-3 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-5 py-2">
 
 <Users className="h-5 w-5 text-yellow-400"/>
 
-<span className="text-sm font-semibold tracking-wider text-yellow-400">
+<span className="text-sm font-semibold tracking-[0.25em] text-yellow-400">
 
 STEP 01
 
@@ -539,19 +450,19 @@ Team Information
 
 <p className="mt-3 text-zinc-400">
 
-Tell us about your team leader and institution.
+Provide your team leader and institution details.
 
 </p>
 
 </div>
 
-<div className="grid gap-7 md:grid-cols-2">
+<div className="grid gap-8 md:grid-cols-2">
 
 {/* Team Name */}
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Team Name
 
@@ -562,7 +473,7 @@ required
 value={teamName}
 onChange={(e)=>setTeamName(e.target.value)}
 placeholder="Code Warriors"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
 </div>
@@ -571,7 +482,7 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 College / University
 
@@ -582,7 +493,7 @@ required
 value={college}
 onChange={(e)=>setCollege(e.target.value)}
 placeholder="Institute Name"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
 </div>
@@ -591,7 +502,7 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Team Leader
 
@@ -602,7 +513,7 @@ required
 value={leaderName}
 onChange={(e)=>setLeaderName(e.target.value)}
 placeholder="Leader Name"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
 </div>
@@ -611,7 +522,7 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Email Address
 
@@ -622,8 +533,8 @@ required
 type="email"
 value={email}
 onChange={(e)=>setEmail(e.target.value)}
-placeholder="example@gmail.com"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+placeholder="leader@example.com"
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
 </div>
@@ -632,7 +543,7 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Phone Number
 
@@ -643,7 +554,7 @@ required
 value={phone}
 onChange={(e)=>setPhone(e.target.value)}
 placeholder="+91XXXXXXXXXX"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
 </div>
@@ -652,7 +563,7 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Department
 
@@ -662,8 +573,8 @@ Department
 required
 value={department}
 onChange={(e)=>setDepartment(e.target.value)}
-placeholder="Computer Science Engineering"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+placeholder="Computer Science & Engineering"
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
 </div>
@@ -671,7 +582,7 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Academic Year
 
@@ -696,7 +607,7 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Team Size
 
@@ -725,7 +636,7 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <label className="mb-3 block text-sm text-zinc-400">
 
-Team Members
+Team Members (One per line)
 
 </label>
 
@@ -742,41 +653,41 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-
 
 <p className="mt-3 text-sm text-zinc-500">
 
-Enter one member name per line.
+Maximum 4 participants including the team leader.
 
 </p>
 
 </div>
 
-{/* Information Card */}
+{/* Premium Information Card */}
 
-<div className="mt-10 rounded-3xl border border-yellow-500/20 bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-transparent p-7">
+<div className="mt-10 rounded-3xl border border-yellow-500/20 bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-transparent p-8">
 
 <div className="flex items-start gap-5">
 
-<div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-500/20">
+<div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-500/20">
 
-<CheckCircle2 className="h-7 w-7 text-yellow-400"/>
+<ShieldCheck className="h-8 w-8 text-yellow-400"/>
 
 </div>
 
 <div>
 
-<h3 className="text-xl font-bold text-white">
+<h3 className="text-2xl font-bold text-white">
 
 Before You Continue
 
 </h3>
 
-<ul className="mt-4 space-y-3 text-zinc-400 leading-7">
+<ul className="mt-5 space-y-3 text-zinc-400 leading-7">
 
-<li>• Verify your email address carefully.</li>
+<li>• Verify all participant names carefully.</li>
 
-<li>• Phone number must be active for updates.</li>
+<li>• The email address will receive all updates.</li>
 
-<li>• Maximum 4 participants are allowed.</li>
+<li>• Phone number must remain active.</li>
 
-<li>• Team leader will receive all notifications.</li>
+<li>• Team leader represents the entire team.</li>
 
 </ul>
 
@@ -810,7 +721,7 @@ Continue
 
 </AnimatePresence>
 {/* ==========================================================
-    STEP 2 : PROJECT DETAILS
+    STEP 2 : PROJECT INFORMATION
 ========================================================== */}
 
 <AnimatePresence mode="wait">
@@ -819,20 +730,20 @@ Continue
 
 <motion.div
 key="project"
-initial={{opacity:0,x:40}}
+initial={{opacity:0,x:50}}
 animate={{opacity:1,x:0}}
-exit={{opacity:0,x:-40}}
+exit={{opacity:0,x:-50}}
 transition={{duration:.45}}
-className="mt-14 rounded-[36px] border border-yellow-500/20 bg-gradient-to-br from-zinc-900/95 to-black p-10 shadow-[0_0_70px_rgba(255,215,0,.08)]"
+className="mt-16 rounded-[36px] border border-yellow-500/20 bg-gradient-to-br from-zinc-900/95 to-black p-10 shadow-[0_0_80px_rgba(255,215,0,.08)]"
 >
 
-<div className="mb-10">
+<div className="mb-12">
 
 <div className="inline-flex items-center gap-3 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-5 py-2">
 
 <Lightbulb className="h-5 w-5 text-yellow-400"/>
 
-<span className="text-sm font-semibold tracking-wider text-yellow-400">
+<span className="text-sm font-semibold tracking-[0.25em] text-yellow-400">
 
 STEP 02
 
@@ -848,7 +759,7 @@ Project Information
 
 <p className="mt-3 text-zinc-400">
 
-Tell us about your innovation and solution.
+Tell us about your innovative idea and technical solution.
 
 </p>
 
@@ -856,9 +767,11 @@ Tell us about your innovation and solution.
 
 <div className="space-y-8">
 
+{/* Project Name */}
+
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Project Name
 
@@ -869,16 +782,18 @@ required
 value={projectName}
 onChange={(e)=>setProjectName(e.target.value)}
 placeholder="AI Smart Healthcare"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
 </div>
 
+{/* Domain */}
+
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
-Domain
+Project Domain
 
 </label>
 
@@ -886,38 +801,32 @@ Domain
 required
 value={domain}
 onChange={(e)=>setDomain(e.target.value)}
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 >
 
 <option value="">Choose Domain</option>
 
 <option>Artificial Intelligence</option>
-
 <option>Machine Learning</option>
-
 <option>Web Development</option>
-
 <option>Cyber Security</option>
-
 <option>Blockchain</option>
-
-<option>IoT</option>
-
+<option>Cloud Computing</option>
+<option>Internet of Things</option>
 <option>Healthcare</option>
-
 <option>Education</option>
-
 <option>Agriculture</option>
-
 <option>Open Innovation</option>
 
 </select>
 
 </div>
 
+{/* Problem Statement */}
+
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Problem Statement
 
@@ -925,18 +834,19 @@ Problem Statement
 
 <textarea
 required
-rows={6}
+rows={7}
 value={problemStatement}
 onChange={(e)=>setProblemStatement(e.target.value)}
-placeholder="Describe the real-world problem..."
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-white outline-none transition focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+placeholder="Describe the real-world problem that your project aims to solve..."
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
 </div>
+{/* Proposed Solution */}
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Proposed Solution
 
@@ -944,21 +854,22 @@ Proposed Solution
 
 <textarea
 required
-rows={6}
+rows={7}
 value={solution}
 onChange={(e)=>setSolution(e.target.value)}
-placeholder="Describe your solution..."
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-white outline-none transition focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
+placeholder="Explain how your solution works, what makes it unique, and how it solves the problem..."
+className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
 </div>
-{/* Tech Stack + GitHub */}
 
-<div className="grid gap-7 md:grid-cols-2">
+{/* Tech Stack & GitHub */}
+
+<div className="grid gap-8 md:grid-cols-2">
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 Technology Stack
 
@@ -967,7 +878,7 @@ Technology Stack
 <input
 value={techStack}
 onChange={(e)=>setTechStack(e.target.value)}
-placeholder="Next.js, Node.js, Supabase, Python..."
+placeholder="Next.js, React, Node.js, Supabase..."
 className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
 />
 
@@ -975,7 +886,7 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <div>
 
-<label className="mb-2 block text-sm text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 GitHub Repository
 
@@ -998,30 +909,29 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-
 
 <div className="flex items-start gap-5">
 
-<div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/20">
+<div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-500/20">
 
-<Lightbulb className="h-7 w-7 text-cyan-400"/>
+<Trophy className="h-8 w-8 text-cyan-400"/>
 
 </div>
 
 <div>
 
-<h3 className="text-xl font-bold text-white">
+<h3 className="text-2xl font-bold text-white">
 
-Submission Tips
+Winning Project Tips
 
 </h3>
 
-<p className="mt-3 leading-7 text-zinc-400">
+<p className="mt-4 leading-7 text-zinc-400">
 
-A strong project clearly explains the problem,
-why it matters, how your solution works,
-what technologies you are using,
-and how it creates real-world impact.
+The strongest submissions clearly explain the problem,
+show innovation, demonstrate technical feasibility,
+and describe how the project can create real-world impact.
 
 </p>
 
-<div className="mt-5 grid gap-4 md:grid-cols-2">
+<div className="mt-6 grid gap-4 md:grid-cols-2">
 
 <div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
 
@@ -1031,9 +941,25 @@ Innovation
 
 </p>
 
-<p className="mt-2 text-sm leading-6 text-zinc-400">
+<p className="mt-2 text-sm text-zinc-400">
 
-Highlight what makes your project unique.
+Highlight what makes your solution different.
+
+</p>
+
+</div>
+
+<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
+
+<p className="font-semibold text-yellow-400">
+
+Impact
+
+</p>
+
+<p className="mt-2 text-sm text-zinc-400">
+
+Describe how users benefit from your solution.
 
 </p>
 
@@ -1047,25 +973,9 @@ Scalability
 
 </p>
 
-<p className="mt-2 text-sm leading-6 text-zinc-400">
+<p className="mt-2 text-sm text-zinc-400">
 
-Explain how your solution can grow.
-
-</p>
-
-</div>
-
-<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
-
-<p className="font-semibold text-yellow-400">
-
-Feasibility
-
-</p>
-
-<p className="mt-2 text-sm leading-6 text-zinc-400">
-
-Show that your idea can actually be built.
+Explain how your project can grow in the future.
 
 </p>
 
@@ -1079,9 +989,9 @@ Presentation
 
 </p>
 
-<p className="mt-2 text-sm leading-6 text-zinc-400">
+<p className="mt-2 text-sm text-zinc-400">
 
-Keep descriptions clear and concise.
+Keep your explanation concise and easy to understand.
 
 </p>
 
@@ -1102,7 +1012,7 @@ Keep descriptions clear and concise.
 <button
 type="button"
 onClick={prevStep}
-className="inline-flex items-center gap-3 rounded-2xl border border-zinc-700 bg-black/40 px-8 py-4 text-white transition-all hover:border-yellow-400 hover:text-yellow-400"
+className="inline-flex items-center gap-3 rounded-2xl border border-zinc-700 bg-black/40 px-8 py-4 text-white transition-all duration-300 hover:border-yellow-400 hover:text-yellow-400"
 >
 
 <ArrowLeft size={20}/>
@@ -1142,20 +1052,20 @@ Continue
 
 <motion.div
 key="payment"
-initial={{opacity:0,x:40}}
+initial={{opacity:0,x:50}}
 animate={{opacity:1,x:0}}
-exit={{opacity:0,x:-40}}
+exit={{opacity:0,x:-50}}
 transition={{duration:.45}}
-className="mt-14 rounded-[36px] border border-yellow-500/20 bg-gradient-to-br from-zinc-900/95 to-black p-10 shadow-[0_0_70px_rgba(255,215,0,.08)]"
+className="mt-16 rounded-[36px] border border-yellow-500/20 bg-gradient-to-br from-zinc-900/95 to-black p-10 shadow-[0_0_80px_rgba(255,215,0,.08)]"
 >
 
-<div className="mb-10">
+<div className="mb-12">
 
 <div className="inline-flex items-center gap-3 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-5 py-2">
 
 <CreditCard className="h-5 w-5 text-yellow-400"/>
 
-<span className="text-sm font-semibold tracking-wider text-yellow-400">
+<span className="text-sm font-semibold tracking-[0.25em] text-yellow-400">
 
 STEP 03
 
@@ -1199,7 +1109,7 @@ Registration Fee
 
 </span>
 
-<span className="text-xl font-bold text-yellow-400">
+<span className="font-bold text-yellow-400">
 
 ₹20 / Member
 
@@ -1231,9 +1141,9 @@ Total Amount
 
 </span>
 
-<span className="text-2xl font-bold text-yellow-400">
+<span className="text-3xl font-black text-yellow-400">
 
-₹{Number(teamSize)*20}
+₹{Number(teamSize) * 20}
 
 </span>
 
@@ -1265,15 +1175,15 @@ Instructions
 
 </h4>
 
-<ul className="mt-5 space-y-3 text-sm leading-7 text-zinc-300">
+<ul className="mt-4 space-y-3 text-sm leading-7 text-zinc-300">
 
 <li>• Scan the QR Code.</li>
 
 <li>• Complete the payment.</li>
 
-<li>• Save the Transaction ID.</li>
+<li>• Copy your UPI Transaction ID.</li>
 
-<li>• Enter it below.</li>
+<li>• Enter the Transaction ID below.</li>
 
 <li>• Click Complete Registration.</li>
 
@@ -1301,16 +1211,12 @@ Google Pay • PhonePe • Paytm • BHIM
 
 <div className="mt-8 flex justify-center">
 
-<div className="rounded-[28px] bg-white p-5 shadow-[0_0_50px_rgba(255,215,0,.18)]">
+<div className="rounded-[30px] bg-white p-5 shadow-[0_0_50px_rgba(255,215,0,.2)]">
 
 <img
-
 src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/payment/upi_1784665369614.png"
-
 alt="Payment QR"
-
 className="h-72 w-72 rounded-2xl object-contain"
-
 />
 
 </div>
@@ -1319,18 +1225,19 @@ className="h-72 w-72 rounded-2xl object-contain"
 
 <p className="mt-6 text-center text-sm text-zinc-500">
 
-After payment, copy your UPI Transaction ID.
+After payment, enter your UPI Transaction ID below.
 
 </p>
 
 </div>
 
 </div>
+
 {/* Transaction ID */}
 
 <div className="mt-10">
 
-<label className="mb-3 block text-sm font-medium text-zinc-400">
+<label className="mb-3 block text-sm text-zinc-400">
 
 UPI Transaction ID *
 
@@ -1346,13 +1253,12 @@ className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-
 
 <p className="mt-3 text-sm text-zinc-500">
 
-Your payment will be verified using this Transaction ID.
+This Transaction ID will be used to verify your payment.
 
 </p>
 
 </div>
-
-{/* Registration Checklist */}
+{/* Final Checklist */}
 
 <div className="mt-10 rounded-3xl border border-green-500/20 bg-gradient-to-r from-green-500/10 via-green-500/5 to-transparent p-8">
 
@@ -1392,7 +1298,7 @@ All participant information is correct.
 
 <p className="mt-2 text-sm text-zinc-400">
 
-Your innovation details are complete.
+Your project details are complete.
 
 </p>
 
@@ -1424,7 +1330,7 @@ Registration fee has been paid.
 
 <p className="mt-2 text-sm text-zinc-400">
 
-Click the button below to complete registration.
+Click the button below to complete your registration.
 
 </p>
 
@@ -1453,7 +1359,7 @@ Back
 <button
 type="submit"
 disabled={loading}
-className="inline-flex items-center gap-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 px-12 py-5 text-lg font-bold text-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(255,215,0,.45)] disabled:cursor-not-allowed disabled:opacity-60"
+className="inline-flex items-center gap-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 px-12 py-5 text-lg font-bold text-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(255,215,0,.4)] disabled:cursor-not-allowed disabled:opacity-60"
 >
 
 {loading ? (
@@ -1493,4 +1399,5 @@ Complete Registration
 </form>
 
 );
+
 }
