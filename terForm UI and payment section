@@ -1,0 +1,37 @@
+[33mcommit 83b4e93bcc621e3f82b5d9fc54e2d7a405033ce4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Arnab Manna <arnabm25102006@gmail.com>
+Date:   Wed Jul 22 01:56:34 2026 +0530
+
+    Update RegisterForm
+
+[1mdiff --git a/src/app/components/RegisterForm.tsx b/src/app/components/RegisterForm.tsx[m
+[1mindex 6022c2c..a32eac0 100644[m
+[1m--- a/src/app/components/RegisterForm.tsx[m
+[1m+++ b/src/app/components/RegisterForm.tsx[m
+[36m@@ -198,7 +198,7 @@[m [mconst [teamSize, setTeamSize] = useState("2");[m
+         Registration[m
+       </p>[m
+       <p className="mt-1 text-lg font-bold text-yellow-400">[m
+[31m-        ₹39 / Member[m
+[32m+[m[32m        ₹20 / Member[m
+       </p>[m
+     </div>[m
+ [m
+[36m@@ -523,7 +523,7 @@[m [mconst [teamSize, setTeamSize] = useState("2");[m
+           </span>[m
+ [m
+           <span className="font-bold text-yellow-400 text-lg">[m
+[31m-            ₹39 / Member[m
+[32m+[m[32m            ₹20 / Member[m
+           </span>[m
+         </div>[m
+ [m
+[36m@@ -590,7 +590,7 @@[m [mconst [teamSize, setTeamSize] = useState("2");[m
+         <div className="rounded-3xl bg-white p-5 shadow-[0_0_40px_rgba(255,215,0,.15)]">[m
+ [m
+           <img[m
+[31m-            src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/payment/IMG-20260716-WA0058.jpg"[m
+[32m+[m[32m            src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/payment/upi_1784665369614.png"[m
+             alt="STAMPERS Payment QR"[m
+             className="h-72 w-72 rounded-2xl object-contain"[m
+           />[m
