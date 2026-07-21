@@ -1,251 +1,794 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import {
+  Rocket,
+  Trophy,
+  Users,
+  Sparkles,
+  ArrowRight,
+  CheckCircle2,
+} from "lucide-react";
+
+const stats = [
+  {
+    title: "Registration",
+    value: "OPEN",
+    icon: CheckCircle2,
+    color: "from-emerald-400 to-green-500",
+  },
+  {
+    title: "Team Size",
+    value: "2 - 4",
+    icon: Users,
+    color: "from-yellow-400 to-orange-500",
+  },
+  {
+    title: "Theme",
+    value: "Open Innovation",
+    icon: Sparkles,
+    color: "from-orange-400 to-red-500",
+  },
+  {
+    title: "Prize Pool",
+    value: "₹5,000+",
+    icon: Trophy,
+    color: "from-yellow-300 via-yellow-500 to-orange-500",
+  },
+];
 
 export default function Countdown() {
-  const targetDate = useMemo(
-    () => new Date("2027-07-22T00:00:00").getTime(),
-    []
-  );
+  return (
+    <section className="relative overflow-hidden bg-black py-24 lg:py-36 text-white">
+      {/* Hero */}
 
-  const [mounted, setMounted] = useState(false);
+<motion.div
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8 }}
+  className="mx-auto max-w-5xl text-center"
+>
+  {/* Live Badge */}
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  <motion.div
+    animate={{
+      scale: [1, 1.04, 1],
+    }}
+    transition={{
+      duration: 2,
+      repeat: Infinity,
+    }}
+    className="inline-flex items-center gap-3 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-6 py-3 backdrop-blur-2xl"
+  >
+    <div className="relative">
 
-  useEffect(() => {
-    setMounted(true);
+      <span className="absolute inset-0 animate-ping rounded-full bg-yellow-400 opacity-60" />
 
-    const updateCountdown = () => {
-      const now = Date.now();
-      const distance = targetDate - now;
+      <span className="relative block h-3 w-3 rounded-full bg-yellow-400" />
 
-      if (distance <= 0) {
-        setTimeLeft({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        });
-        return;
-      }
+    </div>
 
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) /
-            (1000 * 60 * 60)
-        ),
-        minutes: Math.floor(
-          (distance % (1000 * 60 * 60)) /
-            (1000 * 60)
-        ),
-        seconds: Math.floor(
-          (distance % (1000 * 60)) /
-            1000
-        ),
-      });
-    };
+    <span className="text-xs font-bold uppercase tracking-[0.45em] text-yellow-300">
+      Registration Live
+    </span>
 
-    updateCountdown();
+  </motion.div>
 
-    const timer = setInterval(updateCountdown, 1000);
+  {/* Title */}
 
-    return () => clearInterval(timer);
-  }, [targetDate]);
+  <motion.h1
+    initial={{ scale: .9 }}
+    whileInView={{ scale: 1 }}
+    transition={{
+      duration: .8,
+    }}
+    className="mt-10 text-5xl font-black leading-tight sm:text-6xl lg:text-8xl"
+  >
+    <span className="text-white">
+      THE
+    </span>
 
-  if (!mounted) {
-    return null;
-  }
+    <br />
 
-  const items = [
-    {
-      label: "Days",
-      value: String(timeLeft.days).padStart(2, "0"),
-    },
-    {
-      label: "Hours",
-      value: String(timeLeft.hours).padStart(2, "0"),
-    },
-    {
-      label: "Minutes",
-      value: String(timeLeft.minutes).padStart(2, "0"),
-    },
-    {
-      label: "Seconds",
-      value: String(timeLeft.seconds).padStart(2, "0"),
-    },
-  ];
+    <span className="bg-gradient-to-r from-yellow-200 via-yellow-400 to-orange-500 bg-clip-text text-transparent">
+      WAIT IS OVER
+    </span>
+
+  </motion.h1>
+
+  {/* Subtitle */}
+
+  <motion.p
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    transition={{
+      delay: .3,
+      duration: .8,
+    }}
+    className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-300 lg:text-xl"
+  >
+    Registration for the
+    <span className="font-bold text-yellow-400">
+      {" "}STAMPERS Open Innovation Hackathon
+    </span>
+    {" "}is officially open.
+
+    Form your dream team,
+    build innovative solutions,
+    compete with brilliant minds,
+    and showcase your talent on a national platform.
+  </motion.p>
+
+  {/* CTA Buttons */}
+
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{
+      delay: .4,
+      duration: .7,
+    }}
+    className="mt-12 flex flex-col items-center justify-center gap-5 sm:flex-row"
+  >
+
+    <motion.a
+      whileHover={{
+        scale: 1.05,
+      }}
+      whileTap={{
+        scale: .95,
+      }}
+      href="#register"
+      className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 px-8 py-4 text-lg font-bold text-black shadow-[0_15px_50px_rgba(250,204,21,.35)]"
+    >
+      <Rocket size={22} />
+
+      Register Now
+
+      <ArrowRight
+        size={20}
+        className="transition-transform duration-300 group-hover:translate-x-1"
+      />
+    </motion.a>
+
+    <motion.a
+      whileHover={{
+        scale: 1.05,
+      }}
+      href="#timeline"
+      className="rounded-full border border-white/10 bg-white/5 px-8 py-4 text-lg font-semibold backdrop-blur-xl transition hover:border-yellow-500/40 hover:bg-white/10"
+    >
+      View Timeline
+    </motion.a>
+
+  </motion.div>
+
+</motion.div>
+{/* Launch Cards */}
+
+<div className="mt-24 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+
+  {stats.map((item, index) => {
+
+    const Icon = item.icon;
+
     return (
-    <section className="relative">
 
-      {/* Background Glow */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
+      <motion.div
+        key={item.title}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{
+          duration: 0.7,
+          delay: index * 0.12,
+        }}
+        whileHover={{
+          y: -10,
+          scale: 1.03,
+        }}
+        className="group relative overflow-hidden rounded-[32px]
+        border border-white/10
+        bg-white/[0.05]
+        backdrop-blur-3xl
+        p-8"
+      >
+
+        {/* Animated Border */}
+
+        <div
+          className={`absolute inset-0 rounded-[32px]
+          bg-gradient-to-br
+          ${item.color}
+          opacity-10
+          transition-all
+          duration-700
+          group-hover:opacity-20`}
+        />
+
+        {/* Top Glow */}
+
         <motion.div
           animate={{
             scale: [1, 1.15, 1],
-            opacity: [0.2, 0.45, 0.2],
+            opacity: [.15, .35, .15],
           }}
           transition={{
-            duration: 10,
+            duration: 5,
             repeat: Infinity,
           }}
-          className="absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-500/10 blur-[180px]"
+          className={`absolute
+          -right-16
+          -top-16
+          h-44
+          w-44
+          rounded-full
+          bg-gradient-to-br
+          ${item.color}
+          blur-3xl`}
         />
 
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,204,0,0.06),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(255,140,0,0.08),transparent_60%)]" />
-      </div>
+        {/* Bottom Glow */}
 
-      {/* Heading */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: .8 }}
-        className="mb-16 text-center"
-      >
+        <motion.div
+          animate={{
+            scale: [1.1, 1, 1.1],
+            opacity: [.15, .3, .15],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+          }}
+          className={`absolute
+          -bottom-20
+          -left-20
+          h-44
+          w-44
+          rounded-full
+          bg-gradient-to-br
+          ${item.color}
+          blur-3xl`}
+        />
 
-        <span className="rounded-full border border-yellow-500/30 bg-yellow-500/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.45em] text-yellow-300 backdrop-blur-xl">
-          Registration Opens
-        </span>
+        {/* Shine */}
 
-        <h2 className="mt-8 bg-gradient-to-r from-white via-yellow-100 to-yellow-400 bg-clip-text text-5xl font-black text-transparent md:text-6xl">
-          22 JULY 2027
-        </h2>
+        <div
+          className="absolute
+          left-[-120%]
+          top-0
+          h-full
+          w-24
+          rotate-12
+          bg-white/10
+          blur-xl
+          transition-all
+          duration-1000
+          group-hover:left-[130%]"
+        />
 
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
-          Registration begins in
-          <span className="font-semibold text-yellow-400">
-            {" "}just a few moments.
-          </span>
-          Prepare your team and get ready for an exciting innovation journey.
-        </p>
+        {/* Content */}
+
+        <div className="relative z-20">
+
+          {/* Icon */}
+
+          <motion.div
+            whileHover={{
+              rotate: 360,
+            }}
+            transition={{
+              duration: .8,
+            }}
+            className={`flex
+            h-20
+            w-20
+            items-center
+            justify-center
+            rounded-full
+            bg-gradient-to-br
+            ${item.color}
+            shadow-[0_0_40px_rgba(250,204,21,.25)]`}
+          >
+
+            <div className="absolute inset-[4px] rounded-full bg-black/20 backdrop-blur-md" />
+
+            <Icon
+              className="relative z-10 text-black"
+              size={34}
+            />
+
+          </motion.div>
+
+          {/* Title */}
+
+          <p className="mt-8 text-sm font-semibold uppercase tracking-[0.35em] text-gray-400">
+            {item.title}
+          </p>
+
+          {/* Value */}
+
+          <h3 className="mt-4 text-3xl font-black leading-tight text-white">
+
+            {item.value}
+
+          </h3>
+
+        </div>
+
+        {/* Bottom Accent */}
+
+        <div
+          className={`absolute
+          bottom-0
+          left-0
+          h-1
+          w-full
+          bg-gradient-to-r
+          ${item.color}`}
+        />
 
       </motion.div>
 
-      {/* Cards */}
+    );
 
-      <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+  })}
 
-        {items.map((item, index) => (
+</div>
+{/* Registration Live Banner */}
+
+<motion.div
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{
+    duration: .8,
+    delay: .2,
+  }}
+  className="relative mt-24 overflow-hidden rounded-[40px]
+  border border-yellow-500/20
+  bg-white/[0.05]
+  backdrop-blur-3xl"
+>
+
+  {/* Background Glow */}
+
+  <div className="absolute inset-0">
+
+    <motion.div
+      animate={{
+        scale: [1, 1.2, 1],
+        opacity: [.15, .35, .15],
+      }}
+      transition={{
+        duration: 7,
+        repeat: Infinity,
+      }}
+      className="absolute
+      -right-24
+      -top-24
+      h-80
+      w-80
+      rounded-full
+      bg-yellow-500/20
+      blur-[140px]"
+    />
+
+    <motion.div
+      animate={{
+        scale: [1.1, 1, 1.1],
+      }}
+      transition={{
+        duration: 9,
+        repeat: Infinity,
+      }}
+      className="absolute
+      -bottom-32
+      -left-32
+      h-96
+      w-96
+      rounded-full
+      bg-orange-500/10
+      blur-[180px]"
+    />
+
+  </div>
+
+  <div className="relative z-20 p-8 lg:p-14">
+
+    <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+
+      {/* Left */}
+
+      <div>
+
+        {/* Live Badge */}
+
+        <div className="inline-flex items-center gap-3 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-5 py-2">
+
+          <span className="relative flex h-3 w-3">
+
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+
+            <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-400" />
+
+          </span>
+
+          <span className="text-xs font-bold uppercase tracking-[0.4em] text-emerald-300">
+            LIVE NOW
+          </span>
+
+        </div>
+
+        <h2 className="mt-8 text-4xl font-black leading-tight lg:text-6xl">
+
+          Registration is
+
+          <span className="block bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
+
+            Officially Open
+
+          </span>
+
+        </h2>
+
+        <p className="mt-6 max-w-xl text-lg leading-8 text-gray-300">
+
+          Join India's next generation of innovators.
+
+          Form your team, solve real-world challenges,
+
+          build impactful solutions,
+
+          and compete for exciting prizes and national recognition.
+
+        </p>
+
+      </div>
+
+      {/* Right */}
+
+      <div className="grid grid-cols-2 gap-5">
+
+        {[
+          "Open Innovation",
+          "National Level",
+          "Certificates",
+          "Goodies",
+        ].map((feature) => (
 
           <motion.div
-            key={item.label}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{
-              delay: index * .12,
-              duration: .6,
-            }}
+            key={feature}
             whileHover={{
-              y: -10,
-              scale: 1.04,
+              scale: 1.05,
             }}
-            className="group relative overflow-hidden rounded-[32px] border border-yellow-500/20 bg-white/[0.04] p-8 text-center backdrop-blur-3xl"
+            className="rounded-3xl border border-white/10 bg-black/20 p-6 backdrop-blur-xl"
           >
 
-            {/* Hover Glow */}
+            <div className="flex items-center gap-3">
 
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-transparent to-orange-500/10 opacity-0 transition duration-500 group-hover:opacity-100" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500">
 
-            {/* Golden Orb */}
+                <CheckCircle2
+                  size={22}
+                  className="text-black"
+                />
 
-            <div className="absolute -right-14 -top-14 h-40 w-40 rounded-full bg-yellow-500/10 blur-3xl transition-all duration-700 group-hover:bg-yellow-400/20" />
+              </div>
 
-            {/* Bottom Orb */}
+              <span className="font-semibold text-white">
 
-            <div className="absolute -bottom-16 -left-16 h-44 w-44 rounded-full bg-orange-500/10 blur-3xl transition-all duration-700 group-hover:bg-orange-500/20" />
+                {feature}
 
-            <div className="relative z-10">
-
-              <motion.h3
-                key={item.value}
-                initial={{ scale: .8 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: .3 }}
-                className="bg-gradient-to-r from-yellow-200 via-yellow-400 to-orange-500 bg-clip-text text-6xl font-black text-transparent"
-              >
-                {item.value}
-              </motion.h3>
-
-              <div className="mx-auto mt-5 h-[3px] w-16 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500" />
-
-              <p className="mt-6 text-xs font-semibold uppercase tracking-[0.4em] text-gray-300">
-                {item.label}
-              </p>
+              </span>
 
             </div>
-
-            {/* Shine */}
-
-            <div className="absolute left-[-120%] top-0 h-full w-20 rotate-12 bg-white/10 blur-xl transition-all duration-1000 group-hover:left-[120%]" />
 
           </motion.div>
 
         ))}
 
       </div>
-            {/* Bottom Status */}
+
+    </div>
+
+  </div>
+
+</motion.div>
+{/* ========================= CTA ========================= */}
+
+<motion.div
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{
+    duration: 0.8,
+    delay: 0.3,
+  }}
+  className="relative mt-20 overflow-hidden rounded-[40px]
+  border border-yellow-500/20
+  bg-gradient-to-br
+  from-yellow-500/10
+  via-black
+  to-orange-500/10
+  p-10
+  text-center
+  backdrop-blur-3xl
+  lg:p-16"
+>
+
+  {/* Animated Glow */}
+
+  <motion.div
+    animate={{
+      scale: [1, 1.2, 1],
+      opacity: [.15, .35, .15],
+    }}
+    transition={{
+      duration: 8,
+      repeat: Infinity,
+    }}
+    className="absolute
+    left-1/2
+    top-1/2
+    h-[500px]
+    w-[500px]
+    -translate-x-1/2
+    -translate-y-1/2
+    rounded-full
+    bg-yellow-500/20
+    blur-[180px]"
+  />
+
+  {/* Shine */}
+
+  <div
+    className="absolute
+    left-[-120%]
+    top-0
+    h-full
+    w-28
+    rotate-12
+    bg-white/10
+    blur-xl
+    transition-all
+    duration-[1500ms]
+    hover:left-[130%]"
+  />
+
+  <div className="relative z-20">
+
+    {/* Rocket */}
+
+    <motion.div
+      animate={{
+        y: [0, -10, 0],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+      }}
+      className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-yellow-300 via-yellow-500 to-orange-500 shadow-[0_0_60px_rgba(250,204,21,.4)]"
+    >
+      <Rocket
+        size={42}
+        className="text-black"
+      />
+    </motion.div>
+
+    {/* Heading */}
+
+    <h2 className="mt-10 text-4xl font-black leading-tight lg:text-6xl">
+
+      Ready to
+
+      <span className="block bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
+
+        Build Something Amazing?
+
+      </span>
+
+    </h2>
+
+    {/* Description */}
+
+    <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-300">
+
+      Bring your ideas to life.
+
+      Meet talented developers.
+
+      Learn from mentors.
+
+      Compete nationally.
+
+      Win prizes.
+
+      This is your chance to create something extraordinary.
+
+    </p>
+
+    {/* Button */}
+
+    <motion.a
+
+      href="#register"
+
+      whileHover={{
+        scale: 1.05,
+      }}
+
+      whileTap={{
+        scale: .96,
+      }}
+
+      className="group mt-12 inline-flex items-center gap-4 rounded-full
+      bg-gradient-to-r
+      from-yellow-400
+      via-yellow-500
+      to-orange-500
+
+      px-10
+      py-5
+
+      text-xl
+      font-bold
+
+      text-black
+
+      shadow-[0_20px_60px_rgba(250,204,21,.35)]"
+
+    >
+
+      Register Now
 
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        className="mt-14"
+
+        animate={{
+          x: [0, 6, 0],
+        }}
+
+        transition={{
+          duration: 1,
+          repeat: Infinity,
+        }}
+
       >
-        <div className="mx-auto max-w-3xl rounded-2xl border border-yellow-500/20 bg-white/5 p-5 backdrop-blur-2xl">
 
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        <ArrowRight size={24} />
 
-            <div className="text-center md:text-left">
-              <p className="text-xs uppercase tracking-[0.4em] text-yellow-400">
-                STAMPERS HACKATHON
-              </p>
-
-              <h3 className="mt-2 text-2xl font-bold text-white">
-                Registration Opens on <span className="text-yellow-400">22 July 2027</span>
-              </h3>
-
-              <p className="mt-2 text-gray-400">
-                Build • Innovate • Collaborate • Win
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-5 py-2">
-              <span className="h-3 w-3 animate-pulse rounded-full bg-emerald-400" />
-              <span className="text-sm font-semibold text-emerald-300">
-                Registration Coming Soon
-              </span>
-            </div>
-
-          </div>
-
-          {/* Progress Bar */}
-
-          <div className="mt-6 h-2 overflow-hidden rounded-full bg-white/10">
-            <motion.div
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-              className="h-full rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-300"
-            />
-          </div>
-
-        </div>
       </motion.div>
 
+    </motion.a>
+
+    {/* Bottom Text */}
+
+    <p className="mt-8 text-sm uppercase tracking-[0.35em] text-yellow-300">
+
+      Limited Seats • National Level • Innovation Starts Here
+
+    </p>
+
+  </div>
+
+</motion.div>
+{/* ===================== LIVE STATS ===================== */}
+
+<motion.div
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: .8 }}
+  className="mt-24"
+>
+
+  <div className="grid gap-6 md:grid-cols-3">
+
+    {/* Participants */}
+
+    <motion.div
+      whileHover={{
+        y:-8,
+        scale:1.02,
+      }}
+      className="group relative overflow-hidden rounded-[30px]
+      border border-white/10
+      bg-white/[0.04]
+      p-8
+      backdrop-blur-3xl"
+    >
+
+      <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-yellow-500/10 blur-3xl" />
+
+      <div className="relative z-10">
+
+        <p className="text-xs uppercase tracking-[0.35em] text-yellow-300">
+          EXPECTED
+        </p>
+
+        <h2 className="mt-4 text-6xl font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
+          500+
+        </h2>
+
+        <p className="mt-4 text-gray-300">
+          Participants from colleges across India.
+        </p>
+
+      </div>
+
+    </motion.div>
+
+    {/* Teams */}
+
+    <motion.div
+      whileHover={{
+        y:-8,
+        scale:1.02,
+      }}
+      className="group relative overflow-hidden rounded-[30px]
+      border border-white/10
+      bg-white/[0.04]
+      p-8
+      backdrop-blur-3xl"
+    >
+
+      <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-orange-500/10 blur-3xl" />
+
+      <div className="relative z-10">
+
+        <p className="text-xs uppercase tracking-[0.35em] text-yellow-300">
+          TEAMS
+        </p>
+
+        <h2 className="mt-4 text-6xl font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
+          120+
+        </h2>
+
+        <p className="mt-4 text-gray-300">
+          Brilliant teams competing for the championship.
+        </p>
+
+      </div>
+
+    </motion.div>
+
+    {/* Prize */}
+
+    <motion.div
+      whileHover={{
+        y:-8,
+        scale:1.02,
+      }}
+      className="group relative overflow-hidden rounded-[30px]
+      border border-white/10
+      bg-white/[0.04]
+      p-8
+      backdrop-blur-3xl"
+    >
+
+      <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-yellow-400/10 blur-3xl" />
+
+      <div className="relative z-10">
+
+        <p className="text-xs uppercase tracking-[0.35em] text-yellow-300">
+          PRIZE POOL
+        </p>
+
+        <h2 className="mt-4 text-6xl font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
+          ₹5K+
+        </h2>
+
+        <p className="mt-4 text-gray-300">
+          Cash prizes, certificates and exclusive goodies.
+        </p>
+
+      </div>
+
+    </motion.div>
+
+  </div>
+
+</motion.div>
     </section>
   );
 }
