@@ -86,7 +86,7 @@ export default function Footer() {
 
               <div className="flex items-center gap-3 text-gray-400">
                 <Mail className="text-yellow-400" size={18} />
-                <span>contact@stampers.in</span>
+                <span>suport@stampers.in</span>
               </div>
 
               <div className="flex items-center gap-3 text-gray-400">
@@ -149,7 +149,7 @@ export default function Footer() {
           </p>
 
           <p>
-            Built with ❤️ by the STAMPERS Team
+            Built with  by the STAMPERS Team
           </p>
 
         </div>
