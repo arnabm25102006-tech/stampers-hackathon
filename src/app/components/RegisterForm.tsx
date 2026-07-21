@@ -110,6 +110,17 @@ export default function RegisterForm() {
         github,
         transactionId,
       });
+      await fetch("/api/send-email", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    email,
+    leaderName,
+    teamName,
+  }),
+});
 
       alert("Registration Successful!");
 

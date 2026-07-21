@@ -50,12 +50,23 @@ export async function registerTeam(form: RegisterFormData) {
   console.log("STEP 3 - Registrations");
 
   // =========================
+  // GENERATE REGISTRATION ID
+  // Example: STP-2026-384521
+  // =========================
+  const registrationNumber =
+    "STP-" +
+    new Date().getFullYear() +
+    "-" +
+    Date.now().toString().slice(-6);
+
+  // =========================
   // REGISTRATIONS
   // =========================
   const { data: registration, error: registrationError } =
     await supabase
       .from("registrations")
       .insert({
+        registration_id: registrationNumber,
         team_id: team.id,
         hackathon_id: "578ec523-bbda-4720-9193-d77bc1dab088",
         registration_status: "Pending",
@@ -90,5 +101,28 @@ export async function registerTeam(form: RegisterFormData) {
 
   if (projectError) throw projectError;
 
-  return true;
+  // =========================
+  // SEND CONFIRMATION EMAIL
+  // =========================
+  try {
+    await fetch("/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: form.email,
+        leaderName: form.leaderName,
+        teamName: form.teamName,
+        registrationId: registrationNumber,
+      }),
+    });
+  } catch (err) {
+    console.error("Email sending failed:", err);
+  }
+
+  return {
+    success: true,
+    registrationId: registrationNumber,
+  };
 }
