@@ -132,25 +132,25 @@ export default function Countdown() {
     className="mt-12 flex flex-col items-center justify-center gap-5 sm:flex-row"
   >
 
-    <motion.a
-      whileHover={{
-        scale: 1.05,
-      }}
-      whileTap={{
-        scale: .95,
-      }}
-      href="#register"
-      className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 px-8 py-4 text-lg font-bold text-black shadow-[0_15px_50px_rgba(250,204,21,.35)]"
-    >
-      <Rocket size={22} />
+   <motion.a
+  whileHover={{
+    scale: 1.05,
+  }}
+  whileTap={{
+    scale: 0.95,
+  }}
+  href="/register"
+  className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 px-8 py-4 font-bold text-black shadow-xl shadow-yellow-500/40 transition"
+>
+  <Rocket size={22} />
 
-      Register Now
+  Register Now
 
-      <ArrowRight
-        size={20}
-        className="transition-transform duration-300 group-hover:translate-x-1"
-      />
-    </motion.a>
+  <ArrowRight
+    size={20}
+    className="transition-transform duration-300 group-hover:translate-x-1"
+  />
+</motion.a>
 
     <motion.a
       whileHover={{
