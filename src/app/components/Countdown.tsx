@@ -707,7 +707,7 @@ export default function Countdown() {
         </p>
 
         <h2 className="mt-4 text-6xl font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
-          500+
+          20+
         </h2>
 
         <p className="mt-4 text-gray-300">
@@ -741,7 +741,7 @@ export default function Countdown() {
         </p>
 
         <h2 className="mt-4 text-6xl font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
-          120+
+          20+
         </h2>
 
         <p className="mt-4 text-gray-300">
@@ -775,11 +775,11 @@ export default function Countdown() {
         </p>
 
         <h2 className="mt-4 text-6xl font-black bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
-          ₹5K+
+          GOODIESsss
         </h2>
 
         <p className="mt-4 text-gray-300">
-          Cash prizes, certificates and exclusive goodies.
+           certificates and exclusive goodies.
         </p>
 
       </div>
