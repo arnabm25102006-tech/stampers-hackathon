@@ -198,7 +198,7 @@ const [teamSize, setTeamSize] = useState("2");
         Registration
       </p>
       <p className="mt-1 text-lg font-bold text-yellow-400">
-        ₹39 / Member
+        ₹20 / Member
       </p>
     </div>
 
@@ -523,7 +523,7 @@ const [teamSize, setTeamSize] = useState("2");
           </span>
 
           <span className="font-bold text-yellow-400 text-lg">
-            ₹39 / Member
+            ₹20 / Member
           </span>
         </div>
 
@@ -590,7 +590,7 @@ const [teamSize, setTeamSize] = useState("2");
         <div className="rounded-3xl bg-white p-5 shadow-[0_0_40px_rgba(255,215,0,.15)]">
 
           <img
-            src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/payment/IMG-20260716-WA0058.jpg"
+            src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/payment/upi_1784665369614.png"
             alt="STAMPERS Payment QR"
             className="h-72 w-72 rounded-2xl object-contain"
           />
