@@ -1214,7 +1214,7 @@ Google Pay • PhonePe • Paytm • BHIM
 <div className="rounded-[30px] bg-white p-5 shadow-[0_0_50px_rgba(255,215,0,.2)]">
 
 <img
-src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/payment/upi_1784665369614.png"
+src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/payment/unnamed.png"
 alt="Payment QR"
 className="h-72 w-72 rounded-2xl object-contain"
 />
