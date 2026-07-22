@@ -188,11 +188,7 @@ export default function Countdown() {
           y: -10,
           scale: 1.03,
         }}
-        className="group relative overflow-hidden rounded-[32px]
-        border border-white/10
-        bg-white/[0.05]
-        backdrop-blur-3xl
-        p-8"
+       className="group relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.05] backdrop-blur-3xl p-8"
       >
 
         {/* Animated Border */}
