@@ -3,190 +3,221 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ArrowRight } from "lucide-react";
 
 const LOGO =
   "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/logo.png.jpeg";
 
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "#about" },
-  { name: "Tracks", href: "#tracks" },
-  { name: "Prizes", href: "#prizes" },
-  { name: "Timeline", href: "#timeline" },
-  { name: "Sponsors", href: "#sponsors" },
+const links = [
+  { title: "About", href: "#about" },
+  { title: "Tracks", href: "#tracks" },
+  { title: "Timeline", href: "#timeline" },
+  { title: "Prizes", href: "#prizes" },
+  { title: "Sponsors", href: "#sponsors" },
 ];
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [scroll, setScroll] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 30);
+    const handleScroll = () => {
+      setScroll(window.scrollY > 30);
     };
 
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <>
-      <motion.header
-        initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-black/70 backdrop-blur-2xl border-b border-white/10 shadow-2xl"
-            : "bg-transparent"
-        }`}
-      >
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scroll
+          ? "bg-black/90 border-b border-red-500/20 backdrop-blur-xl"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5">
 
-          {/* LOGO */}
+        {/* Logo */}
 
-          <Link
-            href="/"
-            className="group flex items-center gap-4"
+        <Link href="/" className="flex items-center gap-4">
+
+          <motion.div
+            whileHover={{
+              rotate: -8,
+              scale: 1.05,
+            }}
           >
-            <motion.div
-              whileHover={{
-                rotate: 5,
-                scale: 1.08,
-              }}
+            <Image
+              src={LOGO}
+              width={52}
+              height={52}
+              alt="STAMPERS"
+              className="rounded-2xl"
+              priority
+            />
+          </motion.div>
+
+          <div>
+
+            <h2 className="bg-gradient-to-r from-red-300 via-red-500 to-red-700 bg-clip-text text-2xl font-black text-transparent">
+              STAMPERS™
+            </h2>
+
+            <p className="text-[10px] uppercase tracking-[0.45em] text-gray-500">
+              NATIONAL HACKATHON
+            </p>
+
+          </div>
+
+        </Link>
+
+        {/* Desktop Menu */}
+
+        <nav className="hidden items-center gap-10 lg:flex">
+
+          {links.map((item) => (
+
+            <Link
+              key={item.title}
+              href={item.href}
+              className="group relative text-sm font-medium text-gray-300 transition hover:text-white"
             >
-              <Image
-                src={LOGO}
-                width={56}
-                height={56}
-                alt="STAMPERS"
-                className="rounded-xl"
-                priority
-              />
-            </motion.div>
+              {item.title}
 
-            <div>
+              <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-gradient-to-r from-red-500 to-red-700 transition-all duration-300 group-hover:w-full" />
 
-              <h1 className="text-2xl font-black tracking-wide bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
-                STAMPERS
-              </h1>
+            </Link>
 
-              <p className="text-xs tracking-[0.25em] uppercase text-gray-400">
-                Open Innovation
-              </p>
+          ))}
+
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+
+            <Link
+              href="/register"
+              className="flex items-center gap-2 rounded-full bg-gradient-to-r from-red-500 via-red-600 to-rose-700 px-6 py-3 font-bold text-white shadow-[0_15px_45px_rgba(239,68,68,.35)]"
+            >
+
+              Register
+
+              <ArrowRight size={18} />
+
+            </Link>
+
+          </motion.div>
+
+        </nav>
+
+        {/* Mobile Button */}
+
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex h-11 w-11 items-center justify-center rounded-xl border border-red-500/20 bg-[#111111] text-white lg:hidden"
+        >
+
+          {open ? <X size={22} /> : <Menu size={22} />}
+
+        </button>
+
+      </div>
+            {/* ================= MOBILE MENU ================= */}
+
+      <AnimatePresence>
+
+        {open && (
+
+          <motion.div
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{
+              duration: 0.35,
+              ease: "easeInOut",
+            }}
+            className="fixed inset-0 z-40 bg-[#050505] lg:hidden"
+          >
+
+            {/* Background Glow */}
+
+            <div className="absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-red-600/20 blur-[120px]" />
+
+            <div className="relative flex h-full flex-col px-8 pt-28 pb-8">
+
+              {/* Navigation */}
+
+              <div className="space-y-4">
+
+                {links.map((item, index) => (
+
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, x: 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      delay: index * 0.08,
+                    }}
+                  >
+
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-6 py-5 text-lg font-semibold text-white transition-all duration-300 hover:border-red-500/40 hover:bg-red-500/10"
+                    >
+
+                      {item.title}
+
+                      <ArrowRight
+                        size={20}
+                        className="text-red-400 transition-transform duration-300 group-hover:translate-x-2"
+                      />
+
+                    </Link>
+
+                  </motion.div>
+
+                ))}
+
+              </div>
+
+              {/* Register Button */}
+
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.5,
+                }}
+                className="mt-auto"
+              >
+
+                <Link
+                  href="/register"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-red-500 via-red-600 to-rose-700 py-5 text-lg font-bold text-white shadow-[0_20px_50px_rgba(239,68,68,.35)] transition hover:scale-[1.02]"
+                >
+
+                  Register Now
+
+                  <ArrowRight size={20} />
+
+                </Link>
+
+              </motion.div>
 
             </div>
-          </Link>
 
-          {/* Desktop Menu */}
+          </motion.div>
 
-          <nav className="hidden lg:flex items-center gap-8">
+        )}
 
-            {navLinks.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="relative text-gray-300 transition duration-300 hover:text-white after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-yellow-400 after:to-purple-500 after:transition-all hover:after:w-full"
-              >
-                {item.name}
-              </Link>
-            ))}
+      </AnimatePresence>
 
-            <motion.div
-              whileHover={{
-                scale: 1.05,
-              }}
-              whileTap={{
-                scale: 0.95,
-              }}
-            >
-              <Link
-                href="/register"
-                className="relative text-gray-300 transition duration-300 hover:text-white after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-yellow-400 after:to-purple-500 after:transition-all hover:after:w-full"
-              >
-                Register Now
-              </Link>
-            </motion.div>
-
-          </nav>
-
-          {/* Mobile Button */}
-
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden rounded-xl border border-white/10 p-2 text-white"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-
-        </div>
-      
-                {/* Mobile Menu */}
-
-          <AnimatePresence>
-            {mobileOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.25 }}
-                className="
-                lg:hidden
-                border-t
-                border-white/10
-                bg-black/95
-                backdrop-blur-2xl
-              "
-              >
-                <div className="flex flex-col gap-2 px-6 py-6">
-
-                  {navLinks.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="
-                      rounded-xl
-                      px-4
-                      py-3
-                      text-gray-300
-                      transition
-                      hover:bg-white/5
-                      hover:text-white
-                    "
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-
-                  <Link
-                    href="/register"
-                    onClick={() => setMobileOpen(false)}
-                    className="
-                    mt-3
-                    rounded-xl
-                    bg-gradient-to-r
-                    from-yellow-400
-                    via-yellow-500
-                    to-orange-500
-                    py-3
-                    text-center
-                    font-bold
-                    text-black
-                  "
-                  >
-                    Register Now
-                  </Link>
-
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-      </motion.header>
-    </>
+    </header>
   );
 }

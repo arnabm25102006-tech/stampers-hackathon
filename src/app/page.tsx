@@ -1,14 +1,12 @@
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-
-import EventDetails from "./components/EventDetails";
-import Timeline from "./components/Timeline";
-import About from "./components/About";
-import Tracks from "./components/Tracks";
-import Prizes from "./components/Prizes";
-import WhyParticipate from "./components/WhyParticipate";
-import FAQ from "./components/FAQ";
-import Leadership from "./components/Leadership";
+import Hero from "./components/Hero/Hero";
+import IndiaMap from "./components/IndiaMap/IndiaMap";
+import About from "./components/About/About";
+import Rewards from "./components/Rewards/Rewards";
+import Timeline from "./components/Timeline/Timeline";
+import Tracks from "./components/Tracks/Tracks";
+import Sponsors from "./components/Sponsors/Sponsors";
+import FAQ from "./components/FAQ/FAQ";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -16,17 +14,14 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
-      
-      <EventDetails />
-      <Timeline />
-      <About />
-      <Tracks />
-      <Prizes />
-      <Leadership />
-      <WhyParticipate />
-      <FAQ />
-      
-      <Footer />
+       <IndiaMap />
+       <About />
+        <Tracks />
+       <Rewards />
+        <Timeline />
+        <Sponsors />
+        <FAQ />
+        <Footer />
     </>
   );
 }
