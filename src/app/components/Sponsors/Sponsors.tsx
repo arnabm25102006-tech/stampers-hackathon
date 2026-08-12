@@ -2,134 +2,194 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Crown, Play } from "lucide-react";
 
-const sponsors = [
-  {
-    name: "Title Sponsor",
-    logo: "/images/sponsors/title.png",
-  },
-  {
-    name: "Technology Partner",
-    logo: "/images/sponsors/tech.png",
-  },
-  {
-    name: "Innovation Partner",
-    logo: "/images/sponsors/innovation.png",
-  },
-  {
-    name: "Community Partner",
-    logo: "/images/sponsors/community.png",
-  },
-  {
-    name: "Education Partner",
-    logo: "/images/sponsors/education.png",
-  },
-  {
-    name: "Media Partner",
-    logo: "/images/sponsors/media.png",
-  },
-];
+const baloonLogo =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/sponsors/ChatGPT%20Image%20Aug%2012%2C%202026%2C%2009_36_19%20PM%20%281%29.png";
 
 export default function Sponsors() {
   return (
     <section
       id="sponsors"
-      className="relative overflow-hidden bg-[#050507] py-32"
+      className="relative overflow-hidden bg-[#050505] py-28 text-white sm:py-32 lg:py-40"
     >
-      {/* Background Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,53,94,.08),transparent_70%)]" />
+      {/* Background */}
 
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="stampers-grid pointer-events-none absolute inset-0 opacity-[0.07]" />
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
 
         {/* Heading */}
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center"
+          transition={{ duration: 0.7 }}
+          className="mx-auto max-w-4xl text-center"
         >
-          <span className="rounded-full border border-red-500/30 bg-red-500/10 px-6 py-2 text-sm font-semibold tracking-[0.35em] text-red-300">
-            SPONSORS & PARTNERS
-          </span>
+          <div className="mb-6 flex items-center justify-center gap-4">
+            <span className="h-px w-12 bg-yellow-500" />
 
-          <h2 className="mt-8 text-5xl font-black text-white md:text-7xl">
-            POWERING
-            <span className="block bg-gradient-to-r from-red-400 via-red-500 to-rose-500 bg-clip-text text-transparent">
-              INNOVATION
+            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-yellow-400">
+              Official Partners
+            </span>
+
+            <span className="h-px w-12 bg-yellow-500" />
+          </div>
+
+          <h2 className="text-4xl font-black tracking-[-0.05em] sm:text-5xl md:text-6xl lg:text-7xl">
+            Powering
+            <span className="stampers-gold-text block">
+              STAMPERS 2K26.
             </span>
           </h2>
 
-          <p className="mx-auto mt-8 max-w-3xl text-xl leading-9 text-gray-400">
-            STAMPERS National Hackathon 2K26 is supported by
-            organizations committed to empowering student innovation.
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-gray-500 sm:text-base sm:leading-8">
+            Proudly supported by BALOON, helping bring the STAMPERS
+            National Hackathon 2K26 experience to students and innovators.
           </p>
         </motion.div>
 
-        {/* Sponsors Grid */}
+        {/* Main Partner Frame */}
 
-        <div className="mt-24 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          initial={{ opacity: 0, y: 35, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mx-auto mt-16 max-w-6xl"
+        >
+          <div className="relative rounded-[32px] border border-yellow-500/20 bg-[#080808] p-[1px] shadow-2xl">
 
-          {sponsors.map((sponsor, index) => (
+            <div className="relative overflow-hidden rounded-[31px] border border-white/[0.07]">
 
-            <motion.div
-              key={sponsor.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{
-                y: -8,
-                scale: 1.02,
-              }}
-              className="group rounded-3xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur-xl transition-all duration-300 hover:border-red-500/40"
-            >
+              {/* Header */}
 
-              <div className="flex h-40 items-center justify-center rounded-2xl bg-black/20">
+              <div className="flex items-center justify-between border-b border-white/[0.07] px-6 py-5 sm:px-10">
 
-                <Image
-                  src={sponsor.logo}
-                  alt={sponsor.name}
-                  width={180}
-                  height={80}
-                  className="object-contain opacity-80 transition duration-300 group-hover:opacity-100"
-                />
+                <div className="flex items-center gap-3">
+
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-yellow-500/20 bg-yellow-500/[0.05]">
+                    <Crown
+                      size={17}
+                      className="text-yellow-400"
+                    />
+                  </div>
+
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.28em] text-yellow-400">
+                      Title Partner
+                    </p>
+
+                    <p className="mt-1 text-[10px] text-gray-600">
+                      BALOON
+                    </p>
+                  </div>
+
+                </div>
+
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-700">
+                  STAMPERS™
+                </span>
 
               </div>
 
-              <h3 className="mt-8 text-center text-xl font-bold text-white">
-                {sponsor.name}
-              </h3>
+              {/* Logo Area */}
 
-            </motion.div>
+              <div className="flex min-h-[360px] items-center justify-center bg-black px-8 py-12 sm:min-h-[500px] sm:px-16 sm:py-16">
 
-          ))}
+                <div className="relative flex h-full w-full items-center justify-center">
 
-        </div>
+                  <Image
+                    src={baloonLogo}
+                    alt="BALOON - Title Partner and Streaming Partner"
+                    width={900}
+                    height={450}
+                    priority
+                    className="block h-auto max-h-[300px] w-auto max-w-[92%] object-contain sm:max-h-[400px] sm:max-w-[85%] lg:max-h-[450px] lg:max-w-[80%]"
+                  />
 
-        {/* CTA */}
+                </div>
+
+              </div>
+
+              {/* Bottom Partner Information */}
+
+              <div className="border-t border-white/[0.07] px-6 py-6 sm:px-10">
+
+                <div className="grid gap-5 sm:grid-cols-2">
+
+                  {/* Title Partner */}
+
+                  <div className="flex items-center gap-4">
+
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-yellow-500/15 bg-yellow-500/[0.04]">
+                      <Crown
+                        size={16}
+                        className="text-yellow-400"
+                      />
+                    </div>
+
+                    <div>
+                      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-600">
+                        Title Partner
+                      </p>
+
+                      <p className="mt-1 text-base font-black text-white">
+                        BALOON
+                      </p>
+                    </div>
+
+                  </div>
+
+                  {/* Streaming Partner */}
+
+                  <div className="flex items-center gap-4 sm:justify-end">
+
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-yellow-500/15 bg-yellow-500/[0.04]">
+                      <Play
+                        size={15}
+                        className="ml-0.5 text-yellow-400"
+                      />
+                    </div>
+
+                    <div className="sm:text-right">
+                      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-600">
+                        Streaming Partner
+                      </p>
+
+                      <p className="mt-1 text-base font-black text-white">
+                        BALOON
+                      </p>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Partner Statement */}
 
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-24 rounded-3xl border border-red-500/20 bg-white/[0.04] p-12 text-center backdrop-blur-xl"
+          transition={{ duration: 0.6 }}
+          className="mx-auto mt-7 max-w-4xl text-center"
         >
-          <h3 className="text-4xl font-black text-white">
-            Become a Sponsor
-          </h3>
-
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-400">
-            Join us in supporting the next generation of innovators and
-            showcase your brand to talented students from across India.
+          <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-gray-700">
+            In partnership with
           </p>
 
-          <a
-            href="mailto:support@stampers.in"
-            className="mt-10 inline-flex rounded-full bg-gradient-to-r from-red-500 to-rose-600 px-8 py-4 text-lg font-bold text-white transition hover:scale-105"
-          >
-            Partner With Us
-          </a>
+          <p className="mt-2 text-xl font-black tracking-tight text-yellow-400">
+            BALOON
+          </p>
 
         </motion.div>
 

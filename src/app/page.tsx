@@ -8,12 +8,14 @@ import Tracks from "./components/Tracks/Tracks";
 import Sponsors from "./components/Sponsors/Sponsors";
 import FAQ from "./components/FAQ/FAQ";
 import Footer from "./components/Footer";
+import FeaturedCompetitions from "./components/FeaturedCompetitions";
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <Hero />
+      <FeaturedCompetitions />
        <IndiaMap />
        <About />
         <Tracks />

@@ -1,222 +1,166 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowRight } from "lucide-react";
-
-const LOGO =
-  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/logo.png.jpeg";
+import { motion } from "framer-motion";
+import {
+  Menu,
+  X,
+  Search,
+  UserRound,
+} from "lucide-react";
+import { useState } from "react";
 
 const links = [
-  { title: "About", href: "#about" },
-  { title: "Tracks", href: "#tracks" },
-  { title: "Timeline", href: "#timeline" },
-  { title: "Prizes", href: "#prizes" },
-  { title: "Sponsors", href: "#sponsors" },
+  {
+    name: "Explore",
+    href: "/explore",
+  },
+  {
+    name: "Competitions",
+    href: "/explore",
+  },
+  {
+    name: "About",
+    href: "#about",
+  },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scroll, setScroll] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScroll(window.scrollY > 30);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scroll
-          ? "bg-black/90 border-b border-red-500/20 backdrop-blur-xl"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5">
+    <header className="fixed inset-x-0 top-0 z-50">
 
-        {/* Logo */}
+      <div className="mx-auto max-w-7xl px-4 pt-4 md:px-6">
 
-        <Link href="/" className="flex items-center gap-4">
+        <nav className="flex h-[72px] items-center justify-between rounded-2xl border border-white/10 bg-black/70 px-5 shadow-2xl backdrop-blur-2xl md:px-7">
 
-          <motion.div
-            whileHover={{
-              rotate: -8,
-              scale: 1.05,
-            }}
+          {/* Logo */}
+
+          <Link
+            href="/"
+            className="group flex items-center gap-3"
           >
-            <Image
-              src={LOGO}
-              width={52}
-              height={52}
-              alt="STAMPERS"
-              className="rounded-2xl"
-              priority
-            />
-          </motion.div>
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-yellow-500/30 bg-black">
 
-          <div>
+              <span className="text-xl font-black text-yellow-400">
+                S
+              </span>
 
-            <h2 className="bg-gradient-to-r from-red-300 via-red-500 to-red-700 bg-clip-text text-2xl font-black text-transparent">
-              STAMPERS™
-            </h2>
+            </div>
 
-            <p className="text-[10px] uppercase tracking-[0.45em] text-gray-500">
-              NATIONAL HACKATHON
-            </p>
+            <div className="leading-none">
+
+              <div className="text-xl font-black tracking-tight text-white md:text-2xl">
+                STAMPERS<span className="text-yellow-400">™</span>
+              </div>
+
+              <div className="mt-1 text-[9px] font-semibold tracking-[0.35em] text-gray-500">
+                COMPETITION PLATFORM
+              </div>
+
+            </div>
+          </Link>
+
+          {/* Desktop Navigation */}
+
+          <div className="hidden items-center gap-8 md:flex">
+
+            {links.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-sm font-medium text-gray-300 transition hover:text-yellow-400"
+              >
+                {link.name}
+              </Link>
+            ))}
 
           </div>
 
-        </Link>
+          {/* Desktop Actions */}
 
-        {/* Desktop Menu */}
-
-        <nav className="hidden items-center gap-10 lg:flex">
-
-          {links.map((item) => (
+          <div className="hidden items-center gap-3 md:flex">
 
             <Link
-              key={item.title}
-              href={item.href}
-              className="group relative text-sm font-medium text-gray-300 transition hover:text-white"
+              href="/explore"
+              className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 transition hover:border-yellow-500/30 hover:text-yellow-400"
             >
-              {item.title}
-
-              <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-gradient-to-r from-red-500 to-red-700 transition-all duration-300 group-hover:w-full" />
-
+              <Search size={19} />
             </Link>
 
-          ))}
+            <Link
+              href="/account/login"
+              className="flex items-center gap-2 rounded-xl border border-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-yellow-500/40 hover:text-yellow-400"
+            >
+              <UserRound size={17} />
+              Sign In
+            </Link>
 
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            <Link
+              href="/account/register"
+              className="rounded-xl bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-600 px-5 py-3 text-sm font-bold text-black shadow-lg shadow-yellow-500/10 transition hover:scale-[1.03]"
+            >
+              Create Account
+            </Link>
+
+          </div>
+
+          {/* Mobile Button */}
+
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white md:hidden"
           >
-
-            <Link
-              href="/register"
-              className="flex items-center gap-2 rounded-full bg-gradient-to-r from-red-500 via-red-600 to-rose-700 px-6 py-3 font-bold text-white shadow-[0_15px_45px_rgba(239,68,68,.35)]"
-            >
-
-              Register
-
-              <ArrowRight size={18} />
-
-            </Link>
-
-          </motion.div>
+            {open ? <X size={21} /> : <Menu size={21} />}
+          </button>
 
         </nav>
 
-        {/* Mobile Button */}
-
-        <button
-          onClick={() => setOpen(!open)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl border border-red-500/20 bg-[#111111] text-white lg:hidden"
-        >
-
-          {open ? <X size={22} /> : <Menu size={22} />}
-
-        </button>
-
-      </div>
-            {/* ================= MOBILE MENU ================= */}
-
-      <AnimatePresence>
+        {/* Mobile Menu */}
 
         {open && (
-
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{
-              duration: 0.35,
-              ease: "easeInOut",
-            }}
-            className="fixed inset-0 z-40 bg-[#050505] lg:hidden"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-2 rounded-2xl border border-white/10 bg-[#080808]/95 p-4 shadow-2xl backdrop-blur-2xl md:hidden"
           >
 
-            {/* Background Glow */}
+            <div className="space-y-1">
 
-            <div className="absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-red-600/20 blur-[120px]" />
-
-            <div className="relative flex h-full flex-col px-8 pt-28 pb-8">
-
-              {/* Navigation */}
-
-              <div className="space-y-4">
-
-                {links.map((item, index) => (
-
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      delay: index * 0.08,
-                    }}
-                  >
-
-                    <Link
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-6 py-5 text-lg font-semibold text-white transition-all duration-300 hover:border-red-500/40 hover:bg-red-500/10"
-                    >
-
-                      {item.title}
-
-                      <ArrowRight
-                        size={20}
-                        className="text-red-400 transition-transform duration-300 group-hover:translate-x-2"
-                      />
-
-                    </Link>
-
-                  </motion.div>
-
-                ))}
-
-              </div>
-
-              {/* Register Button */}
-
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: 0.5,
-                }}
-                className="mt-auto"
-              >
-
+              {links.map((link) => (
                 <Link
-                  href="/register"
+                  key={link.name}
+                  href={link.href}
                   onClick={() => setOpen(false)}
-                  className="flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-red-500 via-red-600 to-rose-700 py-5 text-lg font-bold text-white shadow-[0_20px_50px_rgba(239,68,68,.35)] transition hover:scale-[1.02]"
+                  className="block rounded-xl px-4 py-3 text-gray-300 transition hover:bg-yellow-500/10 hover:text-yellow-400"
                 >
-
-                  Register Now
-
-                  <ArrowRight size={20} />
-
+                  {link.name}
                 </Link>
+              ))}
 
-              </motion.div>
+              <Link
+                href="/account/login"
+                onClick={() => setOpen(false)}
+                className="block rounded-xl px-4 py-3 text-gray-300 transition hover:bg-yellow-500/10 hover:text-yellow-400"
+              >
+                Sign In
+              </Link>
+
+              <Link
+                href="/account/register"
+                onClick={() => setOpen(false)}
+                className="mt-2 block rounded-xl bg-gradient-to-r from-yellow-300 to-yellow-600 px-4 py-3 text-center font-bold text-black"
+              >
+                Create Account
+              </Link>
 
             </div>
 
           </motion.div>
-
         )}
 
-      </AnimatePresence>
+      </div>
 
     </header>
   );

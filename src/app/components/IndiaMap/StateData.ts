@@ -14,7 +14,7 @@ export const states: State[] = [
     colleges: 18,
     x: 77,
     y: 47,
-    color: "#ff355e",
+    color: "#FACC15",
   },
 
   {
@@ -23,7 +23,7 @@ export const states: State[] = [
     colleges: 11,
     x: 72,
     y: 57,
-    color: "#ff355e",
+    color: "#FACC15",
   },
 
   {
@@ -32,7 +32,7 @@ export const states: State[] = [
     colleges: 13,
     x: 58,
     y: 63,
-    color: "#ff355e",
+    color: "#FACC15",
   },
 
   {
@@ -41,7 +41,7 @@ export const states: State[] = [
     colleges: 21,
     x: 56,
     y: 86,
-    color: "#ff355e",
+    color: "#FACC15",
   },
 
   {
@@ -50,7 +50,7 @@ export const states: State[] = [
     colleges: 16,
     x: 49,
     y: 73,
-    color: "#ff355e",
+    color: "#FACC15",
   },
 
   {
@@ -59,7 +59,7 @@ export const states: State[] = [
     colleges: 22,
     x: 43,
     y: 54,
-    color: "#ff355e",
+    color: "#FACC15",
   },
 
   {
@@ -68,7 +68,7 @@ export const states: State[] = [
     colleges: 14,
     x: 28,
     y: 42,
-    color: "#ff355e",
+    color: "#FACC15",
   },
 
   {
@@ -77,6 +77,6 @@ export const states: State[] = [
     colleges: 10,
     x: 44,
     y: 25,
-    color: "#ff355e",
+    color: "#FACC15",
   },
 ];

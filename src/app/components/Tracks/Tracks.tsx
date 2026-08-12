@@ -8,6 +8,9 @@ import {
   GraduationCap,
   Landmark,
   Globe,
+  CalendarDays,
+  Clock3,
+  Trophy,
 } from "lucide-react";
 
 const tracks = [
@@ -53,74 +56,175 @@ export default function Tracks() {
   return (
     <section
       id="tracks"
-      className="relative overflow-hidden bg-[#050507] py-32"
+      className="relative overflow-hidden bg-[#050505] py-24 text-white sm:py-28 lg:py-32"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,53,94,.08),transparent_70%)]" />
+      {/* Background */}
 
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="stampers-grid pointer-events-none absolute inset-0 opacity-[0.13]" />
 
-        {/* Heading */}
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-yellow-500/[0.035] blur-[170px]" />
+
+      <div className="pointer-events-none absolute bottom-0 right-[-150px] h-[350px] w-[350px] rounded-full bg-yellow-500/[0.025] blur-[140px]" />
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-7 lg:px-8">
+
+        {/* Header */}
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center"
+          transition={{ duration: 0.7 }}
+          className="mx-auto max-w-4xl text-center"
         >
-          <span className="rounded-full border border-red-500/30 bg-red-500/10 px-6 py-2 text-sm font-semibold tracking-[0.35em] text-red-300">
-            HACKATHON TRACKS
-          </span>
+          <div className="mb-5 flex items-center justify-center gap-3">
 
-          <h2 className="mt-8 text-5xl font-black text-white md:text-7xl">
-            BUILD FOR THE
-            <span className="block bg-gradient-to-r from-red-400 via-red-500 to-rose-500 bg-clip-text text-transparent">
-              FUTURE
+            <span className="h-px w-9 bg-yellow-500" />
+
+            <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-yellow-400 sm:text-xs">
+              National Hackathon 2K26
+            </span>
+
+            <span className="h-px w-9 bg-yellow-500" />
+
+          </div>
+
+          <h2 className="text-4xl font-black leading-[1] tracking-[-0.045em] sm:text-5xl md:text-6xl lg:text-7xl">
+            Build for the
+            <span className="stampers-gold-text block">
+              future.
             </span>
           </h2>
 
-          <p className="mx-auto mt-8 max-w-3xl text-xl leading-9 text-gray-400">
-            Choose your domain, solve meaningful challenges, and create
-            innovative solutions that make a real impact.
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-gray-500 sm:text-base sm:leading-8">
+            Choose your domain, solve meaningful challenges and create
+            innovative solutions that make a real-world impact.
           </p>
         </motion.div>
 
+        {/* Important Dates */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 0.7,
+            delay: 0.15,
+          }}
+          className="mt-14 grid gap-4 md:grid-cols-3"
+        >
+
+          {/* Registration */}
+
+          <DateCard
+            icon={<Clock3 size={20} />}
+            label="Registration"
+            date="12 August 2026"
+            description="Registration Closed"
+            closed
+          />
+
+          {/* Hackathon */}
+
+          <DateCard
+            icon={<CalendarDays size={20} />}
+            label="Hackathon"
+            date="14–15 August 2026"
+            description="National Hackathon 2K26"
+          />
+
+          {/* Results */}
+
+          <DateCard
+            icon={<Trophy size={20} />}
+            label="Results"
+            date="29 August 2026"
+            description="Winners Announcement"
+          />
+
+        </motion.div>
+
+        {/* Divider */}
+
+        <div className="my-20 flex items-center gap-5">
+
+          <div className="h-px flex-1 bg-white/10" />
+
+          <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-gray-600">
+            Innovation Tracks
+          </span>
+
+          <div className="h-px flex-1 bg-white/10" />
+
+        </div>
+
         {/* Track Cards */}
 
-        <div className="mt-24 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
 
           {tracks.map((track, index) => {
+
             const Icon = track.icon;
 
             return (
               <motion.div
                 key={track.title}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{
-                  y: -10,
-                  scale: 1.02,
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.08,
                 }}
-                className="group rounded-3xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur-xl transition-all duration-300 hover:border-red-500/40"
+                whileHover={{ y: -6 }}
+                className="group relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.018] p-6 transition-all duration-300 hover:border-yellow-500/20 hover:bg-yellow-500/[0.025] sm:p-7"
               >
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-red-500 to-rose-600 shadow-lg shadow-red-500/20">
 
-                  <Icon className="h-8 w-8 text-white" />
+                {/* Glow */}
+
+                <div className="pointer-events-none absolute -right-20 -top-20 h-40 w-40 rounded-full bg-yellow-500/[0.07] blur-[70px] opacity-0 transition duration-500 group-hover:opacity-100" />
+
+                <div className="relative">
+
+                  {/* Icon */}
+
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-yellow-500/15 bg-yellow-500/[0.05]">
+
+                    <Icon
+                      size={21}
+                      className="text-yellow-400"
+                    />
+
+                  </div>
+
+                  {/* Title */}
+
+                  <h3 className="mt-7 text-xl font-bold tracking-tight sm:text-2xl">
+                    {track.title}
+                  </h3>
+
+                  {/* Description */}
+
+                  <p className="mt-3 text-sm leading-7 text-gray-500">
+                    {track.description}
+                  </p>
+
+                  {/* Bottom */}
+
+                  <div className="mt-7 flex items-center justify-between border-t border-white/10 pt-5">
+
+                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-700">
+                      OPEN INNOVATION
+                    </span>
+
+                    <span className="text-[9px] font-bold uppercase tracking-wider text-yellow-400">
+                      Track
+                    </span>
+
+                  </div>
 
                 </div>
-
-                <h3 className="mt-8 text-2xl font-bold text-white">
-                  {track.title}
-                </h3>
-
-                <p className="mt-5 leading-8 text-gray-400">
-                  {track.description}
-                </p>
-
-                <button className="mt-8 rounded-full border border-red-500/30 px-5 py-2 text-sm font-semibold text-red-300 transition hover:bg-red-500/10">
-                  Explore Track
-                </button>
 
               </motion.div>
             );
@@ -130,5 +234,71 @@ export default function Tracks() {
 
       </div>
     </section>
+  );
+}
+
+/* =========================================
+   DATE CARD
+========================================= */
+
+function DateCard({
+  icon,
+  label,
+  date,
+  description,
+  closed = false,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  date: string;
+  description: string;
+  closed?: boolean;
+}) {
+  return (
+    <div
+      className={`relative overflow-hidden rounded-[24px] border p-5 sm:p-6 ${
+        closed
+          ? "border-white/10 bg-white/[0.018]"
+          : "border-yellow-500/15 bg-yellow-500/[0.025]"
+      }`}
+    >
+
+      <div className="flex items-start justify-between">
+
+        <div
+          className={`flex h-11 w-11 items-center justify-center rounded-xl border ${
+            closed
+              ? "border-white/10 bg-white/[0.03] text-gray-500"
+              : "border-yellow-500/15 bg-yellow-500/[0.05] text-yellow-400"
+          }`}
+        >
+          {icon}
+        </div>
+
+        {closed && (
+          <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-gray-500">
+            Closed
+          </span>
+        )}
+
+      </div>
+
+      <p className="mt-5 text-[9px] font-bold uppercase tracking-[0.22em] text-gray-600">
+        {label}
+      </p>
+
+      <p
+        className={`mt-2 text-xl font-black tracking-tight ${
+          closed ? "text-gray-400" : "text-white"
+        }`}
+      >
+        {date}
+      </p>
+
+      <p className="mt-1 text-xs text-gray-600">
+        {description}
+      </p>
+
+    </div>
   );
 }

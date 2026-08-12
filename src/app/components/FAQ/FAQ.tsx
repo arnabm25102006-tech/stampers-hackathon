@@ -1,39 +1,53 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const faqs = [
   {
     question: "Who can participate?",
     answer:
-      "Students from any recognized college or university in India can participate individually or as a team.",
+      "The STAMPERS National Hackathon 2K26 is open to school students, college students, and recent graduates with a passion for innovation.",
   },
   {
-    question: "What is the registration fee?",
-    answer:
-      "The registration fee is ₹20 per participant. Every team member must register separately.",
+    question: "What is the team size?",
+    answer: "Each team can have 2–4 members.",
   },
   {
-    question: "How many members are allowed in one team?",
+    question: "When does registration close?",
     answer:
-      "A team can have 2–4 members.",
+      "Registration for the STAMPERS National Hackathon 2K26 closes on 12 August 2026.",
   },
   {
-    question: "Will everyone receive a certificate?",
+    question: "When is the hackathon?",
     answer:
-      "Yes. Every eligible participant receives an official participation certificate after successful submission.",
+      "The STAMPERS National Hackathon 2K26 will take place from 14–15 August 2026.",
+  },
+  {
+    question: "What is the theme?",
+    answer:
+      "The theme is Open Innovation. Teams can build innovative solutions that address real-world problems.",
+  },
+  {
+    question: "Is there a registration fee?",
+    answer:
+      "Yes. The registration fee is ₹20 per participant.",
+  },
+  {
+    question: "Will participants receive certificates?",
+    answer:
+      "Yes. Eligible participants will receive certificates. Winners will also receive special recognition and event goodies.",
+  },
+  {
+    question: "When will the results be announced?",
+    answer:
+      "The results of the STAMPERS National Hackathon 2K26 will be announced on 29 August 2026.",
   },
   {
     question: "What do winners receive?",
     answer:
-      "Champion Trophy, Official STAMPERS T-Shirt, Hard Copy Certificate, Winner Card and Exclusive Goodies.",
-  },
-  {
-    question: "Is the hackathon online?",
-    answer:
-      "Yes. Registration, submission and evaluation are conducted online.",
+      "Winners receive the Champion Trophy, official STAMPERS merchandise, hard copy certificates, exclusive goodies, and national recognition.",
   },
 ];
 
@@ -43,70 +57,173 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="relative overflow-hidden bg-[#050507] py-32"
+      className="relative overflow-hidden bg-[#030303] py-28 text-white sm:py-32 lg:py-40"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,53,94,.08),transparent_70%)]" />
+      {/* ========================================
+          PREMIUM BACKGROUND
+      ======================================== */}
 
-      <div className="relative mx-auto max-w-5xl px-6">
+      <div className="stampers-grid pointer-events-none absolute inset-0 opacity-[0.055]" />
 
-        <div className="text-center">
+      {/* Main champagne glow */}
+      <div className="pointer-events-none absolute left-1/2 top-[-180px] h-[600px] w-[850px] -translate-x-1/2 rounded-full bg-[#D4AF37]/[0.045] blur-[180px]" />
 
-          <span className="rounded-full border border-red-500/30 bg-red-500/10 px-6 py-2 text-sm font-semibold tracking-[0.35em] text-red-300">
-            FAQ
-          </span>
+      {/* Secondary warm glow */}
+      <div className="pointer-events-none absolute -right-40 top-1/2 h-[400px] w-[400px] rounded-full bg-[#B8860B]/[0.025] blur-[150px]" />
 
-          <h2 className="mt-8 text-5xl font-black text-white md:text-7xl">
-            FREQUENTLY
-            <span className="block bg-gradient-to-r from-red-400 via-red-500 to-rose-500 bg-clip-text text-transparent">
-              ASKED QUESTIONS
+      {/* Bottom glow */}
+      <div className="pointer-events-none absolute bottom-[-200px] left-1/2 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-[#D4AF37]/[0.025] blur-[160px]" />
+
+      <div className="relative mx-auto max-w-4xl px-5 sm:px-8">
+
+        {/* ========================================
+            HEADING
+        ======================================== */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-14 text-center"
+        >
+          {/* Section label */}
+
+          <div className="mb-6 flex items-center justify-center gap-4">
+            <span className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]" />
+
+            <span className="text-[10px] font-bold uppercase tracking-[0.45em] text-[#D4AF37]">
+              Support
+            </span>
+
+            <span className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]" />
+          </div>
+
+          {/* Heading */}
+
+          <h2 className="text-4xl font-black tracking-[-0.05em] sm:text-5xl md:text-6xl">
+            Frequently Asked
+            <span className="block bg-gradient-to-r from-[#F5D76E] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
+              Questions.
             </span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-400">
-            Everything you need to know before participating in STAMPERS™ National Hackathon 2K26.
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-zinc-500 sm:text-base sm:leading-8">
+            Everything you need to know about participating in the
+            STAMPERS National Hackathon 2K26.
           </p>
+        </motion.div>
 
-        </div>
+        {/* ========================================
+            FAQ LIST
+        ======================================== */}
 
-        <div className="mt-20 space-y-5">
-
+        <div className="space-y-3">
           {faqs.map((faq, index) => {
-
-            const isOpen = open === index;
+            const active = open === index;
 
             return (
-
               <motion.div
-                key={faq.question}
-                layout
-                className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl"
+                key={`${faq.question}-${index}`}
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.04,
+                }}
+                className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${
+                  active
+                    ? "border-[#D4AF37]/40 bg-gradient-to-r from-[#D4AF37]/[0.055] via-[#D4AF37]/[0.025] to-transparent shadow-[0_10px_40px_rgba(212,175,55,0.035)]"
+                    : "border-white/[0.07] bg-white/[0.012] hover:border-[#D4AF37]/20 hover:bg-[#D4AF37]/[0.018]"
+                }`}
               >
 
-                <button
-                  onClick={() =>
-                    setOpen(isOpen ? null : index)
-                  }
-                  className="flex w-full items-center justify-between p-7 text-left"
-                >
+                {/* Active left accent */}
 
-                  <h3 className="text-xl font-bold text-white">
-                    {faq.question}
-                  </h3>
+                <motion.div
+                  initial={false}
+                  animate={{
+                    opacity: active ? 1 : 0,
+                  }}
+                  className="absolute bottom-0 left-0 top-0 w-[2px] bg-gradient-to-b from-[#F5D76E] via-[#D4AF37] to-transparent"
+                />
+
+                {/* Question */}
+
+                <button
+                  type="button"
+                  onClick={() => setOpen(active ? null : index)}
+                  className="flex w-full items-center justify-between gap-6 px-5 py-5 text-left sm:px-6 sm:py-6"
+                  aria-expanded={active}
+                >
+                  <div className="flex min-w-0 items-center gap-4">
+
+                    {/* Number */}
+
+                    <span
+                      className={`shrink-0 font-mono text-[9px] font-bold tracking-[0.2em] transition-colors ${
+                        active
+                          ? "text-[#D4AF37]"
+                          : "text-zinc-700"
+                      }`}
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+
+                    {/* Question */}
+
+                    <span
+                      className={`text-sm font-bold transition-colors sm:text-base ${
+                        active
+                          ? "text-white"
+                          : "text-zinc-300 group-hover:text-white"
+                      }`}
+                    >
+                      {faq.question}
+                    </span>
+
+                  </div>
+
+                  {/* Arrow */}
 
                   <motion.div
                     animate={{
-                      rotate: isOpen ? 180 : 0,
+                      rotate: active ? 180 : 0,
                     }}
+                    transition={{
+                      duration: 0.25,
+                    }}
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-all ${
+                      active
+                        ? "border-[#D4AF37]/30 bg-[#D4AF37]/[0.08]"
+                        : "border-white/[0.07] bg-white/[0.02] group-hover:border-[#D4AF37]/20"
+                    }`}
                   >
-                    <ChevronDown className="text-red-400" />
+                    <ChevronDown
+                      size={16}
+                      className={`transition-colors ${
+                        active
+                          ? "text-[#D4AF37]"
+                          : "text-zinc-600 group-hover:text-[#D4AF37]"
+                      }`}
+                    />
                   </motion.div>
 
                 </button>
 
-                <AnimatePresence>
+                {/* Answer */}
 
-                  {isOpen && (
-
+                <AnimatePresence initial={false}>
+                  {active && (
                     <motion.div
                       initial={{
                         height: 0,
@@ -120,24 +237,72 @@ export default function FAQ() {
                         height: 0,
                         opacity: 0,
                       }}
+                      transition={{
+                        duration: 0.3,
+                      }}
+                      className="overflow-hidden"
                     >
+                      <div className="border-t border-[#D4AF37]/10 px-5 pb-6 pt-5 pl-[52px] sm:px-6 sm:pl-[58px]">
 
-                      <p className="px-7 pb-7 leading-8 text-gray-400">
-                        {faq.answer}
-                      </p>
+                        <p className="max-w-2xl text-sm leading-7 text-zinc-500">
+                          {faq.answer}
+                        </p>
 
+                      </div>
                     </motion.div>
-
                   )}
-
                 </AnimatePresence>
 
               </motion.div>
-
             );
           })}
-
         </div>
+
+        {/* ========================================
+            SUPPORT CARD
+        ======================================== */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+          }}
+          transition={{
+            duration: 0.6,
+          }}
+          className="relative mt-10 overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.045] via-white/[0.01] to-transparent px-6 py-8 text-center"
+        >
+
+          {/* Card glow */}
+
+          <div className="pointer-events-none absolute left-1/2 top-0 h-32 w-64 -translate-x-1/2 rounded-full bg-[#D4AF37]/[0.08] blur-[70px]" />
+
+          <div className="relative">
+
+            <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#D4AF37]">
+              Need assistance?
+            </p>
+
+            <p className="mt-3 text-sm text-zinc-500">
+              Our support team is here to help you.
+            </p>
+
+            <a
+              href="mailto:support@stampers.in"
+              className="mt-4 inline-flex text-sm font-bold text-[#E6C85C] transition hover:text-[#F5D76E]"
+            >
+              support@stampers.in
+            </a>
+
+          </div>
+        </motion.div>
 
       </div>
     </section>

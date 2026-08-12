@@ -1,37 +1,84 @@
 @import "tailwindcss";
 
 :root {
-  --heading: var(--font-heading);
-  --body: var(--font-body);
-
-  --background: #070707;
+  --background: #050505;
   --foreground: #f5f5f5;
 
-  --primary: #FF355E;
-  --secondary: #B11226;
-  --accent: #FF8FA3;
-  --muted: #9CA3AF;
+  --stampers-black: #050505;
+  --stampers-black-soft: #0b0b0b;
+
+  --stampers-gold: #d4a72c;
+  --stampers-gold-bright: #f5c542;
+  --stampers-gold-light: #ffe7a0;
+
+  --stampers-white: #f5f5f5;
+  --stampers-muted: #929292;
+  --stampers-border: rgba(212, 167, 44, 0.18);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  background: var(--stampers-black);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--body);
+  margin: 0;
+  background: var(--stampers-black);
+  color: var(--stampers-white);
+  font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-.hero-title {
-  font-family: var(--heading);
+::selection {
+  background: var(--stampers-gold);
+  color: #000;
 }
 
-::selection {
-  background: var(--primary);
-  color: white;
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+.stampers-gold-text {
+  background: linear-gradient(
+    90deg,
+    #ffe7a0 0%,
+    #f5c542 45%,
+    #d4a72c 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.stampers-gold-border {
+  border: 1px solid rgba(212, 167, 44, 0.25);
+}
+
+.stampers-grid {
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+  background-size: 70px 70px;
+}
+
+.stampers-glow {
+  box-shadow:
+    0 0 40px rgba(212, 167, 44, 0.12),
+    0 0 100px rgba(212, 167, 44, 0.05);
 }

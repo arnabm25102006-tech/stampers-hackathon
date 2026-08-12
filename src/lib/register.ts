@@ -2,14 +2,40 @@ import { supabase } from "@/lib/supabase";
 import { RegisterFormData } from "@/types/register";
 
 export async function registerTeam(form: RegisterFormData) {
+  console.log("STEP 0 - Checking logged-in user");
+
+  // =========================
+  // GET LOGGED-IN STAMPERS USER
+  // =========================
+
+  const {
+    data: { user: authUser },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  console.log("AUTH USER:", authUser);
+  console.log("AUTH ERROR:", authError);
+
+  if (authError) {
+    throw authError;
+  }
+
+  if (!authUser) {
+    throw new Error(
+      "You must be logged in to register for this competition."
+    );
+  }
+
   console.log("STEP 1 - Users");
 
   // =========================
   // USERS
   // =========================
+
   const { data: user, error: userError } = await supabase
     .from("users")
     .insert({
+      auth_user_id: authUser.id,
       full_name: form.leaderName,
       email: form.email,
       phone: form.phone,
@@ -24,13 +50,16 @@ export async function registerTeam(form: RegisterFormData) {
   console.log("USER:", user);
   console.log("USER ERROR:", userError);
 
-  if (userError) throw userError;
+  if (userError) {
+    throw userError;
+  }
 
   console.log("STEP 2 - Teams");
 
   // =========================
   // TEAMS
   // =========================
+
   const { data: team, error: teamError } = await supabase
     .from("teams")
     .insert({
@@ -45,7 +74,9 @@ export async function registerTeam(form: RegisterFormData) {
   console.log("TEAM:", team);
   console.log("TEAM ERROR:", teamError);
 
-  if (teamError) throw teamError;
+  if (teamError) {
+    throw teamError;
+  }
 
   console.log("STEP 3 - Registrations");
 
@@ -53,6 +84,7 @@ export async function registerTeam(form: RegisterFormData) {
   // GENERATE REGISTRATION ID
   // Example: STP-2026-384521
   // =========================
+
   const registrationNumber =
     "STP-" +
     new Date().getFullYear() +
@@ -62,29 +94,36 @@ export async function registerTeam(form: RegisterFormData) {
   // =========================
   // REGISTRATIONS
   // =========================
-  const { data: registration, error: registrationError } =
-    await supabase
-      .from("registrations")
-      .insert({
-        registration_id: registrationNumber,
-        team_id: team.id,
-        hackathon_id: "578ec523-bbda-4720-9193-d77bc1dab088",
-        registration_status: "Pending",
-        payment_status: "Pending",
-      })
-      .select()
-      .single();
+
+  const {
+    data: registration,
+    error: registrationError,
+  } = await supabase
+    .from("registrations")
+    .insert({
+      registration_id: registrationNumber,
+      team_id: team.id,
+      hackathon_id: "578ec523-bbda-4720-9193-d77bc1dab088",
+      registration_status: "Pending",
+      payment_status: "Pending",
+      user_id: authUser.id,
+    })
+    .select()
+    .single();
 
   console.log("REGISTRATION:", registration);
   console.log("REGISTRATION ERROR:", registrationError);
 
-  if (registrationError) throw registrationError;
+  if (registrationError) {
+    throw registrationError;
+  }
 
   console.log("STEP 4 - Project");
 
   // =========================
   // PROJECT SUBMISSION
   // =========================
+
   const { error: projectError } = await supabase
     .from("project_submissions")
     .insert({
@@ -99,11 +138,16 @@ export async function registerTeam(form: RegisterFormData) {
 
   console.log("PROJECT ERROR:", projectError);
 
-  if (projectError) throw projectError;
+  if (projectError) {
+    throw projectError;
+  }
+
+  console.log("STEP 5 - Confirmation Email");
 
   // =========================
   // SEND CONFIRMATION EMAIL
   // =========================
+
   try {
     await fetch("/api/send-email", {
       method: "POST",
@@ -120,6 +164,8 @@ export async function registerTeam(form: RegisterFormData) {
   } catch (err) {
     console.error("Email sending failed:", err);
   }
+
+  console.log("REGISTRATION COMPLETE");
 
   return {
     success: true,
