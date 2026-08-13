@@ -16,9 +16,13 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
-import type { ElementType } from "react";
+import type { LucideIcon } from "lucide-react";
 
-const highlights = [
+const highlights: {
+  icon: LucideIcon;
+  title: string;
+  value: string;
+}[] = [
   {
     icon: CalendarDays,
     title: "Hackathon Date",
@@ -71,7 +75,6 @@ export default function HackathonPage() {
       ===================================================== */}
 
       <header className="relative z-20 border-b border-white/[0.07] bg-black/30 backdrop-blur-xl">
-
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-7 md:px-8">
 
           <Link
@@ -91,7 +94,6 @@ export default function HackathonPage() {
           </span>
 
         </div>
-
       </header>
 
       {/* =====================================================
@@ -204,7 +206,6 @@ export default function HackathonPage() {
           </div>
 
         </div>
-
       </section>
 
       {/* =====================================================
@@ -445,11 +446,8 @@ export default function HackathonPage() {
                 rel="noopener noreferrer"
                 className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-[#FFD000]/20 bg-[#FFD000]/[0.04] py-3.5 text-sm font-black text-[#FFD000] transition-all duration-300 hover:bg-[#FFD000] hover:text-black hover:shadow-[0_10px_35px_rgba(255,208,0,0.15)]"
               >
-
                 <FileText size={17} />
-
                 View Brochure
-
               </a>
 
             </motion.div>
@@ -525,7 +523,7 @@ function InfoRow({
   label,
   value,
 }: {
-  icon: ElementType;
+  icon: LucideIcon;
   label: string;
   value: string;
 }) {
