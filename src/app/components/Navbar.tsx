@@ -1,23 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  Menu,
-  X,
-  Search,
-  UserRound,
-} from "lucide-react";
-import { useState } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const links = [
   {
-    name: "Explore",
-    href: "/explore",
+    name: "AXION",
+    href: "#axion",
   },
   {
-    name: "Competitions",
-    href: "/explore",
+    name: "Events",
+    href: "#events",
+  },
+  {
+    name: "Management",
+    href: "#management",
   },
   {
     name: "About",
@@ -28,140 +26,204 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
+  /*
+  |--------------------------------------------------------------------------
+  | Prevent background scrolling when mobile menu is open
+  |--------------------------------------------------------------------------
+  */
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <>
+      <header className="stamper-nav sticky top-0 z-[100] w-full">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
+          <nav className="flex h-16 items-center justify-between lg:h-[72px]">
+            {/* =====================================================
+                BRAND
+            ===================================================== */}
+<Link
+  href="/"
+  onClick={() => setOpen(false)}
+  className="group relative z-[110] flex h-10 w-[150px] items-center overflow-hidden"
+  aria-label="STAMPERS home"
+>
+  <img
+    src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png"
+    alt="STAMPERS"
+    className="block h-auto w-[150px] max-w-none object-contain"
+  />
 
-      <div className="mx-auto max-w-7xl px-4 pt-4 md:px-6">
+  <span className="absolute right-0 top-0 text-[7px] font-bold text-[#D39A24]">
+    
+  </span>
+</Link>
+            {/* =====================================================
+                DESKTOP NAVIGATION
+            ===================================================== */}
 
-        <nav className="flex h-[72px] items-center justify-between rounded-2xl border border-white/10 bg-black/70 px-5 shadow-2xl backdrop-blur-2xl md:px-7">
-
-          {/* Logo */}
-
-          <Link
-            href="/"
-            className="group flex items-center gap-3"
-          >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-yellow-500/30 bg-black">
-
-              <span className="text-xl font-black text-yellow-400">
-                S
-              </span>
-
-            </div>
-
-            <div className="leading-none">
-
-              <div className="text-xl font-black tracking-tight text-white md:text-2xl">
-                STAMPERS<span className="text-yellow-400">™</span>
-              </div>
-
-              <div className="mt-1 text-[9px] font-semibold tracking-[0.35em] text-gray-500">
-                COMPETITION PLATFORM
-              </div>
-
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-
-          <div className="hidden items-center gap-8 md:flex">
-
-            {links.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-sm font-medium text-gray-300 transition hover:text-yellow-400"
-              >
-                {link.name}
-              </Link>
-            ))}
-
-          </div>
-
-          {/* Desktop Actions */}
-
-          <div className="hidden items-center gap-3 md:flex">
-
-            <Link
-              href="/explore"
-              className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-gray-300 transition hover:border-yellow-500/30 hover:text-yellow-400"
-            >
-              <Search size={19} />
-            </Link>
-
-            <Link
-              href="/account/login"
-              className="flex items-center gap-2 rounded-xl border border-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-yellow-500/40 hover:text-yellow-400"
-            >
-              <UserRound size={17} />
-              Sign In
-            </Link>
-
-            <Link
-              href="/account/register"
-              className="rounded-xl bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-600 px-5 py-3 text-sm font-bold text-black shadow-lg shadow-yellow-500/10 transition hover:scale-[1.03]"
-            >
-              Create Account
-            </Link>
-
-          </div>
-
-          {/* Mobile Button */}
-
-          <button
-            onClick={() => setOpen(!open)}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white md:hidden"
-          >
-            {open ? <X size={21} /> : <Menu size={21} />}
-          </button>
-
-        </nav>
-
-        {/* Mobile Menu */}
-
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-2 rounded-2xl border border-white/10 bg-[#080808]/95 p-4 shadow-2xl backdrop-blur-2xl md:hidden"
-          >
-
-            <div className="space-y-1">
-
+            <div className="hidden items-center gap-8 lg:flex">
               {links.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl px-4 py-3 text-gray-300 transition hover:bg-yellow-500/10 hover:text-yellow-400"
+                  className="stamper-nav-link"
                 >
                   {link.name}
                 </Link>
               ))}
+            </div>
+
+            {/* =====================================================
+                DESKTOP ACTIONS
+            ===================================================== */}
+
+            <div className="hidden items-center gap-2 md:flex">
+              <Link
+                href="/explore"
+                className="px-3 py-2 text-[12px] font-bold uppercase tracking-[0.08em] text-black/55 transition hover:text-black"
+              >
+                Explore
+              </Link>
 
               <Link
                 href="/account/login"
-                onClick={() => setOpen(false)}
-                className="block rounded-xl px-4 py-3 text-gray-300 transition hover:bg-yellow-500/10 hover:text-yellow-400"
+                className="px-3 py-2 text-[12px] font-bold uppercase tracking-[0.08em] text-black/55 transition hover:text-black"
               >
-                Sign In
+                Sign in
               </Link>
 
               <Link
                 href="/account/register"
-                onClick={() => setOpen(false)}
-                className="mt-2 block rounded-xl bg-gradient-to-r from-yellow-300 to-yellow-600 px-4 py-3 text-center font-bold text-black"
+                className="stamper-button stamper-button-primary ml-1"
               >
-                Create Account
+                Join STAMPERS
+                <ArrowUpRight size={14} strokeWidth={2} />
               </Link>
-
             </div>
 
-          </motion.div>
-        )}
+            {/* =====================================================
+                MOBILE MENU BUTTON
+            ===================================================== */}
 
+            <button
+              type="button"
+              aria-label={
+                open ? "Close navigation menu" : "Open navigation menu"
+              }
+              aria-expanded={open}
+              onClick={() => setOpen((current) => !current)}
+              className="relative z-[110] flex h-10 w-10 items-center justify-center border border-black/10 bg-white transition duration-200 hover:border-black active:scale-95 lg:hidden"
+            >
+              {open ? (
+                <X size={19} strokeWidth={1.7} />
+              ) : (
+                <Menu size={19} strokeWidth={1.7} />
+              )}
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      {/* =========================================================
+          MOBILE FULL-SCREEN MENU
+      ========================================================== */}
+
+      <div
+        className={`fixed inset-0 z-[90] bg-[#080808] text-white transition-all duration-500 lg:hidden ${
+          open
+            ? "visible opacity-100"
+            : "pointer-events-none invisible opacity-0"
+        }`}
+      >
+        <div className="flex h-full flex-col px-5 pb-8 pt-28 sm:px-8">
+          {/* Menu label */}
+
+          <div className="flex items-center gap-3">
+            <span className="h-[2px] w-8 bg-[#D39A24]" />
+
+            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-white/35">
+              STAMPERS / Navigation
+            </span>
+          </div>
+
+          {/* Main navigation */}
+
+          <div className="mt-10 flex flex-col">
+            {links.map((link, index) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className={`group flex items-center justify-between border-b border-white/10 py-5 ${
+                  index === 0 ? "border-t" : ""
+                }`}
+              >
+                <span className="font-[Space_Grotesk] text-4xl font-bold uppercase tracking-[-0.05em] text-white/90 transition duration-200 group-hover:text-[#D39A24]">
+                  {link.name}
+                </span>
+
+                <ArrowUpRight
+                  size={20}
+                  strokeWidth={1.5}
+                  className="text-white/25 transition duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[#D39A24]"
+                />
+              </Link>
+            ))}
+          </div>
+
+          {/* Bottom actions */}
+
+          <div className="mt-auto">
+            <div className="grid grid-cols-2 gap-3">
+              <Link
+                href="/explore"
+                onClick={() => setOpen(false)}
+                className="flex h-12 items-center justify-center border border-white/15 text-[10px] font-black uppercase tracking-[0.14em] text-white/70 transition hover:border-white/40 hover:text-white"
+              >
+                Explore
+              </Link>
+
+              <Link
+                href="/account/login"
+                onClick={() => setOpen(false)}
+                className="flex h-12 items-center justify-center border border-white/15 text-[10px] font-black uppercase tracking-[0.14em] text-white/70 transition hover:border-white/40 hover:text-white"
+              >
+                Sign in
+              </Link>
+            </div>
+
+            <Link
+              href="/account/register"
+              onClick={() => setOpen(false)}
+              className="mt-3 flex h-12 items-center justify-center gap-2 bg-white text-[10px] font-black uppercase tracking-[0.14em] text-black transition hover:bg-[#D39A24] hover:text-white"
+            >
+              Join STAMPERS
+              <ArrowUpRight size={14} />
+            </Link>
+
+            <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-5">
+              <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/25">
+                Think. Build. Compete.
+              </span>
+
+              <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#D39A24]/70">
+                © 2026 STAMPERS
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-
-    </header>
+    </>
   );
 }

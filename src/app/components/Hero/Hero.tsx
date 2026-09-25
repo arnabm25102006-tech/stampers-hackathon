@@ -2,710 +2,412 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
-  Search,
-  Trophy,
-  Users,
-  Sparkles,
-  CalendarDays,
-  MapPin,
+  ChevronLeft,
   ChevronRight,
-  Zap,
-  Cpu,
-  Gamepad2,
-  Code2,
+  ExternalLink,
 } from "lucide-react";
 
+type Slide = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  accent: string;
+  date: string;
+  status: string;
+  image: string;
+  logo?: string;
+  primaryText: string;
+  primaryHref: string;
+  secondaryText?: string;
+  secondaryHref?: string;
+};
+
+/*
+|--------------------------------------------------------------------------
+| HERO CONTENT
+|--------------------------------------------------------------------------
+| Keep image/logo values empty until you upload the actual assets.
+|
+| Later these can be connected to your STAMPERS/Unstop content system.
+|--------------------------------------------------------------------------
+*/
+
+const slides: Slide[] = [
+  {
+    id: "axion",
+    eyebrow: "UPCOMING EVENT",
+    title: "AXION",
+    subtitle: "National Hackathon",
+    description:
+      "A national-level innovation challenge by STAMPERS, powered by Unstop, built around the theme Open Innovation.",
+    accent: "OPEN INNOVATION",
+    date: "11 OCTOBER 2026",
+    status: "REGISTRATION CLOSED · 10 OCTOBER",
+    image: "",
+    logo: "",
+    primaryText: "Explore AXION",
+    primaryHref: "#axion",
+    secondaryText: "Powered by Unstop",
+    secondaryHref: "https://unstop.com/",
+  },
+  {
+    id: "national-hackathon",
+    eyebrow: "PREVIOUS HIGHLIGHT",
+    title: "STAMPERS",
+    subtitle: "National Hackathon 2026",
+    description:
+      "Our national hackathon brought together students and teams from universities across India and beyond.",
+    accent: "369 TEAMS · 713 CANDIDATES",
+    date: "14 — 15 AUGUST 2026",
+    status: "EVENT COMPLETED",
+    image: "",
+    logo: "",
+    primaryText: "View Highlights",
+    primaryHref: "#previous-hackathon",
+  },
+];
+
 export default function Hero() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const currentSlide = slides[activeSlide];
+
+  const nextSlide = () => {
+    setActiveSlide((current) => (current + 1) % slides.length);
+  };
+
+  const previousSlide = () => {
+    setActiveSlide(
+      (current) => (current - 1 + slides.length) % slides.length
+    );
+  };
+
+  const goToSlide = (index: number) => {
+    setActiveSlide(index);
+  };
+
+  /*
+  |--------------------------------------------------------------------------
+  | AUTOPLAY
+  |--------------------------------------------------------------------------
+  */
+
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = window.setInterval(() => {
+      nextSlide();
+    }, 7000);
+
+    return () => window.clearInterval(interval);
+  }, [isPaused]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | KEYBOARD NAVIGATION
+  |--------------------------------------------------------------------------
+  */
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
+        nextSlide();
+      }
+
+      if (event.key === "ArrowLeft") {
+        previousSlide();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  /*
+  |--------------------------------------------------------------------------
+  | MOBILE SWIPE
+  |--------------------------------------------------------------------------
+  */
+
+  const handleTouchStart = (event: React.TouchEvent) => {
+    touchStartX.current = event.changedTouches[0].clientX;
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent) => {
+    touchEndX.current = event.changedTouches[0].clientX;
+
+    if (
+      touchStartX.current === null ||
+      touchEndX.current === null
+    ) {
+      return;
+    }
+
+    const distance =
+      touchStartX.current - touchEndX.current;
+
+    const minimumSwipeDistance = 50;
+
+    if (Math.abs(distance) < minimumSwipeDistance) {
+      return;
+    }
+
+    if (distance > 0) {
+      nextSlide();
+    } else {
+      previousSlide();
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#010101] text-white">
+    <section
+      className="relative min-h-[calc(100svh-64px)] overflow-hidden bg-[#050505] text-white lg:min-h-[calc(100svh-72px)]"
+      aria-label="STAMPERS featured events"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* =========================================================
+          SLIDE BACKGROUNDS
+      ========================================================== */}
+
+      {slides.map((slide, index) => (
+        <div
+          key={slide.id}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            activeSlide === index
+              ? "opacity-100"
+              : "pointer-events-none opacity-0"
+          }`}
+        >
+          {slide.image ? (
+            <>
+              <Image
+                src={slide.image}
+                alt=""
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover"
+              />
+
+              <div className="absolute inset-0 bg-black/55" />
+            </>
+          ) : (
+            <div
+              className={`absolute inset-0 ${
+                index === 0
+                  ? "bg-[radial-gradient(circle_at_75%_25%,rgba(37,99,235,0.32),transparent_28%),radial-gradient(circle_at_20%_70%,rgba(211,154,36,0.08),transparent_25%),linear-gradient(135deg,#030303,#101827,#050505)]"
+                  : "bg-[radial-gradient(circle_at_75%_25%,rgba(211,154,36,0.16),transparent_28%),linear-gradient(135deg,#050505,#171717,#050505)]"
+              }`}
+            />
+          )}
+        </div>
+      ))}
 
       {/* =========================================================
-          TECH BACKGROUND
-      ========================================================= */}
+          CINEMATIC OVERLAY
+      ========================================================== */}
 
-      {/* Cyber Grid */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.11]">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,208,0,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(255,208,0,0.055)_1px,transparent_1px)] bg-[size:55px_55px]" />
-      </div>
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.68)_35%,rgba(0,0,0,0.24)_75%,rgba(0,0,0,0.42)_100%)]" />
 
-      {/* Fine Grid */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.035]">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:11px_11px]" />
-      </div>
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.88)_0%,transparent_58%)]" />
 
-      {/* Main Golden Energy */}
-      <motion.div
-        animate={{
-          scale: [1, 1.08, 1],
-          opacity: [0.16, 0.26, 0.16],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute left-1/2 top-[-380px] h-[950px] w-[950px] -translate-x-1/2 rounded-full bg-[#FFD000] blur-[240px]"
-      />
+      {/* Subtle grain */}
 
-      {/* Inner Light */}
-      <motion.div
-        animate={{
-          scale: [1, 1.12, 1],
-          opacity: [0.08, 0.16, 0.08],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute left-1/2 top-[-100px] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[#FFF3A3] blur-[170px]"
-      />
-
-      {/* Left Tech Glow */}
-      <motion.div
-        animate={{
-          x: [-40, 30, -40],
-          opacity: [0.04, 0.1, 0.04],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute -left-[300px] top-[30%] h-[650px] w-[650px] rounded-full bg-[#D9A900] blur-[220px]"
-      />
-
-      {/* Right Tech Glow */}
-      <motion.div
-        animate={{
-          y: [-30, 30, -30],
-          opacity: [0.05, 0.12, 0.05],
-        }}
-        transition={{
-          duration: 9,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute -right-[300px] top-[25%] h-[700px] w-[700px] rounded-full bg-[#FFD000] blur-[230px]"
-      />
-
-      {/* Gold Atmosphere */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,208,0,0.14),transparent_46%)]" />
-
-      {/* Dark Vignette */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.82)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.045] [background-image:radial-gradient(#ffffff_0.7px,transparent_0.7px)] [background-size:5px_5px]" />
 
       {/* =========================================================
-          SCAN LINES
-      ========================================================= */}
-
-      <motion.div
-        animate={{
-          y: ["-10%", "110%"],
-          opacity: [0, 0.5, 0],
-        }}
-        transition={{
-          duration: 7,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        className="pointer-events-none absolute left-0 right-0 top-0 z-[1] h-px bg-gradient-to-r from-transparent via-[#FFD000] to-transparent shadow-[0_0_18px_rgba(255,208,0,0.8)]"
-      />
-
-      <motion.div
-        animate={{
-          opacity: [0.15, 0.5, 0.15],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute left-1/2 top-[80px] z-[2] h-px w-[75%] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#FFD000] to-transparent shadow-[0_0_25px_rgba(255,208,0,0.7)]"
-      />
-
-      {/* =========================================================
-          CONTENT
-      ========================================================= */}
-
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl items-center px-5 pb-20 pt-32 sm:px-7 lg:px-8">
-
-        <div className="grid w-full items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
-
-          {/* =====================================================
-              LEFT CONTENT
-          ===================================================== */}
-
-          <div>
-
-            {/* Platform Badge */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.7,
-              }}
-              className="inline-flex items-center gap-3 rounded-full border border-[#FFD000]/30 bg-[#FFD000]/[0.055] px-4 py-2.5 shadow-[0_0_30px_rgba(255,208,0,0.05)] backdrop-blur-xl"
-            >
-
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FFD000] opacity-50" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#FFD000]" />
-              </span>
-
-              <Cpu
-                size={14}
-                className="text-[#FFD000]"
-              />
-
-              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-[#FFE45C]">
-                India's Tech Competition Platform
-              </span>
-
-            </motion.div>
-
-            {/* Main Heading */}
-
-            <motion.h1
-              initial={{
-                opacity: 0,
-                y: 35,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.8,
-                delay: 0.1,
-              }}
-              className="mt-8 max-w-5xl text-5xl font-black leading-[0.88] tracking-[-0.065em] sm:text-6xl md:text-7xl lg:text-[92px]"
-            >
-
-              <span className="text-white">
-                DISCOVER.
-              </span>
-
-              <br />
-
-              <span className="bg-gradient-to-r from-[#FFF8B0] via-[#FFD000] to-[#FF9F00] bg-clip-text text-transparent">
-                COMPETE.
-              </span>
-
-              <br />
-
-              <span className="text-white">
-                CREATE.
-              </span>
-
-            </motion.h1>
-
-            {/* Gold Accent */}
-
-            <motion.div
-              initial={{
-                width: 0,
-              }}
-              animate={{
-                width: 150,
-              }}
-              transition={{
-                duration: 0.8,
-                delay: 0.4,
-              }}
-              className="mt-8 h-[3px] rounded-full bg-gradient-to-r from-[#FFF3A3] via-[#FFD000] to-transparent shadow-[0_0_20px_rgba(255,208,0,0.8)]"
-            />
-
-            {/* Description */}
-
-            <motion.p
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.25,
-              }}
-              className="mt-7 max-w-2xl text-sm leading-7 text-[#918C80] md:text-lg md:leading-8"
-            >
-              One platform for hackathons, coding contests, gaming
-              championships, photography challenges, innovation events
-              and the next generation of technology competitions.
-            </motion.p>
-
-            {/* Search */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.35,
-              }}
-              className="mt-9 max-w-2xl"
-            >
-
-              <Link
-                href="/explore"
-                className="group flex h-16 items-center gap-4 rounded-2xl border border-white/[0.10] bg-black/75 px-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-all duration-300 hover:border-[#FFD000]/40 hover:shadow-[0_20px_70px_rgba(255,208,0,0.06)]"
-              >
-
-                <Search
-                  size={20}
-                  className="text-gray-600 transition-colors group-hover:text-[#FFD000]"
-                />
-
-                <span className="flex-1 text-left text-sm text-gray-500 md:text-base">
-                  Search hackathons, gaming events, challenges...
-                </span>
-
-                <div className="hidden items-center gap-2 rounded-xl bg-gradient-to-r from-[#FFF3A3] via-[#FFD000] to-[#FFB000] px-5 py-3 text-sm font-black text-black shadow-[0_5px_25px_rgba(255,208,0,0.15)] sm:flex">
-                  Explore
-                  <ArrowRight size={16} />
-                </div>
-
-                <ArrowRight
-                  size={19}
-                  className="text-gray-500 sm:hidden"
-                />
-
-              </Link>
-
-            </motion.div>
-
-            {/* Buttons */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.45,
-              }}
-              className="mt-6 flex flex-col gap-3 sm:flex-row"
-            >
-
-              <Link
-                href="/explore"
-                className="group inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#FFF3A3] via-[#FFD000] to-[#FFAE00] px-7 py-4 font-black text-black shadow-[0_15px_50px_rgba(255,208,0,0.18)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(255,208,0,0.3)]"
-              >
-                Explore Competitions
-
-                <ArrowRight
-                  size={19}
-                  className="transition-transform group-hover:translate-x-1"
-                />
-              </Link>
-
-              <Link
-                href="/account/register"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.025] px-7 py-4 font-bold text-white backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-[#FFD000]/40 hover:bg-[#FFD000]/[0.04]"
-              >
-                Create Account
-
-                <ChevronRight
-                  size={18}
-                  className="text-[#FFD000]"
-                />
-              </Link>
-
-            </motion.div>
-
-            {/* Stats */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.55,
-              }}
-              className="mt-12 grid grid-cols-3 border-t border-white/[0.08] pt-7"
-            >
-
-              <HeroStat
-                icon={<Trophy size={16} />}
-                value="Multiple"
-                label="Competition Types"
-              />
-
-              <HeroStat
-                icon={<Users size={16} />}
-                value="Student"
-                label="Focused Platform"
-              />
-
-              <HeroStat
-                icon={<Zap size={16} />}
-                value="Tech"
-                label="Innovation Driven"
-              />
-
-            </motion.div>
-
-          </div>
-
-          {/* =====================================================
-              RIGHT SIDE — LOGO / TECH FEATURE
-          ===================================================== */}
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: 45,
-            }}
-            animate={{
-              opacity: 1,
-              x: 0,
-            }}
-            transition={{
-              duration: 0.9,
-              delay: 0.2,
-            }}
-            className="relative"
-          >
-
-            {/* Outer Glow */}
-
-            <div className="pointer-events-none absolute -inset-20 rounded-full bg-[#FFD000]/[0.08] blur-[130px]" />
-
-            {/* Tech Rings */}
-
-            <motion.div
-              animate={{
-                rotate: 360,
-              }}
-              transition={{
-                duration: 28,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[570px] w-[570px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#FFD000]/[0.08]"
-            />
-
-            <motion.div
-              animate={{
-                rotate: -360,
-              }}
-              transition={{
-                duration: 38,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[460px] w-[460px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#FFD000]/[0.10]"
-            />
-
-            {/* Main Card */}
-
-            <div className="relative overflow-hidden rounded-[34px] border border-[#FFD000]/25 bg-[#030303]/90 shadow-[0_40px_120px_rgba(0,0,0,0.85)] backdrop-blur-2xl">
-
-              {/* Card Top */}
-
-              <div className="flex items-center justify-between border-b border-white/[0.07] px-6 py-4">
-
-                <div className="flex items-center gap-2">
-
-                  <span className="h-2 w-2 rounded-full bg-red-500" />
-                  <span className="h-2 w-2 rounded-full bg-yellow-500" />
-                  <span className="h-2 w-2 rounded-full bg-green-500" />
-
-                </div>
-
-                <span className="text-[8px] font-black uppercase tracking-[0.3em] text-gray-600">
-                  STAMPERS // SYSTEM
-                </span>
-
-                <Code2
-                  size={15}
-                  className="text-[#FFD000]"
-                />
-
-              </div>
-
-              {/* Visual Area */}
-
-              <div className="relative flex h-[390px] items-center justify-center overflow-hidden">
-
-                {/* Background Grid */}
-
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,208,0,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,208,0,0.035)_1px,transparent_1px)] bg-[size:35px_35px]" />
-
-                {/* Top Gradient */}
-
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FFD000]/[0.12] via-transparent to-transparent" />
-
-                {/* Center Glow */}
-
-                <motion.div
-                  animate={{
-                    scale: [1, 1.15, 1],
-                    opacity: [0.25, 0.4, 0.25],
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute h-[250px] w-[250px] rounded-full bg-[#FFD000]/30 blur-[100px]"
-                />
-
-                {/* Uploaded Logo/Image */}
-
-                <motion.div
-                  animate={{
-                    y: [-7, 7, -7],
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="relative z-10 flex h-[250px] w-[80%] max-w-[430px] items-center justify-center"
-                >
-
-                  <Image
-                    src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png"
-                    alt="STAMPERS"
-                    width={700}
-                    height={350}
-                    priority
-                    className="h-auto max-h-[240px] w-full object-contain drop-shadow-[0_0_35px_rgba(255,208,0,0.45)]"
-                  />
-
-                </motion.div>
-
-                {/* Corner HUD */}
-
-                <div className="absolute left-6 top-6 border-l border-t border-[#FFD000]/40 px-3 py-3">
-                  <p className="text-[8px] font-black uppercase tracking-[0.25em] text-[#FFD000]">
-                    SYSTEM ONLINE
-                  </p>
-                </div>
-
-                <div className="absolute bottom-6 right-6 border-b border-r border-[#FFD000]/40 px-3 py-3 text-right">
-                  <p className="text-[8px] font-black uppercase tracking-[0.25em] text-gray-600">
-                    NEXT GENERATION
-                  </p>
-
-                  <p className="mt-1 text-[9px] font-bold text-[#FFD000]">
-                    INNOVATION PLATFORM
-                  </p>
-                </div>
-
-                {/* Scan Line */}
-
-                <motion.div
-                  animate={{
-                    y: [-180, 180],
-                    opacity: [0, 0.7, 0],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className="pointer-events-none absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FFD000] to-transparent shadow-[0_0_15px_rgba(255,208,0,0.8)]"
-                />
-
-              </div>
-
-              {/* Feature Information */}
-
-              <div className="border-t border-white/[0.07] p-7">
-
-                <div className="flex items-center justify-between gap-4">
-
-                  <div>
-
-                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#FFD000]">
-                      Featured Event
-                    </p>
-
-                    <h2 className="mt-2 text-3xl font-black leading-none text-white">
-                      National
-                      <br />
-                      Hackathon
-                    </h2>
-
-                  </div>
-
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#FFD000]/20 bg-[#FFD000]/[0.05]">
-                    <Gamepad2
-                      size={22}
-                      className="text-[#FFD000]"
-                    />
-                  </div>
-
-                </div>
-
-                <p className="mt-5 text-sm leading-6 text-[#817D73]">
-                  Build innovative solutions, collaborate with talented
-                  participants and compete on a national technology platform.
-                </p>
-
-                {/* Event Details */}
-
-                <div className="mt-7 grid grid-cols-2 gap-3">
-
-                  <EventInfo
-                    icon={<CalendarDays size={15} />}
-                    label="Event"
-                    value="14–15 Aug 2026"
-                  />
-
-                  <EventInfo
-                    icon={<MapPin size={15} />}
-                    label="Format"
-                    value="Online"
-                  />
-
-                </div>
-
-                {/* Registration */}
-
-                <div className="mt-3 rounded-xl border border-red-500/15 bg-red-500/[0.035] px-4 py-3">
-
-                  <p className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-600">
-                    Registration
-                  </p>
-
-                  <p className="mt-1 text-xs font-bold text-white">
-                    Closed · 12 August 2026
-                  </p>
-
-                </div>
-
-                {/* CTA */}
-
-                <Link
-                  href="/explore"
-                  className="group mt-5 flex w-full items-center justify-between rounded-xl border border-[#FFD000]/25 bg-[#FFD000]/[0.04] px-5 py-4 text-sm font-black text-[#FFD000] transition-all duration-300 hover:bg-[#FFD000] hover:text-black hover:shadow-[0_10px_35px_rgba(255,208,0,0.18)]"
-                >
-
-                  View Competition
-
-                  <ChevronRight
-                    size={18}
-                    className="transition-transform group-hover:translate-x-1"
-                  />
-
-                </Link>
-
-              </div>
-
-            </div>
-
-          </motion.div>
-
+          TOP EVENT STATUS
+      ========================================================== */}
+
+      <div className="absolute left-5 right-5 top-7 z-20 flex items-center justify-between sm:left-8 sm:right-8 lg:left-12 lg:right-12">
+        <div className="flex items-center gap-3">
+          <span className="h-[2px] w-8 bg-[#D39A24] sm:w-10" />
+
+          <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-white/50 sm:text-[10px]">
+            {currentSlide.eyebrow}
+          </span>
         </div>
 
-      </div>
-
-      {/* Bottom Fade */}
-
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#010101] to-transparent" />
-
-    </section>
-  );
-}
-
-/* =========================================================
-   HERO STAT
-========================================================= */
-
-function HeroStat({
-  icon,
-  value,
-  label,
-}: {
-  icon: React.ReactNode;
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="flex min-w-0 items-center gap-2 border-r border-white/[0.08] pr-3 last:border-r-0 sm:gap-3 sm:pr-5">
-
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#FFD000]/20 bg-[#FFD000]/[0.04] text-[#FFD000]">
-        {icon}
-      </div>
-
-      <div className="min-w-0">
-
-        <p className="truncate text-xs font-black text-white sm:text-sm">
-          {value}
-        </p>
-
-        <p className="mt-0.5 truncate text-[8px] uppercase tracking-[0.08em] text-[#68635A] sm:text-[9px]">
-          {label}
-        </p>
-
-      </div>
-
-    </div>
-  );
-}
-
-/* =========================================================
-   EVENT INFO
-========================================================= */
-
-function EventInfo({
-  icon,
-  label,
-  value,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="rounded-xl border border-white/[0.07] bg-white/[0.018] p-3.5 transition hover:border-[#FFD000]/20">
-
-      <div className="flex items-center gap-2 text-[#FFD000]">
-
-        {icon}
-
-        <span className="text-[8px] font-black uppercase tracking-[0.18em] text-[#68635A]">
-          {label}
+        <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
+          STAMPERS / 2026
         </span>
-
       </div>
 
-      <p className="mt-2 text-xs font-bold text-[#DDD9CF]">
-        {value}
-      </p>
+      {/* =========================================================
+          MAIN CONTENT
+      ========================================================== */}
 
-    </div>
+      <div className="relative z-10 flex min-h-[calc(100svh-64px)] items-end lg:min-h-[calc(100svh-72px)]">
+        <div className="w-full px-5 pb-28 sm:px-8 sm:pb-32 lg:px-12 lg:pb-32">
+          <div className="mx-auto max-w-[1440px]">
+            <div className="max-w-5xl">
+              {/* Event logo */}
+
+              {currentSlide.logo ? (
+                <div className="mb-7">
+                  <Image
+                    src={currentSlide.logo}
+                    alt=""
+                    width={220}
+                    height={70}
+                    className="h-auto max-h-16 w-auto object-contain object-left"
+                  />
+                </div>
+              ) : null}
+
+              {/* Title */}
+
+              <h1
+                key={`${currentSlide.id}-title`}
+                className="stamper-slide-up font-[family-name:var(--font-space)] text-[clamp(4.5rem,15vw,11rem)] font-black uppercase leading-[0.74] tracking-[-0.085em]"
+              >
+                {currentSlide.title}
+              </h1>
+
+              {/* Subtitle */}
+
+              <h2
+                key={`${currentSlide.id}-subtitle`}
+                className="stamper-slide-up mt-5 max-w-4xl font-[family-name:var(--font-space)] text-[clamp(1.25rem,3vw,3rem)] font-bold uppercase leading-none tracking-[-0.04em] text-white/85"
+              >
+                {currentSlide.subtitle}
+              </h2>
+
+              {/* Metadata */}
+
+              <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] font-black uppercase tracking-[0.16em] sm:text-[10px]">
+                <span className="text-[#E5B84D]">
+                  {currentSlide.accent}
+                </span>
+
+                <span className="hidden h-1 w-1 rounded-full bg-white/25 sm:block" />
+
+                <span className="text-white/50">
+                  {currentSlide.date}
+                </span>
+
+                <span className="hidden h-1 w-1 rounded-full bg-white/25 sm:block" />
+
+                <span className="text-white/35">
+                  {currentSlide.status}
+                </span>
+              </div>
+
+              {/* Description */}
+
+              <p
+                key={`${currentSlide.id}-description`}
+                className="stamper-slide-up mt-6 max-w-xl text-xs leading-7 text-white/55 sm:text-sm sm:leading-8"
+              >
+                {currentSlide.description}
+              </p>
+
+              {/* Actions */}
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href={currentSlide.primaryHref}
+                  className="inline-flex min-h-12 items-center gap-3 bg-white px-5 text-[10px] font-black uppercase tracking-[0.14em] text-black transition hover:bg-[#D39A24] hover:text-white"
+                >
+                  {currentSlide.primaryText}
+                  <ArrowRight size={15} />
+                </Link>
+
+                {currentSlide.secondaryText &&
+                currentSlide.secondaryHref ? (
+                  <a
+                    href={currentSlide.secondaryHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-12 items-center gap-3 border border-white/15 bg-black/10 px-5 text-[10px] font-black uppercase tracking-[0.14em] text-white/70 backdrop-blur-md transition hover:border-white/35 hover:text-white"
+                  >
+                    {currentSlide.secondaryText}
+                    <ExternalLink size={13} />
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* =========================================================
+          SLIDER CONTROLS
+      ========================================================== */}
+
+      <div className="absolute bottom-7 left-5 right-5 z-30 flex items-center justify-between sm:left-8 sm:right-8 lg:left-12 lg:right-12">
+        {/* Progress */}
+
+        <div className="flex items-center gap-2">
+          {slides.map((slide, index) => (
+            <button
+              key={slide.id}
+              type="button"
+              aria-label={`Go to ${slide.title}`}
+              aria-current={
+                activeSlide === index ? "true" : undefined
+              }
+              onClick={() => goToSlide(index)}
+              className={`h-[3px] transition-all duration-500 ${
+                activeSlide === index
+                  ? "w-11 bg-[#D39A24] sm:w-14"
+                  : "w-5 bg-white/25 hover:bg-white/45"
+              }`}
+            />
+          ))}
+
+          <span className="ml-2 text-[9px] font-bold tracking-[0.2em] text-white/30">
+            0{activeSlide + 1} / 0{slides.length}
+          </span>
+        </div>
+
+        {/* Desktop controls */}
+
+        <div className="hidden gap-2 sm:flex">
+          <button
+            type="button"
+            aria-label="Previous event"
+            onClick={previousSlide}
+            className="flex h-10 w-10 items-center justify-center border border-white/15 bg-black/10 text-white/50 backdrop-blur-md transition hover:border-[#D39A24] hover:text-white"
+          >
+            <ChevronLeft size={17} strokeWidth={1.5} />
+          </button>
+
+          <button
+            type="button"
+            aria-label="Next event"
+            onClick={nextSlide}
+            className="flex h-10 w-10 items-center justify-center border border-white/15 bg-black/10 text-white/50 backdrop-blur-md transition hover:border-[#D39A24] hover:text-white"
+          >
+            <ChevronRight size={17} strokeWidth={1.5} />
+          </button>
+        </div>
+
+        {/* Mobile swipe hint */}
+
+        <div className="flex items-center gap-2 text-[8px] font-bold uppercase tracking-[0.18em] text-white/25 sm:hidden">
+          Swipe
+          <ChevronRight size={12} />
+        </div>
+      </div>
+    </section>
   );
 }

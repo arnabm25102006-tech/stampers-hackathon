@@ -1,214 +1,181 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Trophy,
-  Shirt,
-  Medal,
-  Gift,
-  Award,
-  BadgeCheck,
-} from "lucide-react";
+import { Clock3, Sparkles, ArrowUpRight } from "lucide-react";
 
-const rewards = [
-  {
-    number: "01",
-    icon: Trophy,
-    title: "Champion Trophy",
-    desc: "Official STAMPERS National Hackathon Winner Trophy.",
-  },
-  {
-    number: "02",
-    icon: Shirt,
-    title: "Official T-Shirt",
-    desc: "Exclusive STAMPERS merchandise created for the event.",
-  },
-  {
-    number: "03",
-    icon: Medal,
-    title: "Hard Copy Certificate",
-    desc: "Premium printed certificate recognising your achievement.",
-  },
-  {
-    number: "04",
-    icon: Gift,
-    title: "Exclusive Goodies",
-    desc: "Bottle, pen, recognition card and selected event goodies.",
-  },
-  {
-    number: "05",
-    icon: Award,
-    title: "National Recognition",
-    desc: "Recognition through the STAMPERS competition platform.",
-  },
-  {
-    number: "06",
-    icon: BadgeCheck,
-    title: "Verified Achievement",
-    desc: "Official recognition of your participation and achievement.",
-  },
-];
-
-export default function Rewards() {
+export default function Timeline() {
   return (
     <section
-      id="rewards"
+      id="timeline"
       className="relative overflow-hidden bg-[#050505] py-28 text-white sm:py-32 lg:py-40"
     >
-      {/* Background */}
+      {/* =====================================================
+          BACKGROUND
+      ====================================================== */}
 
-      <div className="stampers-grid pointer-events-none absolute inset-0 opacity-[0.07]" />
+      <div className="stampers-grid pointer-events-none absolute inset-0 opacity-[0.045]" />
 
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[750px] -translate-x-1/2 rounded-full bg-yellow-500/[0.035] blur-[150px]" />
+      <div className="pointer-events-none absolute left-1/2 top-[-180px] h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#D39A24]/[0.05] blur-[160px]" />
 
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
+      <div className="pointer-events-none absolute -left-40 bottom-[-150px] h-[400px] w-[400px] rounded-full bg-[#D39A24]/[0.02] blur-[150px]" />
 
-        {/* Heading */}
+      <div className="relative mx-auto max-w-5xl px-5 sm:px-8">
+        {/* =====================================================
+            HEADER
+        ====================================================== */}
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="mx-auto max-w-4xl text-center"
+          className="text-center"
         >
-          <div className="mb-6 flex items-center justify-center gap-4">
-            <span className="h-px w-12 bg-yellow-500" />
+          <div className="mb-7 flex items-center justify-center gap-4">
+            <span className="h-px w-10 bg-gradient-to-r from-transparent to-[#D39A24]" />
 
-            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-yellow-400">
-              Rewards & Recognition
+            <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D39A24]">
+              Timeline
             </span>
 
-            <span className="h-px w-12 bg-yellow-500" />
+            <span className="h-px w-10 bg-gradient-to-l from-transparent to-[#D39A24]" />
           </div>
 
-          <h2 className="text-4xl font-black tracking-[-0.05em] sm:text-5xl md:text-6xl lg:text-7xl">
-            Your work.
-            <span className="stampers-gold-text block">
-              Your recognition.
+          <div className="mx-auto flex h-14 w-14 items-center justify-center border border-[#D39A24]/20 bg-[#D39A24]/[0.05]">
+            <Clock3
+              size={23}
+              strokeWidth={1.3}
+              className="text-[#D39A24]"
+            />
+          </div>
+
+          <h2 className="mt-7 font-[family-name:var(--font-space)] text-4xl font-black tracking-[-0.055em] sm:text-5xl md:text-6xl lg:text-7xl">
+            What's
+            <span className="block bg-gradient-to-r from-[#F5D76E] via-[#D39A24] to-[#B8860B] bg-clip-text text-transparent">
+              coming next?
             </span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-gray-500 sm:text-base sm:leading-8">
-            Compete, create and earn recognition that goes beyond the
-            competition itself.
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-8 text-white/35 sm:text-base">
+            The next STAMPERS timeline is being prepared. Dates, milestones
+            and important announcements will be revealed soon.
           </p>
         </motion.div>
 
-        {/* Rewards Grid */}
-
-        <div className="mt-16 grid gap-4 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
-
-          {rewards.map((reward, index) => {
-            const Icon = reward.icon;
-
-            return (
-              <motion.div
-                key={reward.title}
-                initial={{
-                  opacity: 0,
-                  y: 30,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.08,
-                }}
-                whileHover={{
-                  y: -6,
-                }}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.018] p-6 transition-all duration-300 hover:border-yellow-500/25 hover:bg-yellow-500/[0.025] sm:p-7"
-              >
-                {/* Number */}
-
-                <div className="flex items-center justify-between">
-
-                  <span className="text-[10px] font-bold tracking-[0.25em] text-gray-700">
-                    {reward.number}
-                  </span>
-
-                  <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-700">
-                    STAMPERS
-                  </span>
-
-                </div>
-
-                {/* Icon */}
-
-                <div className="mt-8 flex h-12 w-12 items-center justify-center rounded-xl border border-yellow-500/15 bg-yellow-500/[0.05] transition-all duration-300 group-hover:border-yellow-500/30 group-hover:bg-yellow-500/[0.08]">
-                  <Icon
-                    size={21}
-                    className="text-yellow-400"
-                  />
-                </div>
-
-                {/* Content */}
-
-                <h3 className="mt-6 text-xl font-black tracking-tight text-white">
-                  {reward.title}
-                </h3>
-
-                <p className="mt-3 text-sm leading-6 text-gray-500">
-                  {reward.desc}
-                </p>
-
-                {/* Bottom */}
-
-                <div className="mt-7 flex items-center gap-3">
-
-                  <span className="h-px w-8 bg-yellow-500/40 transition-all duration-300 group-hover:w-14" />
-
-                  <span className="text-[8px] font-bold uppercase tracking-[0.25em] text-gray-700">
-                    Recognition
-                  </span>
-
-                </div>
-              </motion.div>
-            );
-          })}
-
-        </div>
-
-        {/* Bottom Statement */}
+        {/* =====================================================
+            REVEAL CARD
+        ====================================================== */}
 
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 25,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.7,
-          }}
-          className="mx-auto mt-10 max-w-4xl rounded-2xl border border-yellow-500/15 bg-yellow-500/[0.02] px-6 py-8 text-center sm:px-10"
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.75, delay: 0.1 }}
+          className="relative mt-14 overflow-hidden border border-[#D39A24]/20 bg-white/[0.018]"
         >
-          <Trophy
-            size={24}
-            className="mx-auto text-yellow-400"
-          />
+          <div className="pointer-events-none absolute left-1/2 top-[-160px] h-[350px] w-[500px] -translate-x-1/2 rounded-full bg-[#D39A24]/[0.075] blur-[120px]" />
 
-          <h3 className="mt-4 text-xl font-black sm:text-2xl">
-            More than a competition.
-          </h3>
+          <div className="relative px-6 py-14 text-center sm:px-12 sm:py-20">
+            {/* Icon */}
 
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-gray-500">
-            Build something meaningful, showcase your skills and leave
-            your mark with STAMPERS National Hackathon 2K26.
-          </p>
+            <motion.div
+              animate={{
+                rotate: [0, 4, -4, 0],
+                y: [0, -4, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="mx-auto flex h-16 w-16 items-center justify-center border border-[#D39A24]/30 bg-[#D39A24]/[0.06]"
+            >
+              <Sparkles
+                size={25}
+                strokeWidth={1.2}
+                className="text-[#D39A24]"
+              />
+            </motion.div>
+
+            <p className="mt-8 text-[9px] font-bold uppercase tracking-[0.3em] text-[#D39A24]">
+              Stay Tuned
+            </p>
+
+            <h3 className="mt-4 font-[family-name:var(--font-space)] text-3xl font-black tracking-[-0.045em] sm:text-4xl">
+              Timeline will be
+              <span className="text-white/30"> revealed soon.</span>
+            </h3>
+
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/35">
+              We are working on the next chapter of STAMPERS. Stay connected
+              for upcoming event dates, registrations and announcements.
+            </p>
+
+            {/* Status */}
+
+            <div className="mx-auto mt-9 inline-flex items-center gap-3 border border-white/10 bg-white/[0.025] px-5 py-3">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D39A24] opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D39A24]" />
+              </span>
+
+              <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">
+                Details coming soon
+              </span>
+            </div>
+          </div>
         </motion.div>
 
+        {/* =====================================================
+            TEASER
+        ====================================================== */}
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          {["Dates", "Milestones", "Announcements"].map(
+            (item, index) => (
+              <motion.div
+                key={item}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.08,
+                }}
+                className="group flex items-center justify-between border border-white/[0.07] bg-white/[0.012] px-5 py-5 transition hover:border-[#D39A24]/20"
+              >
+                <div>
+                  <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/20">
+                    0{index + 1}
+                  </span>
+
+                  <p className="mt-2 font-[family-name:var(--font-space)] text-sm font-bold text-white/60">
+                    {item}
+                  </p>
+                </div>
+
+                <ArrowUpRight
+                  size={15}
+                  className="text-white/15 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#D39A24]"
+                />
+              </motion.div>
+            )
+          )}
+        </div>
+
+        {/* =====================================================
+            BOTTOM
+        ====================================================== */}
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.25 }}
+          className="mt-10 text-center text-[9px] font-bold uppercase tracking-[0.28em] text-white/15"
+        >
+          STAMPERS · THE NEXT CHAPTER
+        </motion.p>
       </div>
     </section>
   );

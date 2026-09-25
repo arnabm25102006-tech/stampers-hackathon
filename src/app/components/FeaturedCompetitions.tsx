@@ -5,173 +5,161 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   CalendarDays,
-  MapPin,
-  Trophy,
-  Clock3,
+  Code2,
+  Gamepad2,
+  Camera,
+  Lightbulb,
   Sparkles,
+  Trophy,
 } from "lucide-react";
 
 const competitions = [
   {
-    title: "STAMPERS National Hackathon 2K26",
+    title: "AXION",
+    subtitle: "National Hackathon",
+    category: "Innovation",
+    description:
+      "A national-level innovation experience by STAMPERS, powered by Unstop. Explore ideas, build solutions and compete through Open Innovation.",
+    status: "UPCOMING",
+    date: "11 OCTOBER 2026",
+    icon: Lightbulb,
+    featured: true,
+    href: "#axion",
+  },
+  {
+    title: "STAMPERS National Hackathon",
+    subtitle: "2026",
     category: "Hackathon",
     description:
-      "An open innovation challenge for students, developers and creators to build meaningful solutions.",
-    date: "14–15 August 2026",
-    location: "India • Online",
-    prize: "Exciting Prizes & Goodies",
-    status: "UPCOMING",
-    featured: true,
-  },
-  {
-    title: "National Photography Challenge",
-    category: "Photography",
-    description:
-      "Showcase your perspective, creativity and visual storytelling through your lens.",
-    date: "Coming Soon",
-    location: "India • Online",
-    prize: "Prizes & Recognition",
-    status: "UPCOMING",
+      "Our previous national hackathon brought together students and innovators from across India to build, compete and showcase their ideas.",
+    status: "COMPLETED",
+    date: "14–15 AUGUST 2026",
+    icon: Trophy,
     featured: false,
+    href: "#previous-hackathon",
   },
   {
-    title: "Future Coders Challenge",
-    category: "Coding",
+    title: "More Experiences",
+    subtitle: "Coming Soon",
+    category: "STAY TUNED",
     description:
-      "Test your problem-solving skills through exciting programming challenges.",
-    date: "Coming Soon",
-    location: "Online",
-    prize: "Prizes & Certificates",
+      "Gaming, coding, creative challenges and new opportunities are being prepared for the STAMPERS community.",
     status: "COMING SOON",
+    date: "TO BE ANNOUNCED",
+    icon: Sparkles,
     featured: false,
+    href: "/explore",
   },
 ];
 
 export default function FeaturedCompetitions() {
   return (
     <section
-      id="competitions"
-      className="relative overflow-hidden bg-[#050505] py-24 text-white sm:py-28"
+      id="events"
+      className="relative overflow-hidden border-t border-white/10 bg-black py-20 text-white sm:py-24 lg:py-28"
     >
-      {/* Background */}
+      {/* Background glow */}
 
-      <div className="stampers-grid pointer-events-none absolute inset-0 opacity-[0.13]" />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[-10%] top-[10%] h-[350px] w-[350px] rounded-full bg-amber-400/5 blur-[120px]" />
+        <div className="absolute bottom-[-15%] right-[-5%] h-[400px] w-[400px] rounded-full bg-white/5 blur-[130px]" />
+      </div>
 
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-yellow-500/[0.035] blur-[170px]" />
-
-      <div className="pointer-events-none absolute bottom-0 left-[-150px] h-[300px] w-[300px] rounded-full bg-yellow-600/[0.025] blur-[140px]" />
-
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-7 lg:px-8">
-
-        {/* Section Header */}
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        {/* Header */}
 
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="flex flex-col justify-between gap-7 md:flex-row md:items-end"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col justify-between gap-8 md:flex-row md:items-end"
         >
-          <div>
-
+          <div className="max-w-3xl">
             <div className="mb-5 flex items-center gap-3">
+              <span className="h-px w-8 bg-amber-400" />
 
-              <span className="h-px w-8 bg-yellow-500 sm:w-10" />
-
-              <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-yellow-400 sm:text-xs">
-                Opportunities
+              <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-amber-400">
+                Events & Opportunities
               </span>
-
             </div>
 
-            <h2 className="max-w-3xl text-4xl font-black tracking-[-0.04em] sm:text-5xl md:text-6xl">
-              Find your next
-              <span className="stampers-gold-text"> challenge.</span>
+            <h2 className="text-3xl font-bold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">
+              Where ideas become{" "}
+              <span className="text-amber-400">experiences.</span>
             </h2>
 
-            <p className="mt-5 max-w-2xl text-sm leading-7 text-gray-500 sm:text-base sm:leading-8">
-              Explore competitions across technology, creativity,
-              innovation and more. Discover an opportunity that
-              matches your ambition.
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-white/55 sm:text-base sm:leading-8">
+              Discover hackathons, competitions and experiences built for
+              students, creators and innovators.
             </p>
-
           </div>
 
           <Link
             href="/explore"
-            className="group inline-flex w-fit items-center gap-2 text-sm font-semibold text-yellow-400"
+            className="group inline-flex w-fit items-center gap-3 border border-white/15 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white transition hover:border-amber-400/40 hover:bg-amber-400/10 hover:text-amber-300"
           >
-            Explore all competitions
-
+            Explore all events
             <ArrowRight
-              size={17}
-              className="transition-transform duration-300 group-hover:translate-x-1"
+              size={16}
+              className="transition-transform duration-200 group-hover:translate-x-1"
             />
           </Link>
-
         </motion.div>
 
-        {/* Competition Grid */}
+        {/* Event Cards */}
 
-        <div className="mt-14 grid gap-5 lg:grid-cols-3">
-
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {competitions.map((competition, index) => (
-
             <CompetitionCard
               key={competition.title}
               competition={competition}
               index={index}
             />
-
           ))}
-
         </div>
 
-        {/* Bottom CTA */}
+        {/* Bottom strip */}
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.25 }}
-          className="mt-8 flex flex-col items-center justify-between gap-5 rounded-2xl border border-white/10 bg-white/[0.02] px-6 py-5 sm:flex-row"
+          transition={{ duration: 0.55, delay: 0.15 }}
+          className="mt-6 flex flex-col gap-5 border border-white/10 bg-white/[0.025] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6"
         >
-
-          <div className="flex items-center gap-3">
-
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-yellow-500/15 bg-yellow-500/[0.05]">
-              <Sparkles
-                size={17}
-                className="text-yellow-400"
-              />
+          <div className="flex items-center gap-4">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-amber-400/20 bg-amber-400/10 text-amber-400">
+              <Sparkles size={17} />
             </div>
 
-            <p className="text-sm text-gray-400">
-              More competitions are being added to STAMPERS.
-            </p>
+            <div>
+              <p className="text-sm font-semibold text-white">
+                The STAMPERS ecosystem is growing.
+              </p>
 
+              <p className="mt-1 text-xs leading-5 text-white/40">
+                More events, competitions and opportunities will be announced
+                here.
+              </p>
+            </div>
           </div>
 
           <Link
             href="/account/register"
-            className="inline-flex items-center gap-2 text-sm font-bold text-white transition hover:text-yellow-400"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-amber-400 transition hover:text-amber-300"
           >
-            Create your account
-
-            <ArrowRight size={16} />
-
+            Join STAMPERS
+            <ArrowRight
+              size={16}
+              className="transition-transform group-hover:translate-x-1"
+            />
           </Link>
-
         </motion.div>
-
       </div>
     </section>
   );
 }
-
-/* =========================================
-   COMPETITION CARD
-========================================= */
 
 function CompetitionCard({
   competition,
@@ -179,184 +167,134 @@ function CompetitionCard({
 }: {
   competition: {
     title: string;
+    subtitle: string;
     category: string;
     description: string;
-    date: string;
-    location: string;
-    prize: string;
     status: string;
+    date: string;
+    icon: React.ComponentType<{
+      size?: number;
+      strokeWidth?: number;
+    }>;
     featured: boolean;
+    href: string;
   };
   index: number;
 }) {
+  const Icon = competition.icon;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 35 }}
+    <motion.article
+      initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.15 }}
       transition={{
-        duration: 0.65,
-        delay: index * 0.1,
+        duration: 0.55,
+        delay: index * 0.08,
       }}
-      whileHover={{ y: -7 }}
-      className={`group relative overflow-hidden rounded-[26px] border p-5 transition-all duration-300 sm:p-6 ${
+      whileHover={{ y: -5 }}
+      className={`group relative flex min-h-[390px] flex-col overflow-hidden border p-6 transition-all duration-300 sm:p-7 ${
         competition.featured
-          ? "border-yellow-500/25 bg-gradient-to-b from-yellow-500/[0.055] to-white/[0.018] shadow-[0_20px_80px_rgba(234,179,8,0.06)]"
-          : "border-white/10 bg-white/[0.018] hover:border-white/15"
+          ? "border-amber-400/30 bg-gradient-to-b from-amber-400/[0.07] to-white/[0.02] shadow-[0_20px_70px_rgba(245,158,11,0.06)]"
+          : "border-white/10 bg-white/[0.025] hover:border-white/20 hover:bg-white/[0.04]"
       }`}
     >
-
-      {/* Featured Glow */}
+      {/* Featured glow */}
 
       {competition.featured && (
-        <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-yellow-500/[0.10] blur-[80px]" />
+        <div className="pointer-events-none absolute right-[-70px] top-[-70px] h-40 w-40 rounded-full bg-amber-400/10 blur-[70px]" />
       )}
 
-      {/* Top Row */}
+      {/* Top */}
 
       <div className="relative flex items-center justify-between gap-3">
-
-        <span className="rounded-full border border-yellow-500/15 bg-yellow-500/[0.05] px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-yellow-400">
+        <span
+          className={`inline-flex items-center gap-2 px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] ${
+            competition.featured
+              ? "bg-amber-400 text-black"
+              : "bg-white/[0.06] text-white/50"
+          }`}
+        >
+          {competition.featured && <Sparkles size={10} />}
           {competition.category}
         </span>
 
-        {competition.featured ? (
-          <span className="flex items-center gap-1.5 rounded-full border border-yellow-400/20 bg-yellow-400/[0.06] px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-yellow-300">
-            <Sparkles size={11} />
-            Featured
-          </span>
-        ) : (
-          <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-gray-600">
-            {competition.status}
-          </span>
-        )}
-
+        <span
+          className={`text-[9px] font-bold uppercase tracking-[0.16em] ${
+            competition.featured
+              ? "text-amber-400"
+              : "text-white/30"
+          }`}
+        >
+          {competition.status}
+        </span>
       </div>
 
-      {/* Competition Icon */}
+      {/* Icon */}
 
       <div
-        className={`relative mt-7 flex h-14 w-14 items-center justify-center rounded-2xl border ${
+        className={`relative mt-9 flex h-14 w-14 items-center justify-center border transition duration-300 ${
           competition.featured
-            ? "border-yellow-500/25 bg-yellow-500/[0.08]"
-            : "border-white/10 bg-white/[0.025]"
+            ? "border-amber-400/20 bg-amber-400/10 text-amber-400"
+            : "border-white/10 bg-white/[0.04] text-white/50 group-hover:border-amber-400/20 group-hover:text-amber-400"
         }`}
       >
-        <Trophy
-          size={24}
-          className={
-            competition.featured
-              ? "text-yellow-400"
-              : "text-gray-400"
-          }
-        />
+        <Icon size={24} strokeWidth={1.7} />
       </div>
 
       {/* Title */}
 
-      <h3 className="relative mt-6 min-h-[60px] text-xl font-bold leading-tight tracking-tight sm:text-2xl">
-        {competition.title}
-      </h3>
+      <div className="relative mt-6">
+        <h3 className="text-xl font-bold tracking-[-0.025em] text-white sm:text-2xl">
+          {competition.title}
+        </h3>
+
+        <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-amber-400/80">
+          {competition.subtitle}
+        </p>
+      </div>
 
       {/* Description */}
 
-      <p className="relative mt-4 min-h-[72px] text-sm leading-6 text-gray-500">
+      <p className="relative mt-4 max-w-md text-sm leading-6 text-white/45">
         {competition.description}
       </p>
 
-      {/* Details */}
+      {/* Bottom */}
 
-      <div className="relative mt-6 space-y-3 border-t border-white/10 pt-5">
+      <div className="relative mt-auto pt-7">
+        <div className="border-t border-white/10 pt-5">
+          <div className="flex items-center gap-2 text-white/35">
+            <CalendarDays size={14} />
 
-        <Detail
-          icon={<CalendarDays size={15} />}
-          text={competition.date}
-        />
-
-        <Detail
-          icon={<MapPin size={15} />}
-          text={competition.location}
-        />
-
-      </div>
-
-      {/* Reward */}
-
-      <div className="relative mt-5 rounded-xl border border-white/10 bg-black/20 px-4 py-3">
-
-        <div className="flex items-center gap-2">
-
-          <Trophy
-            size={14}
-            className="text-yellow-400"
-          />
-
-          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-gray-600">
-            Rewards
-          </p>
-
+            <span className="text-[10px] font-semibold uppercase tracking-[0.12em]">
+              {competition.date}
+            </span>
+          </div>
         </div>
 
-        <p className="mt-1.5 text-sm font-semibold text-gray-200">
-          {competition.prize}
-        </p>
+        <Link
+          href={competition.href}
+          className={`group/button mt-5 flex w-full items-center justify-between px-4 py-3.5 text-sm font-semibold transition duration-200 ${
+            competition.featured
+              ? "bg-amber-400 text-black hover:bg-amber-300"
+              : "border border-white/10 bg-white/[0.03] text-white hover:border-amber-400/30 hover:bg-amber-400/10 hover:text-amber-300"
+          }`}
+        >
+          <span>
+            {competition.featured
+              ? "Explore AXION"
+              : competition.status === "COMPLETED"
+                ? "View event"
+                : "Explore events"}
+          </span>
 
+          <ArrowRight
+            size={16}
+            className="transition-transform duration-200 group-hover/button:translate-x-1"
+          />
+        </Link>
       </div>
-
-      {/* CTA */}
-
-      <Link
-        href="/explore"
-        className={`relative mt-5 flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-sm font-bold transition-all duration-300 ${
-          competition.featured
-            ? "bg-gradient-to-r from-yellow-300 to-yellow-600 text-black hover:shadow-lg hover:shadow-yellow-500/10"
-            : "border border-white/10 bg-white/[0.025] text-gray-300 hover:border-yellow-500/20 hover:bg-yellow-500/[0.05] hover:text-yellow-400"
-        }`}
-      >
-
-        <span>
-          View competition
-        </span>
-
-        <ArrowRight
-          size={17}
-          className="transition-transform duration-300 group-hover:translate-x-1"
-        />
-
-      </Link>
-
-      {/* Bottom Line */}
-
-      {competition.featured && (
-        <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-yellow-500/40 to-transparent" />
-      )}
-
-    </motion.div>
-  );
-}
-
-/* =========================================
-   DETAIL
-========================================= */
-
-function Detail({
-  icon,
-  text,
-}: {
-  icon: React.ReactNode;
-  text: string;
-}) {
-  return (
-    <div className="flex items-center gap-3 text-sm text-gray-500">
-
-      <span className="text-yellow-400">
-        {icon}
-      </span>
-
-      <span>
-        {text}
-      </span>
-
-    </div>
+    </motion.article>
   );
 }

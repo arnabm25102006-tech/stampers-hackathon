@@ -71,10 +71,11 @@ export default function Footer() {
               href="/"
               className="inline-block transition-opacity duration-300 hover:opacity-80"
             >
-              <h2 className="text-4xl font-black tracking-tight text-white">
-                STAMPERS
-                <span className="text-yellow-400">™</span>
-              </h2>
+              <img
+                src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png"
+                alt="STAMPERS"
+                className="h-10 w-auto object-contain"
+              />
 
               <p className="mt-2 text-[9px] font-semibold tracking-[0.35em] text-gray-600">
                 COMPETITION PLATFORM
@@ -174,11 +175,12 @@ export default function Footer() {
                   >
                     +91 96475 31070
                   </a>
+
                   <a
                     href="tel:+919749876106"
                     className="block text-gray-400 transition-colors duration-300 hover:text-yellow-400"
                   >
-                    +91 97498 76106
+                    +91 98000 31906
                   </a>
 
                 </div>

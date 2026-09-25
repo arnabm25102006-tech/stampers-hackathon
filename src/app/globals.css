@@ -1,555 +1,1388 @@
 @import "tailwindcss";
 
-:root {
-  --background: #fffdf5;
-  --foreground: #090909;
+/* =========================================================
+   STAMPERS — PREMIUM BRAND SYSTEM
+   Black / White / Gold
+   Editorial • Cinematic • Sharp • Modern
+========================================================= */
 
-  --gold-50: #fffbea;
-  --gold-100: #fff3b0;
-  --gold-200: #ffe45c;
-  --gold-300: #ffd000;
-  --gold-400: #ffbf00;
-  --gold-500: #e6a900;
-  --gold-600: #c88a00;
-  --gold-700: #9d6800;
+:root {
+  --background: #ffffff;
+  --foreground: #080808;
 
   --black: #050505;
-  --black-soft: #0d0d0d;
+  --black-soft: #0b0b0b;
+  --black-muted: #151515;
+  --black-card: #101010;
 
-  --gray-100: #f5f5f2;
-  --gray-200: #e8e8e2;
-  --gray-300: #d4d4cc;
-  --gray-400: #9a9a91;
-  --gray-500: #6f6f68;
-  --gray-600: #4d4d47;
+  --white: #ffffff;
+  --off-white: #f5f4f0;
+  --cream: #eeece6;
+
+  --gold: #d39a24;
+  --gold-dark: #ad7510;
+  --gold-light: #e7bd5d;
+
+  --text: #080808;
+  --text-secondary: #505050;
+  --text-muted: #777777;
+
+  --border: #e5e5e2;
+  --border-dark: rgba(255, 255, 255, 0.1);
+
+  --nav-height: 72px;
 }
 
-* {
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-height);
+  background: var(--background);
 }
 
 body {
   margin: 0;
-  background:
-    radial-gradient(
-      circle at 50% -10%,
-      rgba(255, 208, 0, 0.16),
-      transparent 32%
-    ),
-    linear-gradient(
-      180deg,
-      #fffef8 0%,
-      #fffdf5 45%,
-      #f8f7f0 100%
-    );
-
+  min-width: 320px;
+  background: var(--background);
   color: var(--foreground);
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  overflow-x: hidden;
+  font-family: "Plus Jakarta Sans", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* =========================================
-   SELECTION
-========================================= */
+body,
+button,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
 
 ::selection {
-  background: #ffd000;
-  color: #000;
+  background: var(--gold);
+  color: #ffffff;
 }
 
-/* =========================================
+/* =========================================================
    SCROLLBAR
-========================================= */
+========================================================= */
 
 ::-webkit-scrollbar {
-  width: 9px;
+  width: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f0e8;
+  background: #f1f1ef;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    #ffd000,
-    #c88a00
-  );
-
-  border-radius: 999px;
+  background: #b9b9b5;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffbf00;
+  background: var(--gold);
 }
 
-/* =========================================
-   PREMIUM GOLD TEXT
-========================================= */
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
 
-.stampers-gold-text {
-  background:
-    linear-gradient(
-      100deg,
-      #8f5b00 0%,
-      #d89b00 22%,
-      #ffd000 48%,
-      #ffb800 72%,
-      #9b6300 100%
-    );
-
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-
-  background-size: 200% auto;
-
-  animation: gold-shine 5s linear infinite;
+.stamper-display {
+  font-family: "Space Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.06em;
 }
 
-@keyframes gold-shine {
-  0% {
-    background-position: 0% center;
+.stamper-heading {
+  font-family: "Space Grotesk", Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+}
+
+.stamper-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.stamper-gold {
+  color: var(--gold);
+}
+
+.stamper-gold-text {
+  color: var(--gold);
+}
+
+/* =========================================================
+   BRAND WORDMARK
+========================================================= */
+
+.stamper-wordmark {
+  font-family: "Space Grotesk", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+
+.stamper-wordmark span {
+  color: var(--gold);
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.stamper-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@media (min-width: 640px) {
+  .stamper-container {
+    padding-inline: 32px;
   }
+}
 
-  100% {
-    background-position: 200% center;
+@media (min-width: 1024px) {
+  .stamper-container {
+    padding-inline: 48px;
   }
 }
 
-/* =========================================
-   TECH GRID
-========================================= */
-
-.stampers-grid {
-  background-image:
-    linear-gradient(
-      rgba(184, 134, 11, 0.09) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(184, 134, 11, 0.09) 1px,
-      transparent 1px
-    );
-
-  background-size: 50px 50px;
+@media (min-width: 1536px) {
+  .stamper-container {
+    padding-inline: 64px;
+  }
 }
 
-/* =========================================
-   SMALL TECH GRID
-========================================= */
+/* =========================================================
+   SECTIONS
+========================================================= */
 
-.stampers-grid-small {
-  background-image:
-    linear-gradient(
-      rgba(184, 134, 11, 0.055) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(184, 134, 11, 0.055) 1px,
-      transparent 1px
-    );
-
-  background-size: 18px 18px;
+.stamper-section {
+  position: relative;
+  width: 100%;
+  padding-block: 96px;
 }
 
-/* =========================================
-   GOLD GLOW
-========================================= */
-
-.stampers-gold-glow {
-  box-shadow:
-    0 0 20px rgba(255, 208, 0, 0.28),
-    0 0 60px rgba(255, 208, 0, 0.12);
+.stamper-section-light {
+  background: var(--white);
+  color: var(--black);
 }
 
-/* =========================================
-   GOLD BORDER
-========================================= */
-
-.stampers-gold-border {
-  border: 1px solid rgba(200, 138, 0, 0.35);
+.stamper-section-offwhite {
+  background: var(--off-white);
+  color: var(--black);
 }
 
-/* =========================================
-   PREMIUM CARD
-========================================= */
+.stamper-section-dark {
+  background: var(--black);
+  color: var(--white);
+}
 
-.stampers-card {
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(250, 249, 240, 0.96)
-    );
+@media (max-width: 640px) {
+  .stamper-section {
+    padding-block: 72px;
+  }
+}
 
-  border: 1px solid rgba(180, 130, 0, 0.18);
+/* =========================================================
+   BUTTONS
+========================================================= */
 
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.07),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+.stamper-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 46px;
+  padding: 0 20px;
+
+  border: 1px solid transparent;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
 
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+    transform 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease;
 }
 
-.stampers-card:hover {
-  transform: translateY(-6px);
-
-  border-color: rgba(255, 208, 0, 0.55);
-
-  box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.11),
-    0 0 35px rgba(255, 208, 0, 0.10);
+.stamper-button:hover {
+  transform: translateY(-2px);
 }
 
-/* =========================================
-   DARK TECH CARD
-========================================= */
-
-.stampers-dark-card {
-  background:
-    linear-gradient(
-      145deg,
-      #111111,
-      #050505
-    );
-
-  border: 1px solid rgba(255, 208, 0, 0.25);
-
-  color: white;
-
-  box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.22),
-    0 0 35px rgba(255, 208, 0, 0.06);
+.stamper-button:active {
+  transform: translateY(0);
 }
 
-/* =========================================
-   GOLD BUTTON
-========================================= */
+.stamper-button-primary {
+  background: var(--black);
+  color: var(--white);
+}
 
-.stampers-gold-button {
+.stamper-button-primary:hover {
+  background: #222222;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.stamper-button-gold {
+  background: var(--gold);
+  color: #ffffff;
+}
+
+.stamper-button-gold:hover {
+  background: var(--gold-dark);
+  box-shadow: 0 12px 30px rgba(211, 154, 36, 0.22);
+}
+
+.stamper-button-outline {
+  border-color: var(--border);
+  background: var(--white);
+  color: var(--black);
+}
+
+.stamper-button-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold-dark);
+}
+
+.stamper-button-dark-outline {
+  border-color: #343434;
+  background: transparent;
+  color: var(--white);
+}
+
+.stamper-button-dark-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.stamper-card {
+  border: 1px solid var(--border);
+  background: var(--white);
+
+  transition:
+    border-color 250ms ease,
+    box-shadow 250ms ease,
+    transform 250ms ease;
+}
+
+.stamper-card:hover {
+  border-color: #cfcfca;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.07);
+  transform: translateY(-3px);
+}
+
+.stamper-card-dark {
+  border: 1px solid var(--border-dark);
+  background: var(--black-soft);
+  color: var(--white);
+}
+
+/* =========================================================
+   GOLD ACCENTS
+========================================================= */
+
+.stamper-accent-line {
+  width: 42px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.stamper-accent-block {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  background: var(--gold);
+}
+
+/* =========================================================
+   DIVIDERS
+========================================================= */
+
+.stamper-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+.stamper-divider-dark {
+  width: 100%;
+  height: 1px;
+  background: var(--border-dark);
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.stamper-nav {
+  position: relative;
+  z-index: 100;
+  min-height: var(--nav-height);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  transition:
+    background-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.stamper-nav-link {
+  position: relative;
+
+  font-size: 12px;
+  font-weight: 700;
+  color: #505050;
+
+  transition: color 180ms ease;
+}
+
+.stamper-nav-link::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+
+  height: 1px;
+
+  background: var(--gold);
+
+  transform: scaleX(0);
+  transform-origin: center;
+
+  transition: transform 180ms ease;
+}
+
+.stamper-nav-link:hover {
+  color: var(--black);
+}
+
+.stamper-nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* =========================================================
+   PREMIUM HERO
+========================================================= */
+
+.stamper-hero {
   position: relative;
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      110deg,
-      #a96d00,
-      #ffd000 35%,
-      #fff08a 52%,
-      #ffd000 68%,
-      #b87500
-    );
-
-  background-size: 200% auto;
-
-  color: #050505;
-
-  font-weight: 900;
-
-  box-shadow:
-    0 12px 35px rgba(214, 155, 0, 0.28);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    background-position 0.5s ease;
+  background: var(--white);
+  color: var(--black);
 }
 
-.stampers-gold-button:hover {
-  transform: translateY(-2px);
-
-  background-position: right center;
-
-  box-shadow:
-    0 18px 45px rgba(214, 155, 0, 0.40);
+.stamper-hero-dark {
+  background: var(--black);
+  color: var(--white);
 }
 
-/* =========================================
-   BLACK BUTTON
-========================================= */
+/* =========================================================
+   HERO EVENT SLIDER
+========================================================= */
 
-.stampers-black-button {
-  background: #050505;
-
-  color: white;
-
-  border: 1px solid rgba(255, 208, 0, 0.30);
-
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.15);
-
-  transition:
-    transform 0.3s ease,
-    background 0.3s ease,
-    border-color 0.3s ease;
-}
-
-.stampers-black-button:hover {
-  transform: translateY(-2px);
-
-  background: #111111;
-
-  border-color: #ffd000;
-}
-
-/* =========================================
-   GOLD LINE
-========================================= */
-
-.stampers-gold-line {
-  height: 2px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      #a96d00,
-      #ffd000,
-      #fff2a0,
-      #ffd000,
-      #a96d00,
-      transparent
-    );
-
-  box-shadow:
-    0 0 15px rgba(255, 208, 0, 0.55);
-}
-
-/* =========================================
-   GOLD DOT
-========================================= */
-
-.stampers-gold-dot {
-  width: 7px;
-  height: 7px;
-
-  border-radius: 999px;
-
-  background: #ffd000;
-
-  box-shadow:
-    0 0 8px #ffd000,
-    0 0 18px rgba(255, 208, 0, 0.7);
-}
-
-/* =========================================
-   NAVBAR
-========================================= */
-
-.stampers-navbar {
-  background:
-    rgba(255, 255, 255, 0.90);
-
-  border-bottom:
-    1px solid rgba(180, 130, 0, 0.14);
-
-  backdrop-filter: blur(20px);
-
-  box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.05);
-}
-
-/* =========================================
-   INPUTS
-========================================= */
-
-.stampers-input {
-  background: #ffffff;
-
-  border:
-    1px solid rgba(0, 0, 0, 0.10);
-
-  color: #111111;
-
-  outline: none;
-
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.stampers-input:focus {
-  border-color: #d6a400;
-
-  box-shadow:
-    0 0 0 3px rgba(255, 208, 0, 0.13);
-}
-
-/* =========================================
-   SECTION BACKGROUND
-========================================= */
-
-.stampers-section {
+.stamper-event-slider {
   position: relative;
+  width: 100%;
+  min-height: calc(100svh - var(--nav-height));
+
+  overflow: hidden;
+
+  background: var(--black);
+  color: var(--white);
+
+  touch-action: pan-y;
+}
+
+.stamper-event-slide {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 800ms ease;
+}
+
+.stamper-event-slide-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Hero background image */
+
+.stamper-event-background {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transform: scale(1.04);
+
+  transition:
+    transform 7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stamper-event-slide-active .stamper-event-background {
+  transform: scale(1);
+}
+
+/* Dark cinematic overlay */
+
+.stamper-event-overlay {
+  position: absolute;
+  inset: 0;
 
   background:
     linear-gradient(
       180deg,
-      #fffef9,
-      #fffdf5
+      rgba(0, 0, 0, 0.28) 0%,
+      rgba(0, 0, 0, 0.2) 35%,
+      rgba(0, 0, 0, 0.78) 100%
     );
 }
 
-/* =========================================
-   DARK SECTION
-========================================= */
-
-.stampers-dark-section {
-  position: relative;
-
+.stamper-event-overlay-heavy {
   background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(255, 208, 0, 0.16),
-      transparent 35%
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.65) 38%,
+      rgba(0, 0, 0, 0.2) 78%,
+      rgba(0, 0, 0, 0.35) 100%
     ),
-    #050505;
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.05),
+      rgba(0, 0, 0, 0.55)
+    );
+}
 
+/* Hero content */
+
+.stamper-event-content {
+  position: relative;
+  z-index: 10;
+
+  display: flex;
+  min-height: calc(100svh - var(--nav-height));
+
+  align-items: flex-end;
+
+  padding:
+    48px
+    max(20px, calc((100vw - 1440px) / 2))
+    42px;
+}
+
+.stamper-event-content-inner {
+  width: min(100%, 900px);
+}
+
+.stamper-event-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.stamper-event-eyebrow::before {
+  content: "";
+
+  width: 38px;
+  height: 2px;
+
+  background: var(--gold);
+}
+
+.stamper-event-title {
+  margin: 0;
+
+  font-family: "Space Grotesk", Arial, sans-serif;
+
+  font-size: clamp(4rem, 13vw, 11rem);
+  font-weight: 800;
+
+  letter-spacing: -0.09em;
+  line-height: 0.76;
+
+  text-transform: uppercase;
+}
+
+.stamper-event-subtitle {
+  margin-top: 18px;
+
+  font-size: clamp(1.15rem, 2.8vw, 2.7rem);
+  font-weight: 700;
+
+  letter-spacing: -0.035em;
+  line-height: 1;
+
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.stamper-event-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+
+  margin-top: 26px;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+
+  text-transform: uppercase;
+}
+
+.stamper-event-meta-gold {
+  color: var(--gold-light);
+}
+
+.stamper-event-meta-muted {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.stamper-event-description {
+  max-width: 620px;
+
+  margin-top: 22px;
+
+  font-size: 14px;
+  line-height: 1.9;
+
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* =========================================================
+   HERO SLIDER CONTROLS
+========================================================= */
+
+.stamper-slider-controls {
+  position: absolute;
+  z-index: 30;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding:
+    0
+    max(20px, calc((100vw - 1440px) / 2))
+    24px;
+}
+
+.stamper-slider-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stamper-slider-dot {
+  width: 22px;
+  height: 2px;
+
+  border: 0;
+  padding: 0;
+
+  background: rgba(255, 255, 255, 0.22);
+
+  transition:
+    width 350ms ease,
+    background-color 350ms ease;
+}
+
+.stamper-slider-dot-active {
+  width: 48px;
+  background: var(--gold);
+}
+
+.stamper-slider-counter {
+  margin-left: 8px;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.stamper-slider-arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.stamper-slider-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  background: rgba(0, 0, 0, 0.12);
+
+  color: rgba(255, 255, 255, 0.65);
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.stamper-slider-arrow:hover {
+  border-color: var(--gold);
+  background: rgba(211, 154, 36, 0.12);
   color: white;
 }
 
-/* =========================================
-   HERO GLOW
-========================================= */
+/* =========================================================
+   HERO MOBILE
+========================================================= */
 
-.stampers-hero-glow {
-  position: absolute;
+@media (max-width: 640px) {
+  .stamper-event-slider {
+    min-height: calc(100svh - 64px);
+  }
 
-  left: 50%;
-  top: -300px;
+  .stamper-event-content {
+    min-height: calc(100svh - 64px);
 
-  width: 900px;
-  height: 900px;
+    padding:
+      32px
+      20px
+      34px;
+  }
 
-  transform: translateX(-50%);
+  .stamper-event-title {
+    font-size: clamp(4.3rem, 22vw, 7rem);
+    letter-spacing: -0.085em;
+  }
 
-  border-radius: 999px;
+  .stamper-event-subtitle {
+    font-size: 1.25rem;
+    line-height: 1.05;
+  }
+
+  .stamper-event-description {
+    max-width: 100%;
+
+    margin-top: 18px;
+
+    font-size: 12px;
+    line-height: 1.75;
+  }
+
+  .stamper-event-meta {
+    margin-top: 20px;
+
+    font-size: 9px;
+    letter-spacing: 0.13em;
+  }
+
+  .stamper-slider-controls {
+    padding-inline: 20px;
+    padding-bottom: 20px;
+  }
+
+  .stamper-slider-arrows {
+    display: none;
+  }
+
+  .stamper-slider-dot {
+    width: 18px;
+  }
+
+  .stamper-slider-dot-active {
+    width: 38px;
+  }
+}
+
+/* =========================================================
+   HERO WORDMARK
+========================================================= */
+
+.stamper-hero-wordmark {
+  font-family: "Space Grotesk", Arial, sans-serif;
+
+  font-size: clamp(4.5rem, 16vw, 15rem);
+  font-weight: 800;
+
+  letter-spacing: -0.095em;
+  line-height: 0.75;
+
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .stamper-hero-wordmark {
+    font-size: 22vw;
+    letter-spacing: -0.085em;
+  }
+}
+
+/* =========================================================
+   EDITORIAL GRID
+========================================================= */
+
+.stamper-editorial-grid {
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.045) 1px,
+      transparent 1px
+    );
+
+  background-size: 80px 80px;
+}
+
+.stamper-editorial-grid-dark {
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 80px 80px;
+}
+
+/* =========================================================
+   GOLD MARK
+========================================================= */
+
+.stamper-mark {
+  color: var(--gold);
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.stamper-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  border: 1px solid var(--border);
+  background: var(--white);
+
+  padding: 7px 10px;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.stamper-badge-gold {
+  border-color: rgba(211, 154, 36, 0.35);
+  background: rgba(211, 154, 36, 0.08);
+  color: var(--gold-dark);
+}
+
+/* =========================================================
+   ORGANIZER / MANAGEMENT
+========================================================= */
+
+.stamper-organizer-card {
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  background: var(--white);
+
+  transition:
+    border-color 250ms ease,
+    transform 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.stamper-organizer-card:hover {
+  border-color: #cfcfca;
+  transform: translateY(-4px);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.08);
+}
+
+.stamper-organizer-image {
+  position: relative;
+
+  aspect-ratio: 4 / 5;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  background: #151515;
+}
+
+.stamper-organizer-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 500ms ease;
+}
+
+.stamper-organizer-card:hover
+  .stamper-organizer-image
+  img {
+  transform: scale(1.045);
+  filter: grayscale(0);
+}
+
+/* =========================================================
+   IMAGE PLACEHOLDERS
+========================================================= */
+
+.stamper-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 220px;
 
   background:
     radial-gradient(
-      circle,
-      rgba(255, 208, 0, 0.34) 0%,
-      rgba(255, 208, 0, 0.15) 30%,
-      rgba(255, 208, 0, 0.04) 55%,
-      transparent 72%
+      circle at 50% 30%,
+      rgba(211, 154, 36, 0.12),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #101010,
+      #242424
     );
 
-  filter: blur(40px);
+  color: rgba(255, 255, 255, 0.18);
+}
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
+
+.stamper-image-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.72),
+      transparent 55%
+    );
 
   pointer-events: none;
 }
 
-/* =========================================
-   GOLD SHIMMER
-========================================= */
+.stamper-image-overlay-light {
+  position: absolute;
+  inset: 0;
 
-.stampers-shimmer {
   background:
     linear-gradient(
-      110deg,
-      #9d6800,
-      #ffd000,
-      #fff5ad,
-      #ffd000,
-      #9d6800
+      to top,
+      rgba(0, 0, 0, 0.3),
+      transparent 65%
     );
 
-  background-size: 250% 100%;
-
-  animation: shimmer 4s linear infinite;
+  pointer-events: none;
 }
 
-@keyframes shimmer {
-  from {
-    background-position: 0% 50%;
-  }
+/* =========================================================
+   EVENT CARDS
+========================================================= */
 
-  to {
-    background-position: 250% 50%;
+.stamper-event-card {
+  position: relative;
+
+  min-height: 430px;
+
+  overflow: hidden;
+
+  background: var(--black);
+  color: var(--white);
+
+  transition:
+    transform 350ms ease,
+    box-shadow 350ms ease;
+}
+
+.stamper-event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.16);
+}
+
+.stamper-event-card-image {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stamper-event-card:hover
+  .stamper-event-card-image {
+  transform: scale(1.045);
+}
+
+.stamper-event-card-content {
+  position: absolute;
+  inset: auto 0 0;
+
+  padding: 32px;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.92),
+      rgba(0, 0, 0, 0.1)
+    );
+}
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.stamper-stat {
+  position: relative;
+  padding: 32px 0;
+}
+
+.stamper-stat-number {
+  font-family: "Space Grotesk", Arial, sans-serif;
+
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 800;
+
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+}
+
+.stamper-stat-label {
+  margin-top: 12px;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.38);
+}
+
+/* =========================================================
+   WINNER CARDS
+========================================================= */
+
+.stamper-winner-card {
+  position: relative;
+
+  min-height: 360px;
+
+  background: var(--white);
+
+  padding: 32px;
+
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.stamper-winner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.07);
+}
+
+.stamper-winner-rank {
+  font-family: "Space Grotesk", Arial, sans-serif;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.2em;
+
+  color: rgba(0, 0, 0, 0.28);
+}
+
+.stamper-winner-name {
+  margin-top: 44px;
+
+  font-family: "Space Grotesk", Arial, sans-serif;
+
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.stamper-gallery {
+  display: flex;
+
+  overflow-x: auto;
+
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  overscroll-behavior-x: contain;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.stamper-gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.stamper-gallery-item {
+  flex: 0 0 82%;
+
+  scroll-snap-align: start;
+
+  overflow: hidden;
+}
+
+.stamper-gallery-item img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 600ms ease;
+}
+
+.stamper-gallery-item:hover img {
+  transform: scale(1.035);
+}
+
+@media (min-width: 768px) {
+  .stamper-gallery-item {
+    flex-basis: 42%;
   }
 }
 
-/* =========================================
-   SCAN LINE
-========================================= */
+@media (min-width: 1200px) {
+  .stamper-gallery-item {
+    flex-basis: 30%;
+  }
+}
 
-.stampers-scan {
+/* =========================================================
+   COMING SOON
+========================================================= */
+
+.stamper-coming-soon {
+  position: relative;
+  overflow: hidden;
+
+  border: 1px solid var(--black);
+
+  background: var(--black);
+  color: var(--white);
+}
+
+.stamper-coming-soon::before {
+  content: "";
+
   position: absolute;
 
-  left: 0;
-  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 50%;
 
-  height: 1px;
+  width: 1px;
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      #ffd000,
-      #fff4a3,
-      #ffd000,
-      transparent
-    );
-
-  box-shadow:
-    0 0 15px rgba(255, 208, 0, 0.9);
-
-  animation: scan 5s linear infinite;
+  background: rgba(255, 255, 255, 0.07);
 }
 
-@keyframes scan {
+.stamper-coming-soon-gold {
+  color: var(--gold);
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.stamper-input {
+  width: 100%;
+
+  border: 1px solid var(--border);
+  background: var(--white);
+
+  padding: 12px 14px;
+
+  color: var(--black);
+
+  outline: none;
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.stamper-input::placeholder {
+  color: #999999;
+}
+
+.stamper-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(211, 154, 36, 0.1);
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.stamper-search {
+  display: flex;
+  align-items: center;
+
+  min-height: 56px;
+
+  border: 1px solid var(--border);
+  background: var(--white);
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.stamper-search:focus-within {
+  border-color: #bdbdb9;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes stamper-fade-up {
   from {
-    top: -5%;
+    opacity: 0;
+    transform: translateY(18px);
   }
 
   to {
-    top: 105%;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* =========================================
-   MOBILE
-========================================= */
+.stamper-fade-up {
+  animation:
+    stamper-fade-up
+    700ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
 
-@media (max-width: 768px) {
-  .stampers-grid {
-    background-size: 35px 35px;
+@keyframes stamper-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
   }
 
-  .stampers-hero-glow {
-    width: 600px;
-    height: 600px;
-
-    top: -220px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* =========================================
-   REDUCED MOTION
-========================================= */
+.stamper-slide-up {
+  animation:
+    stamper-slide-up
+    850ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+@keyframes stamper-pulse-gold {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(211, 154, 36, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 0 7px rgba(211, 154, 36, 0.08);
+  }
+}
+
+.stamper-pulse-gold {
+  animation: stamper-pulse-gold 2.4s ease-in-out infinite;
+}
+
+/* =========================================================
+   MOBILE TOUCH EXPERIENCE
+========================================================= */
+
+@media (max-width: 640px) {
+  .stamper-container {
+    padding-inline: 20px;
+  }
+
+  .stamper-button {
+    min-height: 44px;
+    padding-inline: 17px;
+
+    font-size: 10px;
+  }
+
+  .stamper-heading {
+    letter-spacing: -0.045em;
+  }
+
+  .stamper-nav {
+    min-height: 64px;
+  }
+}
+
+/* =========================================================
+   SAFE AREA — MOBILE DEVICES
+========================================================= */
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  .stamper-mobile-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .stamper-mobile-safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
 }
