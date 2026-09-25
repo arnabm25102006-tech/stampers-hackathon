@@ -68,17 +68,22 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="relative overflow-hidden bg-[#030303] py-24 text-white sm:py-32 lg:py-36"
+      className="relative overflow-hidden bg-white py-10 text-[#0B1F3A] sm:py-12 lg:py-14"
     >
       {/* =====================================================
-          BACKGROUND
+          SUBTLE BACKGROUND
       ====================================================== */}
 
-      <div className="stampers-grid pointer-events-none absolute inset-0 opacity-[0.035]" />
-
-      <div className="pointer-events-none absolute left-1/2 top-[-220px] h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-[#D39A24]/[0.045] blur-[180px]" />
-
-      <div className="pointer-events-none absolute -right-40 bottom-0 h-[400px] w-[400px] rounded-full bg-[#D39A24]/[0.025] blur-[150px]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.018]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(#0B1F3A 1px, transparent 1px), linear-gradient(90deg, #0B1F3A 1px, transparent 1px)",
+            backgroundSize: "42px 42px",
+          }}
+        />
+      </div>
 
       <div className="relative mx-auto max-w-5xl px-5 sm:px-8">
         {/* =====================================================
@@ -86,38 +91,38 @@ export default function FAQ() {
         ====================================================== */}
 
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.65 }}
-          className="mb-14 text-center"
+          transition={{ duration: 0.5 }}
+          className="mb-8 text-center sm:mb-9"
         >
-          <div className="mb-6 flex items-center justify-center gap-4">
-            <span className="h-px w-10 bg-gradient-to-r from-transparent to-[#D39A24]" />
+          <div className="mb-3 flex items-center justify-center gap-3">
+            <span className="h-[2px] w-8 bg-[#D39A24]" />
 
-            <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D39A24]">
+            <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#D39A24]">
               STAMPERS
             </span>
 
-            <span className="h-px w-10 bg-gradient-to-l from-transparent to-[#D39A24]" />
+            <span className="h-[2px] w-8 bg-[#D39A24]" />
           </div>
 
-          <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center border border-[#D39A24]/20 bg-[#D39A24]/[0.05]">
+          <div className="mx-auto mb-3 flex h-9 w-9 items-center justify-center border-2 border-[#D39A24] bg-[#0B1F3A]">
             <HelpCircle
-              size={20}
-              strokeWidth={1.4}
+              size={17}
+              strokeWidth={1.5}
               className="text-[#D39A24]"
             />
           </div>
 
-          <h2 className="font-[family-name:var(--font-space)] text-4xl font-black tracking-[-0.055em] sm:text-5xl md:text-6xl">
+          <h2 className="font-[family-name:var(--font-space)] text-3xl font-black tracking-[-0.05em] text-[#0B1F3A] sm:text-4xl md:text-5xl">
             Frequently Asked
-            <span className="block bg-gradient-to-r from-[#F5D76E] via-[#D39A24] to-[#B8860B] bg-clip-text text-transparent">
+            <span className="block text-[#D39A24]">
               Questions.
             </span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-white/40 sm:text-base sm:leading-8">
+          <p className="mx-auto mt-3 max-w-xl text-xs leading-5 text-[#0B1F3A]/50 sm:text-sm sm:leading-6">
             Everything you need to know about STAMPERS, participating in
             opportunities and becoming part of the ecosystem.
           </p>
@@ -127,89 +132,79 @@ export default function FAQ() {
             FAQ LIST
         ====================================================== */}
 
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {faqs.map((faq, index) => {
             const active = open === index;
 
             return (
               <motion.div
                 key={faq.question}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{
-                  duration: 0.45,
-                  delay: index * 0.035,
+                  duration: 0.35,
+                  delay: index * 0.025,
                 }}
-                className={`group relative overflow-hidden border transition-all duration-300 ${
-                  active
-                    ? "border-[#D39A24]/35 bg-[#D39A24]/[0.035]"
-                    : "border-white/[0.07] bg-white/[0.012] hover:border-[#D39A24]/20 hover:bg-white/[0.02]"
-                }`}
+                className="group relative overflow-hidden border-2 border-[#D39A24] bg-[#0B1F3A] transition-all duration-300"
               >
-                {/* Active accent */}
+                {/* GOLD LEFT ACCENT */}
 
                 <motion.div
                   initial={false}
                   animate={{
                     opacity: active ? 1 : 0,
                   }}
-                  className="absolute bottom-0 left-0 top-0 w-[2px] bg-gradient-to-b from-[#F5D76E] via-[#D39A24] to-transparent"
+                  className="absolute bottom-0 left-0 top-0 w-[3px] bg-[#D39A24]"
                 />
 
-                {/* Question */}
+                {/* =================================================
+                    QUESTION
+                ================================================== */}
 
                 <button
                   type="button"
                   onClick={() => setOpen(active ? null : index)}
                   aria-expanded={active}
-                  className="flex w-full items-center justify-between gap-6 px-5 py-5 text-left sm:px-7 sm:py-6"
+                  className="flex w-full items-center justify-between gap-4 px-4 py-3.5 text-left sm:px-6 sm:py-4"
                 >
-                  <div className="flex min-w-0 items-center gap-4">
-                    <span
-                      className={`shrink-0 font-mono text-[9px] font-bold tracking-[0.2em] ${
-                        active
-                          ? "text-[#D39A24]"
-                          : "text-white/15"
-                      }`}
-                    >
+                  <div className="flex min-w-0 items-center gap-3">
+                    <span className="shrink-0 font-mono text-[8px] font-bold tracking-[0.2em] text-[#D39A24]">
                       {String(index + 1).padStart(2, "0")}
                     </span>
 
-                    <span
-                      className={`text-sm font-bold transition-colors sm:text-base ${
-                        active
-                          ? "text-white"
-                          : "text-white/65 group-hover:text-white"
-                      }`}
-                    >
+                    <span className="text-sm font-bold text-white sm:text-[15px]">
                       {faq.question}
                     </span>
                   </div>
+
+                  {/* ARROW */}
 
                   <motion.div
                     animate={{
                       rotate: active ? 180 : 0,
                     }}
-                    transition={{ duration: 0.25 }}
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center border ${
+                    transition={{ duration: 0.2 }}
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center border-2 ${
                       active
-                        ? "border-[#D39A24]/30 bg-[#D39A24]/[0.08]"
-                        : "border-white/[0.07] bg-white/[0.02]"
+                        ? "border-[#D39A24] bg-[#D39A24]"
+                        : "border-[#D39A24] bg-[#0B1F3A]"
                     }`}
                   >
                     <ChevronDown
-                      size={16}
+                      size={15}
                       className={
                         active
-                          ? "text-[#D39A24]"
-                          : "text-white/25 group-hover:text-[#D39A24]"
+                          ? "text-[#0B1F3A]"
+                          : "text-[#D39A24]"
                       }
                     />
                   </motion.div>
                 </button>
 
-                {/* Answer */}
+                {/* =================================================
+                    ANSWER
+                ================================================== */}
 
                 <AnimatePresence initial={false}>
                   {active && (
@@ -226,11 +221,11 @@ export default function FAQ() {
                         height: 0,
                         opacity: 0,
                       }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.25 }}
                       className="overflow-hidden"
                     >
-                      <div className="border-t border-[#D39A24]/10 px-5 pb-6 pt-5 sm:px-7 sm:pl-[66px]">
-                        <p className="max-w-2xl text-sm leading-7 text-white/40">
+                      <div className="border-t-2 border-[#D39A24]/30 px-4 pb-4 pt-3 sm:px-6 sm:pl-[58px]">
+                        <p className="max-w-2xl text-xs leading-6 text-white/60 sm:text-sm">
                           {faq.answer}
                         </p>
                       </div>
@@ -247,38 +242,38 @@ export default function FAQ() {
         ====================================================== */}
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative mt-10 overflow-hidden border border-[#D39A24]/20 bg-gradient-to-br from-[#D39A24]/[0.045] via-white/[0.01] to-transparent px-6 py-8 sm:px-10 sm:py-9"
+          transition={{ duration: 0.45 }}
+          className="relative mt-6 overflow-hidden border-2 border-[#D39A24] bg-[#0B1F3A] px-5 py-5 sm:px-7 sm:py-6"
         >
-          <div className="pointer-events-none absolute left-1/2 top-0 h-32 w-64 -translate-x-1/2 rounded-full bg-[#D39A24]/[0.08] blur-[70px]" />
+          <div className="absolute left-0 top-0 h-[3px] w-full bg-[#D39A24]" />
 
-          <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#D39A24]">
+              <p className="text-[8px] font-bold uppercase tracking-[0.28em] text-[#D39A24]">
                 Still have a question?
               </p>
 
-              <h3 className="mt-3 font-[family-name:var(--font-space)] text-xl font-bold tracking-[-0.025em] text-white">
+              <h3 className="mt-1.5 text-lg font-bold text-white">
                 Talk to the STAMPERS team.
               </h3>
 
-              <p className="mt-2 text-sm text-white/35">
+              <p className="mt-1 text-xs text-white/45">
                 We're here to help with platform and event-related questions.
               </p>
             </div>
 
             <a
               href="mailto:support@stampers.in"
-              className="inline-flex w-fit items-center gap-3 border border-white/10 bg-white/[0.03] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-white/70 transition hover:border-[#D39A24]/40 hover:bg-[#D39A24]/10 hover:text-[#D39A24]"
+              className="inline-flex w-fit items-center gap-2 border-2 border-[#D39A24] bg-[#D39A24] px-4 py-2.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#0B1F3A] transition hover:bg-white hover:text-[#0B1F3A]"
             >
-              <Mail size={14} />
+              <Mail size={13} />
 
               Contact Support
 
-              <ArrowUpRight size={13} />
+              <ArrowUpRight size={12} />
             </a>
           </div>
         </motion.div>

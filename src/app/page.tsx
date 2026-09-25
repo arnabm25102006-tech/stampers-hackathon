@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   ChevronLeft,
@@ -18,13 +18,15 @@ import FAQ from "./components/FAQ/FAQ";
 import Footer from "./components/Footer";
 import Sponsors from "./components/Sponsors/Sponsors";
 
-const AXION_HERO_IMAGE = "";
 const AXION_LOGO =
   "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/AXION_HACKATHON_logo_transparent.png";
+
+const STAMPERS_HACKATHON_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/STAMPERS_logo_transparent(2).png";
+
 const UNSTOP_LOGO =
   "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/Unstop-Logo-Blue-Large.jpg";
-const PREVIOUS_HACKATHON_IMAGE = "";
-"https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/logo.png.jpeg"
+
 const MANAGEMENT = [
   {
     name: "Arnab Manna",
@@ -100,34 +102,48 @@ const SLIDES = [
   {
     id: "axion",
     eyebrow: "UPCOMING EVENT",
+    logo: AXION_LOGO,
+    logoAlt: "AXION National Hackathon",
     title: "AXION",
     subtitle: "NATIONAL HACKATHON",
     description:
-      "A national innovation challenge by STAMPERS, powered by Unstop.",
-    theme: "OPEN INNOVATION",
-    date: "11 OCTOBER 2026",
-    status: "REGISTRATION CLOSED · 10 OCTOBER",
-    image: AXION_HERO_IMAGE,
-    logo: AXION_LOGO,
+      "A national innovation challenge by STAMPERS, powered by Unstop, bringing students together to build meaningful solutions through technology.",
+    details: [
+      "OPEN INNOVATION",
+      "11 OCTOBER 2026",
+      "REGISTRATION CLOSES 10 OCTOBER",
+    ],
+    status: "UPCOMING",
+    button: "Explore AXION",
+    target: "#axion",
   },
   {
-    id: "national-hackathon",
-    eyebrow: "PREVIOUS HIGHLIGHT",
+    id: "stampers",
+    eyebrow: "PREVIOUS EVENT",
+    logo: STAMPERS_HACKATHON_LOGO,
+    logoAlt: "STAMPERS National Hackathon 2026",
     title: "STAMPERS",
     subtitle: "NATIONAL HACKATHON 2026",
     description:
-      "Our previous national hackathon brought together students and teams from universities across India and beyond.",
-    theme: "369 TEAMS · 713 CANDIDATES",
-    date: "14 — 15 AUGUST 2026",
-    status: "EVENT COMPLETED",
-    image: PREVIOUS_HACKATHON_IMAGE,
-    logo: "",
+      "The first national hackathon by STAMPERS brought together student teams from universities across India and beyond.",
+    details: [
+      "369 TEAMS",
+      "713 CANDIDATES",
+      "54 UNIVERSITIES",
+    ],
+    status: "COMPLETED",
+    button: "View Highlights",
+    target: "#previous-hackathon",
   },
 ];
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const touchStartTime = useRef(0);
 
   const nextSlide = () => {
     setActiveSlide((current) => (current + 1) % SLIDES.length);
@@ -149,141 +165,172 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [isPaused]);
 
+  const handleTouchStart = (event: React.TouchEvent<HTMLElement>) => {
+    const touch = event.touches[0];
+
+    touchStartX.current = touch.clientX;
+    touchStartY.current = touch.clientY;
+    touchStartTime.current = Date.now();
+
+    setIsPaused(true);
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLElement>) => {
+    const touch = event.changedTouches[0];
+
+    const deltaX = touch.clientX - touchStartX.current;
+    const deltaY = touch.clientY - touchStartY.current;
+    const duration = Date.now() - touchStartTime.current;
+
+    const horizontalSwipe =
+      Math.abs(deltaX) > 50 &&
+      Math.abs(deltaX) > Math.abs(deltaY) * 1.2 &&
+      duration < 1000;
+
+    if (horizontalSwipe) {
+      if (deltaX < 0) {
+        nextSlide();
+      } else {
+        previousSlide();
+      }
+    }
+
+    setIsPaused(false);
+  };
+
   return (
     <>
       <Navbar />
 
       <main className="overflow-hidden bg-white">
+
         {/* =========================================================
-            FIRST WINDOW — PREMIUM EVENT SLIDER
+            HERO SLIDER
         ========================================================== */}
 
         <section
-          className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-[#070707] text-white"
+          className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-[#0B1F3A] text-white"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          style={{ touchAction: "pan-y" }}
         >
           {SLIDES.map((slide, index) => (
             <div
               key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
+              className={`absolute inset-0 transition-opacity duration-700 ${
                 activeSlide === index
                   ? "opacity-100"
                   : "pointer-events-none opacity-0"
               }`}
             >
-              {slide.image ? (
-                <>
-                  <img
-                    src={slide.image}
-                    alt=""
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/55" />
-                </>
-              ) : (
-                <div
-                  className={`absolute inset-0 ${
-                    index === 0
-                      ? "bg-[radial-gradient(circle_at_75%_35%,rgba(37,99,235,0.35),transparent_35%),linear-gradient(135deg,#050505,#111827,#050505)]"
-                      : "bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.10),transparent_30%),linear-gradient(135deg,#050505,#171717,#050505)]"
-                  }`}
-                />
-              )}
+              <div className="absolute inset-0 bg-[#0B1F3A]" />
+
+              <div className="absolute right-[-10%] top-[8%] h-[500px] w-[500px] rounded-full bg-[#D39A24]/[0.06] blur-3xl" />
+
+              <div className="absolute bottom-[-15%] left-[-10%] h-[450px] w-[450px] rounded-full bg-white/[0.025] blur-3xl" />
+
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(11,31,58,0.35))]" />
             </div>
           ))}
 
-          <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:radial-gradient(#fff_0.7px,transparent_0.7px)] [background-size:6px_6px]" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(255,255,255,.7)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.7)_1px,transparent_1px)] [background-size:55px_55px]" />
 
-          <div className="relative z-10 flex min-h-[calc(100svh-72px)] items-end">
-            <div className="w-full px-5 pb-10 sm:px-8 sm:pb-14 lg:px-16 lg:pb-16">
-              <div className="mx-auto max-w-[1500px]">
-                <div className="max-w-4xl">
-                  <div className="mb-6 flex items-center gap-3">
-                    <span className="h-[2px] w-10 bg-[#D39A24]" />
+          <div className="relative z-10 flex min-h-[calc(100svh-72px)] items-center">
 
-                    <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/55 sm:text-xs">
+            <div className="w-full px-5 py-12 sm:px-8 sm:py-14 lg:px-16 lg:py-16">
+
+              <div className="mx-auto max-w-[1450px]">
+
+                <div className="max-w-5xl">
+
+                  {/* EYEBROW */}
+
+                  <div className="mb-7 flex items-center gap-3">
+                    <span className="h-[2px] w-12 bg-[#D39A24]" />
+
+                    <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50 sm:text-xs">
                       {SLIDES[activeSlide].eyebrow}
                     </span>
                   </div>
 
-                  {/* =================================================
-                      AXION LOGO
-                  ================================================== */}
+                  {/* LARGE LOGO */}
 
-                {activeSlide === 0 ? (
-  <div className="mb-6 flex w-full items-center justify-start">
-    <img
-      src={AXION_LOGO}
-      alt="AXION National Hackathon"
-      className="block h-auto w-full max-w-[160px] object-contain object-left"
-    />
-  </div>
-) : (
-                    <>
-                      {SLIDES[activeSlide].logo && (
-                        <div className="mb-6">
-                          <img
-                            src={SLIDES[activeSlide].logo}
-                            alt=""
-                            className="max-h-14 max-w-[190px] object-contain object-left"
-                          />
-                        </div>
-                      )}
+             <div className="flex min-h-[150px] items-center sm:min-h-[190px] md:min-h-[220px]">
+  <img
+    src={SLIDES[activeSlide].logo}
+    alt={SLIDES[activeSlide].logoAlt}
+    className="block h-auto max-h-[155px] w-auto max-w-[330px] object-contain object-left sm:max-h-[185px] sm:max-w-[470px] md:max-h-[215px] md:max-w-[570px]"
+  />
+</div>
 
-                      <h1 className="font-sans text-[clamp(4rem,13vw,11rem)] font-black uppercase leading-[0.78] tracking-[-0.07em]">
-                        {SLIDES[activeSlide].title}
-                      </h1>
+                  {/* TITLE */}
 
-                      <h2 className="mt-4 max-w-3xl text-[clamp(1.2rem,3vw,3rem)] font-semibold uppercase tracking-[0.02em] text-white/85">
-                        {SLIDES[activeSlide].subtitle}
-                      </h2>
-                    </>
-                  )}
-
-                  <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs font-bold uppercase tracking-[0.16em]">
-                    <span className="text-[#D39A24]">
-                      {SLIDES[activeSlide].theme}
-                    </span>
-
-                    <span className="hidden h-1 w-1 rounded-full bg-white/30 sm:block" />
-
-                    <span className="text-white/60">
-                      {SLIDES[activeSlide].date}
-                    </span>
+                  <div className="mt-5">
+                    <p className="text-lg font-bold uppercase tracking-[0.08em] text-white/90 sm:text-2xl">
+                      {SLIDES[activeSlide].subtitle}
+                    </p>
                   </div>
 
-                  <p className="mt-6 max-w-xl text-sm leading-7 text-white/60 sm:text-base">
+                  {/* DETAILS */}
+
+                  <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+                    {SLIDES[activeSlide].details.map((detail, index) => (
+                      <div
+                        key={detail}
+                        className="flex items-center gap-5"
+                      >
+                        <span
+                          className={`text-[10px] font-bold uppercase tracking-[0.16em] sm:text-xs ${
+                            index === 0
+                              ? "text-[#D39A24]"
+                              : "text-white/55"
+                          }`}
+                        >
+                          {detail}
+                        </span>
+
+                        {index <
+                          SLIDES[activeSlide].details.length - 1 && (
+                          <span className="hidden h-1 w-1 rounded-full bg-white/25 sm:block" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* DESCRIPTION */}
+
+                  <p className="mt-6 max-w-2xl text-sm leading-7 text-white/55 sm:text-base sm:leading-8">
                     {SLIDES[activeSlide].description}
                   </p>
 
-                  <div className="mt-8 flex flex-wrap gap-3">
-                    {activeSlide === 0 ? (
-                      <a
-                        href="#axion"
-                        className="inline-flex items-center gap-3 bg-[#D39A24] px-5 py-3.5 text-xs font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#f0b52f]"
-                      >
-                        Explore AXION
-                        <ArrowRight size={15} />
-                      </a>
-                    ) : (
-                      <a
-                        href="#previous-hackathon"
-                        className="inline-flex items-center gap-3 bg-[#D39A24] px-5 py-3.5 text-xs font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#f0b52f]"
-                      >
-                        View Highlights
-                        <ArrowRight size={15} />
-                      </a>
-                    )}
+                  {/* ACTIONS */}
 
-                    <span className="inline-flex items-center border border-white/20 px-5 py-3.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white/60">
+                  <div className="mt-8 flex flex-wrap items-center gap-3">
+
+                    <a
+                      href={SLIDES[activeSlide].target}
+                      className="inline-flex items-center gap-3 bg-[#D39A24] px-6 py-3.5 text-xs font-black uppercase tracking-[0.12em] text-[#0B1F3A] transition hover:bg-[#e7ad32]"
+                    >
+                      {SLIDES[activeSlide].button}
+                      <ArrowRight size={15} />
+                    </a>
+
+                    <span className="inline-flex items-center border border-white/15 px-5 py-3.5 text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
                       {SLIDES[activeSlide].status}
                     </span>
+
                   </div>
+
                 </div>
 
-                <div className="mt-12 flex items-center justify-between border-t border-white/10 pt-5">
+                {/* SLIDER CONTROLS */}
+
+                <div className="mt-12 flex items-center justify-between border-t border-white/10 pt-5 sm:mt-14">
+
                   <div className="flex items-center gap-3">
+
                     {SLIDES.map((slide, index) => (
                       <button
                         key={slide.id}
@@ -292,23 +339,25 @@ export default function Home() {
                         onClick={() => setActiveSlide(index)}
                         className={`h-[3px] transition-all duration-500 ${
                           activeSlide === index
-                            ? "w-12 bg-[#D39A24]"
-                            : "w-5 bg-white/25"
+                            ? "w-14 bg-[#D39A24]"
+                            : "w-6 bg-white/20"
                         }`}
                       />
                     ))}
 
-                    <span className="ml-2 text-[10px] font-bold tracking-[0.2em] text-white/40">
+                    <span className="ml-2 text-[10px] font-bold tracking-[0.2em] text-white/35">
                       0{activeSlide + 1} / 0{SLIDES.length}
                     </span>
+
                   </div>
 
                   <div className="hidden items-center gap-2 sm:flex">
+
                     <button
                       type="button"
                       onClick={previousSlide}
                       aria-label="Previous slide"
-                      className="flex h-10 w-10 items-center justify-center border border-white/15 text-white/60 transition hover:border-white/40 hover:text-white"
+                      className="flex h-10 w-10 items-center justify-center border border-white/15 text-white/55 transition hover:border-[#D39A24] hover:text-[#D39A24]"
                     >
                       <ChevronLeft size={17} />
                     </button>
@@ -317,12 +366,14 @@ export default function Home() {
                       type="button"
                       onClick={nextSlide}
                       aria-label="Next slide"
-                      className="flex h-10 w-10 items-center justify-center border border-white/15 text-white/60 transition hover:border-white/40 hover:text-white"
+                      className="flex h-10 w-10 items-center justify-center border border-white/15 text-white/55 transition hover:border-[#D39A24] hover:text-[#D39A24]"
                     >
                       <ChevronRight size={17} />
                     </button>
+
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -333,106 +384,130 @@ export default function Home() {
           </div>
         </section>
 
+
         {/* =========================================================
             AXION
         ========================================================== */}
 
-        <section id="axion" className="stamper-section bg-white">
-          <div className="stamper-container">
-            <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-end">
-              <div>
-                <div className="stamper-accent-line mb-6" />
+        <section
+          id="axion"
+          className="border-b border-[#0B1F3A]/10 bg-white"
+        >
+          <div className="mx-auto max-w-[1450px] px-5 py-14 sm:px-8 sm:py-16 lg:px-16">
 
-                <p className="stamper-label text-black/40">
-                  Current event
+            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+
+              <div>
+
+                <div className="mb-5 h-[2px] w-12 bg-[#D39A24]" />
+
+                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#0B1F3A]/40">
+                  Current Event
                 </p>
 
                 <img
                   src={AXION_LOGO}
-                  alt="AXION"
-                  className="mt-4 h-auto w-[260px] object-contain object-left sm:w-[380px]"
+                  alt="AXION National Hackathon"
+                  className="mt-5 h-auto w-[260px] object-contain object-left sm:w-[360px]"
                 />
 
-                <p className="mt-3 text-sm font-bold uppercase tracking-[0.18em] text-black/45">
+                <p className="mt-3 text-xs font-bold uppercase tracking-[0.18em] text-[#0B1F3A]/40">
                   National Hackathon
                 </p>
+
               </div>
 
               <div>
-                <p className="max-w-2xl text-base leading-8 text-black/60 sm:text-lg">
+
+                <p className="max-w-2xl text-sm leading-7 text-[#0B1F3A]/60 sm:text-base sm:leading-8">
                   A national innovation challenge by STAMPERS, powered by
                   Unstop, built around the theme of Open Innovation.
                 </p>
 
-                <div className="mt-8 grid grid-cols-2 border-t border-black/10 sm:grid-cols-3">
-                  <div className="border-r border-black/10 py-6 pr-5">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-black/35">
+                <div className="mt-7 grid grid-cols-2 border-t border-[#0B1F3A]/10 sm:grid-cols-3">
+
+                  <div className="border-r border-[#0B1F3A]/10 py-5 pr-5">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#0B1F3A]/35">
                       Theme
                     </p>
-                    <p className="mt-2 text-sm font-bold">Open Innovation</p>
+                    <p className="mt-2 text-sm font-bold text-[#0B1F3A]">
+                      Open Innovation
+                    </p>
                   </div>
 
-                  <div className="border-r border-black/10 px-5 py-6">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-black/35">
+                  <div className="border-r border-[#0B1F3A]/10 px-5 py-5">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#0B1F3A]/35">
                       Hackathon
                     </p>
-                    <p className="mt-2 text-sm font-bold">11 Oct 2026</p>
+                    <p className="mt-2 text-sm font-bold text-[#0B1F3A]">
+                      11 Oct 2026
+                    </p>
                   </div>
 
-                  <div className="col-span-2 py-6 sm:col-span-1 sm:pl-5">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-black/35">
+                  <div className="col-span-2 py-5 sm:col-span-1 sm:pl-5">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#0B1F3A]/35">
                       Registration
                     </p>
-                    <p className="mt-2 text-sm font-bold">
-                      Closed · 10 Oct
+                    <p className="mt-2 text-sm font-bold text-[#0B1F3A]">
+                      Closes 10 Oct
                     </p>
                   </div>
+
                 </div>
+
               </div>
+
             </div>
+
           </div>
         </section>
+
 
         {/* =========================================================
             IMPACT
         ========================================================== */}
 
-        <section className="bg-[#080808] py-16 text-white sm:py-24">
-          <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-16">
-            <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+        <section className="bg-[#0B1F3A] py-14 text-white sm:py-18">
+
+          <div className="mx-auto max-w-[1450px] px-5 sm:px-8 lg:px-16">
+
+            <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/35">
+                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D39A24]">
                   STAMPERS Impact
                 </p>
 
-                <h2 className="mt-4 text-4xl font-black uppercase tracking-[-0.04em] sm:text-6xl">
+                <h2 className="mt-3 text-3xl font-black uppercase tracking-[-0.04em] sm:text-5xl">
                   Built through
                   <br />
                   participation.
                 </h2>
               </div>
 
-              <p className="max-w-sm text-sm leading-7 text-white/45">
+              <p className="max-w-sm text-sm leading-6 text-white/45">
                 The numbers from STAMPERS National Hackathon 2026.
               </p>
+
             </div>
 
             <div className="grid border-t border-white/10 sm:grid-cols-2 lg:grid-cols-4">
+
               {IMPACT.map((item) => {
                 const Icon = item.icon;
 
                 return (
                   <div
                     key={item.label}
-                    className="border-b border-white/10 py-8 sm:border-r sm:px-7 lg:border-b-0"
+                    className="border-b border-white/10 py-7 sm:border-r sm:px-6 lg:border-b-0"
                   >
                     <Icon
-                      size={20}
-                      strokeWidth={1.3}
+                      size={19}
+                      strokeWidth={1.4}
                       className="text-[#D39A24]"
                     />
 
-                    <p className="mt-7 text-5xl font-black tracking-[-0.05em] sm:text-6xl">
+                    <p className="mt-5 text-4xl font-black tracking-[-0.05em] sm:text-5xl">
                       {item.value}
                     </p>
 
@@ -442,247 +517,373 @@ export default function Home() {
                   </div>
                 );
               })}
+
             </div>
+
           </div>
+
         </section>
 
-        {/* =========================================================
-            PREVIOUS HACKATHON
-        ========================================================== */}
 
-        <section
-          id="previous-hackathon"
-          className="stamper-section stamper-section-offwhite"
+       {/* =========================================================
+    PREVIOUS HACKATHON — COMPACT
+========================================================= */}
+
+<section
+  id="previous-hackathon"
+  className="bg-[#F5F7FA]"
+>
+  <div className="mx-auto max-w-[1450px] px-5 py-8 sm:px-8 sm:py-10 lg:px-16">
+
+    <div className="grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+
+      {/* LOGO */}
+
+     <div className="flex h-[210px] items-center justify-center border-2 border-[#D39A24] bg-white p-6 sm:h-[240px]">
+
+        <img
+          src={STAMPERS_HACKATHON_LOGO}
+          alt="STAMPERS National Hackathon 2026"
+          className="h-auto max-h-[170px] w-full max-w-[360px] object-contain"
+        />
+
+      </div>
+
+      {/* INFORMATION */}
+
+      <div>
+
+        <div className="mb-3 h-[2px] w-10 bg-[#D39A24]" />
+
+        <p className="text-[9px] font-black uppercase tracking-[0.25em] text-[#0B1F3A]/40">
+          Previous Event
+        </p>
+
+        <h2 className="mt-2 text-3xl font-black uppercase leading-[0.95] tracking-[-0.045em] text-[#0B1F3A] sm:text-4xl">
+          STAMPERS NATIONAL
+          <br />
+          HACKATHON 2026
+        </h2>
+
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-[#0B1F3A]/55">
+          Our previous national hackathon brought together student teams
+          and candidates from universities across India and beyond.
+        </p>
+
+        {/* STATS */}
+
+        <div className="mt-5 grid grid-cols-4 border-t border-[#0B1F3A]/10">
+
+          <div className="border-r border-[#0B1F3A]/10 py-4 pr-3">
+            <p className="text-2xl font-black text-[#0B1F3A]">
+              369
+            </p>
+
+            <p className="mt-1 text-[8px] font-bold uppercase tracking-[0.14em] text-[#0B1F3A]/35">
+              Teams
+            </p>
+          </div>
+
+          <div className="border-r border-[#0B1F3A]/10 px-4 py-4">
+            <p className="text-2xl font-black text-[#0B1F3A]">
+              713
+            </p>
+
+            <p className="mt-1 text-[8px] font-bold uppercase tracking-[0.14em] text-[#0B1F3A]/35">
+              Candidates
+            </p>
+          </div>
+
+          <div className="border-r border-[#0B1F3A]/10 px-4 py-4">
+            <p className="text-2xl font-black text-[#0B1F3A]">
+              54
+            </p>
+
+            <p className="mt-1 text-[8px] font-bold uppercase tracking-[0.14em] text-[#0B1F3A]/35">
+              Universities
+            </p>
+          </div>
+
+          <div className="py-4 pl-4">
+            <p className="text-2xl font-black text-[#0B1F3A]">
+              14
+            </p>
+
+            <p className="mt-1 text-[8px] font-bold uppercase tracking-[0.14em] text-[#0B1F3A]/35">
+              States
+            </p>
+          </div>
+
+        </div>
+
+        {/* BUTTON */}
+
+        <div className="mt-4">
+
+          <a
+            href="#winners"
+            className="inline-flex items-center gap-3 border border-[#0B1F3A]/15 px-4 py-2.5 text-[9px] font-black uppercase tracking-[0.15em] text-[#0B1F3A] transition hover:border-[#D39A24] hover:text-[#D39A24]"
+          >
+            View Winners
+            <ArrowRight size={13} />
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+       {/* =========================================================
+    WINNERS
+========================================================= */}
+
+<section
+  id="winners"
+  className="bg-[#0B1F3A] py-12 sm:py-14"
+>
+  <div className="mx-auto max-w-[1450px] px-5 sm:px-8 lg:px-16">
+
+    {/* HEADER */}
+
+    <div className="mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+
+      <div>
+
+        <div className="mb-4 h-[2px] w-12 bg-[#D39A24]" />
+
+        <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#D39A24]">
+          Previous Hackathon
+        </p>
+
+        <h2 className="mt-2 text-3xl font-black uppercase tracking-[-0.04em] text-white sm:text-5xl">
+          The Winners.
+        </h2>
+
+      </div>
+
+      <p className="max-w-md text-sm leading-6 text-white/55">
+        Three teams stood out with their solutions during the STAMPERS
+        National Hackathon 2026.
+      </p>
+
+    </div>
+
+
+    {/* WINNER CARDS */}
+
+    <div className="grid gap-4 md:grid-cols-3">
+
+      {WINNERS.map((winner) => (
+        <div
+          key={winner.rank}
+          className="group relative overflow-hidden border border-[#D39A24]/25 bg-white p-6 transition duration-300 hover:border-[#D39A24] sm:p-7"
         >
-          <div className="stamper-container">
-            <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-              <div className="relative min-h-[380px] overflow-hidden bg-[#111] sm:min-h-[520px]">
-                {PREVIOUS_HACKATHON_IMAGE ? (
-                  <img
-                    src={PREVIOUS_HACKATHON_IMAGE}
-                    alt="STAMPERS National Hackathon 2026"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(211,154,36,0.22),transparent_30%),linear-gradient(135deg,#0b0b0b,#202020)]" />
-                )}
 
-                <div className="absolute inset-0 bg-black/20" />
+          {/* GOLD TOP LINE */}
 
-                <div className="absolute bottom-7 left-7 right-7 sm:bottom-10 sm:left-10">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
-                    Previous Event
-                  </p>
+          <div className="absolute left-0 right-0 top-0 h-[3px] bg-[#D39A24]" />
 
-                  <p className="mt-3 text-3xl font-black uppercase tracking-[-0.04em] text-white sm:text-5xl">
-                    National Hackathon
-                    <br />
-                    2026
-                  </p>
-                </div>
-              </div>
+          {/* HEADER */}
 
-              <div>
-                <div className="stamper-accent-line mb-6" />
+          <div className="flex items-center justify-between">
 
-                <p className="stamper-label text-black/40">
-                  STAMPERS National Hackathon 2026
-                </p>
-
-                <h2 className="stamper-heading mt-4 text-4xl sm:text-6xl">
-                  Our first
-                  <br />
-                  major chapter.
-                </h2>
-
-                <p className="mt-6 max-w-xl text-sm leading-7 text-black/55 sm:text-base">
-                  The 2026 national hackathon brought together teams and
-                  candidates from universities across India and beyond.
-                </p>
-
-                <div className="mt-8 grid grid-cols-2 border-t border-black/10">
-                  <div className="border-b border-r border-black/10 py-6">
-                    <p className="text-3xl font-black">369</p>
-                    <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.15em] text-black/35">
-                      Teams
-                    </p>
-                  </div>
-
-                  <div className="border-b border-black/10 py-6 pl-6">
-                    <p className="text-3xl font-black">713</p>
-                    <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.15em] text-black/35">
-                      Candidates
-                    </p>
-                  </div>
-
-                  <div className="border-r border-black/10 py-6">
-                    <p className="text-3xl font-black">54</p>
-                    <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.15em] text-black/35">
-                      Universities
-                    </p>
-                  </div>
-
-                  <div className="py-6 pl-6">
-                    <p className="text-3xl font-black">14</p>
-                    <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.15em] text-black/35">
-                      States
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="flex h-10 w-10 items-center justify-center border border-[#D39A24]/40 bg-[#0B1F3A]">
+              <Trophy
+                size={19}
+                strokeWidth={1.5}
+                className="text-[#D39A24]"
+              />
             </div>
+
+            <span className="text-[9px] font-black tracking-[0.2em] text-[#0B1F3A]/35">
+              RANK {winner.rank}
+            </span>
+
           </div>
-        </section>
+
+
+          {/* TEAM */}
+
+          <h3 className="mt-8 text-2xl font-black uppercase leading-none tracking-[-0.04em] text-[#0B1F3A] sm:text-[27px]">
+            {winner.team}
+          </h3>
+
+          <p className="mt-2 text-sm font-bold text-[#D39A24]">
+            {winner.project}
+          </p>
+
+
+          {/* DETAILS */}
+
+          <div className="mt-7 border-t border-[#0B1F3A]/10 pt-5">
+
+            <p className="text-xs font-black uppercase tracking-[0.04em] text-[#0B1F3A]">
+              {winner.leader}
+            </p>
+
+            <p className="mt-2 text-xs leading-5 text-[#0B1F3A]/50">
+              {winner.institute}
+            </p>
+
+          </div>
+
+
+          {/* PROJECT LINK */}
+
+          <a
+            href={winner.link}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-6 inline-flex items-center gap-2 border-b border-[#D39A24]/50 pb-1 text-[9px] font-black uppercase tracking-[0.15em] text-[#0B1F3A] transition hover:border-[#D39A24] hover:text-[#D39A24]"
+          >
+            View Project
+            <ExternalLink size={12} />
+          </a>
+
+        </div>
+      ))}
+
+    </div>
+
+  </div>
+</section>
+
+     {/* =========================================================
+    EVENTS
+========================================================= */}
+
+<section className="bg-[#F5F7FA]">
+
+  <div className="mx-auto max-w-[1450px] px-5 py-8 sm:px-8 sm:py-10 lg:px-16">
+
+    {/* HEADER */}
+
+    <div className="mb-6">
+
+      <div className="mb-3 h-[2px] w-10 bg-[#D39A24]" />
+
+      <p className="text-[9px] font-black uppercase tracking-[0.25em] text-[#0B1F3A]/40">
+        STAMPERS Events
+      </p>
+
+      <h2 className="mt-2 text-3xl font-black uppercase leading-none tracking-[-0.04em] text-[#0B1F3A] sm:text-4xl">
+        More to come.
+      </h2>
+
+    </div>
+
+
+    {/* EVENT CARDS */}
+
+    <div className="grid gap-3 lg:grid-cols-2">
+
+      {/* AXION */}
+
+      <div className="border border-[#D39A24]/30 bg-[#0B1F3A] px-6 py-6 text-white sm:px-7">
+
+        <div className="flex items-start justify-between">
+
+          <div>
+
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D39A24]">
+              Upcoming
+            </p>
+
+            <img
+              src={AXION_LOGO}
+              alt="AXION National Hackathon"
+              className="mt-4 h-auto w-[200px] object-contain object-left sm:w-[230px]"
+            />
+
+          </div>
+
+          <span className="hidden border border-white/10 px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.15em] text-white/40 sm:block">
+            11 OCT 2026
+          </span>
+
+        </div>
+
+        <p className="mt-3 text-[11px] uppercase tracking-[0.14em] text-white/45">
+          National Hackathon · Open Innovation
+        </p>
+
+        <Link
+          href="#axion"
+          className="mt-5 inline-flex items-center gap-3 border border-white/15 px-4 py-2.5 text-[9px] font-black uppercase tracking-[0.15em] transition hover:border-[#D39A24] hover:text-[#D39A24]"
+        >
+          Explore Event
+          <ArrowRight size={13} />
+        </Link>
+
+      </div>
+
+
+      {/* PREVIOUS STAMPERS HACKATHON */}
+
+      <div className="border border-[#D39A24] bg-white px-6 py-6 sm:px-7">
+
+        <div className="flex items-start justify-between gap-4">
+
+          <div>
+
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#0B1F3A]/40">
+              Completed
+            </p>
+
+            {/* GOLD LOGO FRAME */}
+
+            <div className="relative mt-3 flex h-[92px] w-[230px] items-center justify-center border border-[#D39A24] bg-white sm:h-[100px] sm:w-[250px]">
+
+              <div className="absolute inset-[4px] border border-[#D39A24]/30" />
+
+              <img
+                src={STAMPERS_HACKATHON_LOGO}
+                alt="STAMPERS National Hackathon 2026"
+                className="relative z-10 h-auto max-h-[72px] w-[205px] object-contain sm:max-h-[78px] sm:w-[225px]"
+              />
+
+            </div>
+
+          </div>
+
+          <span className="hidden border border-[#0B1F3A]/10 px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.15em] text-[#0B1F3A]/35 sm:block">
+            2026
+          </span>
+
+        </div>
+
+        <p className="mt-3 text-[11px] text-[#0B1F3A]/45">
+          369 teams · 713 candidates · 54 universities
+        </p>
+
+        <a
+          href="#previous-hackathon"
+          className="mt-5 inline-flex items-center gap-3 border border-[#0B1F3A]/10 px-4 py-2.5 text-[9px] font-black uppercase tracking-[0.15em] text-[#0B1F3A] transition hover:border-[#D39A24] hover:text-[#D39A24]"
+        >
+          View Highlights
+          <ArrowRight size={13} />
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
 
         {/* =========================================================
-            WINNERS
-        ========================================================== */}
-
-        <section className="stamper-section bg-[#0B1F3A]">
-          <div className="stamper-container">
-            <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-              <div>
-                <div className="stamper-accent-line mb-6" />
-
-                <p className="stamper-label text-white/50">
-                  Previous Hackathon
-                </p>
-
-                <h2 className="stamper-heading mt-4 text-4xl text-white sm:text-6xl">
-                  The winners.
-                </h2>
-              </div>
-
-              <p className="max-w-md text-sm leading-7 text-white/60">
-                Three teams stood out with their solutions during the STAMPERS
-                National Hackathon 2026.
-              </p>
-            </div>
-
-            <div className="grid gap-px bg-white/10 md:grid-cols-3">
-              {WINNERS.map((winner) => (
-                <div
-                  key={winner.rank}
-                  className="bg-white p-7 sm:p-9"
-                >
-                  <div className="flex items-center justify-between">
-                    <Trophy
-                      size={21}
-                      strokeWidth={1.4}
-                      className="text-[#D39A24]"
-                    />
-
-                    <span className="text-[10px] font-black tracking-[0.2em] text-black/25">
-                      RANK {winner.rank}
-                    </span>
-                  </div>
-
-                  <h3 className="mt-12 text-3xl font-black uppercase tracking-[-0.04em]">
-                    {winner.team}
-                  </h3>
-
-                  <p className="mt-2 text-sm font-semibold text-black/60">
-                    {winner.project}
-                  </p>
-
-                  <div className="mt-8 border-t border-black/10 pt-5">
-                    <p className="text-xs font-bold">{winner.leader}</p>
-
-                    <p className="mt-2 text-xs leading-5 text-black/45">
-                      {winner.institute}
-                    </p>
-                  </div>
-
-                  <a
-                    href={winner.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-7 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.15em] text-black/50 transition hover:text-black"
-                  >
-                    View Project
-                    <ExternalLink size={13} />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================
-            EVENTS
-        ========================================================== */}
-
-        <section className="stamper-section bg-[#f4f3ef]">
-          <div className="stamper-container">
-            <div className="mb-12">
-              <div className="stamper-accent-line mb-6" />
-
-              <p className="stamper-label text-black/40">
-                STAMPERS Events
-              </p>
-
-              <h2 className="stamper-heading mt-4 text-4xl sm:text-6xl">
-                More to come.
-              </h2>
-            </div>
-
-            <div className="grid gap-4 lg:grid-cols-2">
-              <div className="group bg-[#080808] p-7 text-white sm:p-10">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D39A24]">
-                  Upcoming
-                </p>
-
-                <h3 className="mt-8 text-4xl font-black uppercase tracking-[-0.04em] sm:text-6xl">
-                  AXION
-                </h3>
-
-                <p className="mt-3 text-sm uppercase tracking-[0.15em] text-white/45">
-                  National Hackathon · Open Innovation
-                </p>
-
-                <Link
-                  href="#axion"
-                  className="mt-10 inline-flex items-center gap-3 border border-white/15 px-5 py-3 text-[10px] font-black uppercase tracking-[0.15em] transition group-hover:border-[#D39A24]"
-                >
-                  Explore Event
-                  <ArrowRight size={14} />
-                </Link>
-              </div>
-
-              <div className="bg-white p-7 sm:p-10">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/35">
-                  Completed
-                </p>
-
-                <h3 className="mt-8 text-3xl font-black uppercase tracking-[-0.04em] sm:text-5xl">
-                  National
-                  <br />
-                  Hackathon 2026
-                </h3>
-
-                <p className="mt-3 text-sm text-black/45">
-                  369 teams · 713 candidates · 54 universities
-                </p>
-
-                <a
-                  href="#previous-hackathon"
-                  className="mt-10 inline-flex items-center gap-3 border border-black/10 px-5 py-3 text-[10px] font-black uppercase tracking-[0.15em] transition hover:border-black"
-                >
-                  View Highlights
-                  <ArrowRight size={14} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================
-            OUR SPONSORS
+            SPONSORS
         ========================================================== */}
 
         <section id="sponsors">
           <Sponsors />
         </section>
+
 
         {/* =========================================================
             ABOUT
@@ -692,105 +893,137 @@ export default function Home() {
           <About />
         </section>
 
+
+       {/* =========================================================
+    MANAGEMENT
+========================================================= */}
+
+<section
+  id="management"
+  className="bg-[#0B1F3A]"
+>
+
+  <div className="mx-auto max-w-[1450px] px-5 py-14 sm:px-8 sm:py-16 lg:px-16">
+
+    {/* HEADER */}
+
+    <div className="mb-10">
+
+      <div className="mb-5 h-[2px] w-12 bg-[#D39A24]" />
+
+      <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#D39A24]">
+        Leadership
+      </p>
+
+      <h2 className="mt-3 text-3xl font-black uppercase tracking-[-0.04em] text-white sm:text-5xl">
+        The people
+        <br />
+        <span className="text-[#D39A24]">
+          behind STAMPERS.
+        </span>
+      </h2>
+
+    </div>
+
+
+    {/* CORE TEAM IMAGE */}
+
+    <div className="group relative mb-8 overflow-hidden border border-[#D39A24]/60 bg-[#0B1F3A]">
+
+      <div className="relative aspect-[16/7] w-full overflow-hidden">
+
+        <img
+          src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/unnamed%20(1).png"
+          alt="STAMPERS Core Team"
+          className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.02]"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/80 via-[#0B1F3A]/10 to-transparent" />
+
+        <div className="absolute bottom-5 left-5 sm:bottom-7 sm:left-7">
+
+          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#D39A24]">
+            STAMPERS
+          </p>
+
+          <p className="mt-1 text-xl font-black uppercase tracking-[-0.02em] text-white sm:text-3xl">
+            Core Team
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    {/* MANAGEMENT CARDS */}
+
+    <div className="grid gap-px bg-[#D39A24]/30 md:grid-cols-3">
+
+      {MANAGEMENT.map((person) => (
+
+        <div
+          key={person.name}
+          className="group bg-[#0B1F3A]"
+        >
+
+          <div className="p-6 sm:p-8">
+
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#D39A24]">
+              {person.role}
+            </p>
+
+            <h3 className="mt-3 text-2xl font-black uppercase tracking-[-0.03em] text-white">
+              {person.name}
+            </h3>
+
+            <p className="mt-4 text-sm leading-7 text-white/55">
+              {person.bio}
+            </p>
+
+            <div className="mt-6 h-px w-0 bg-[#D39A24] transition-all duration-500 group-hover:w-full" />
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
+
+
         {/* =========================================================
-            MANAGEMENT
+            SMALL FOOTNOTE
         ========================================================== */}
 
-        <section id="management" className="stamper-section bg-white">
-          <div className="stamper-container">
-            <div className="mb-12">
-              <div className="stamper-accent-line mb-6" />
+        <section className="border-t border-[#0B1F3A]/10 bg-[#F5F7FA] py-7">
 
-              <p className="stamper-label text-black/40">
-                Leadership
-              </p>
+          <div className="mx-auto flex max-w-[1450px] flex-col justify-between gap-3 px-5 sm:flex-row sm:items-center sm:px-8 lg:px-16">
 
-              <h2 className="stamper-heading mt-4 text-4xl sm:text-6xl">
-                The people
-                <br />
-                behind STAMPERS.
-              </h2>
-            </div>
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#0B1F3A]/30">
+              STAMPERS · 2026
+            </p>
 
-            <div className="group relative mb-12 overflow-hidden bg-[#111]">
-              <div className="relative aspect-[16/7] w-full overflow-hidden">
-                <img
-                  src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/1000003036.png"
-                  alt="STAMPERS Core Team"
-                  className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.02]"
-                />
+            <p className="text-xs text-[#0B1F3A]/45">
+              Building platforms for student innovation.
+            </p>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-
-                <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8">
-                  <p className="text-[10px] font-black uppercase tracking-[0.25em] text-white/70">
-                    STAMPERS
-                  </p>
-
-                  <p className="mt-1 text-xl font-black uppercase tracking-[-0.02em] text-white sm:text-3xl">
-                    Core Team
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid gap-px bg-black/10 md:grid-cols-3">
-              {MANAGEMENT.map((person) => (
-                <div
-                  key={person.name}
-                  className="group bg-white"
-                >
-                  <div className="p-6 sm:p-8">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#D39A24]">
-                      {person.role}
-                    </p>
-
-                    <h3 className="mt-3 text-2xl font-black uppercase tracking-[-0.03em]">
-                      {person.name}
-                    </h3>
-
-                    <p className="mt-4 text-sm leading-7 text-black/50">
-                      {person.bio}
-                    </p>
-
-                    <div className="mt-6 h-px w-0 bg-[#D39A24] transition-all duration-500 group-hover:w-full" />
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
+
         </section>
 
-        {/* =========================================================
-            DYNAMIC CONTENT NOTE
-        ========================================================== */}
-
-        <section className="border-t border-black/10 bg-[#f4f3ef] py-10">
-          <div className="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-16">
-            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-black/35">
-                  Built for the next event
-                </p>
-
-                <p className="mt-2 text-sm text-black/55">
-                  Event visuals, logos, gallery images and management profiles
-                  can be connected to the STAMPERS content system.
-                </p>
-              </div>
-
-              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-black/30">
-                STAMPERS / 2026
-              </span>
-            </div>
-          </div>
-        </section>
 
         {/* =========================================================
             FAQ
         ========================================================== */}
 
         <FAQ />
+
       </main>
 
       <Footer />

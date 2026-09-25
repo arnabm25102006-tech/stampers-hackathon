@@ -16,8 +16,18 @@ import {
   Brain,
   Lightbulb,
   BriefcaseBusiness,
+  Sparkles,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+
+const STAMPERS_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png";
+
+const AXION_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/AXION_HACKATHON_logo_transparent.png";
+
+const UNSTOP_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/Unstop-Logo-Blue-Large.jpg";
 
 const categories = [
   "All",
@@ -33,6 +43,19 @@ const categories = [
 
 const competitions = [
   {
+    id: "axion",
+    title: "AXION National Hackathon",
+    category: "Hackathon",
+    description:
+      "Build innovative solutions for real-world problems through Open Innovation.",
+    date: "11 October 2026",
+    status: "Upcoming",
+    prize: "Details announced soon",
+    featured: true,
+    axion: true,
+    icon: Trophy,
+  },
+  {
     id: 1,
     title: "STAMPERS National Hackathon 2K26",
     category: "Hackathon",
@@ -42,6 +65,7 @@ const competitions = [
     status: "Registration Closed",
     prize: "Exciting Prizes & Goodies",
     featured: true,
+    axion: false,
     icon: Trophy,
   },
   {
@@ -54,6 +78,7 @@ const competitions = [
     status: "Upcoming",
     prize: "Prizes, Recognition & Goodies",
     featured: true,
+    axion: false,
     icon: Gamepad2,
   },
   {
@@ -66,6 +91,7 @@ const competitions = [
     status: "Upcoming",
     prize: "Prizes & Recognition",
     featured: true,
+    axion: false,
     icon: Camera,
   },
   {
@@ -78,6 +104,7 @@ const competitions = [
     status: "Upcoming",
     prize: "Prizes & Certificates",
     featured: false,
+    axion: false,
     icon: Code2,
   },
   {
@@ -90,6 +117,7 @@ const competitions = [
     status: "Upcoming",
     prize: "Recognition & Goodies",
     featured: false,
+    axion: false,
     icon: Lightbulb,
   },
   {
@@ -102,6 +130,7 @@ const competitions = [
     status: "Upcoming",
     prize: "Prizes & Certificates",
     featured: false,
+    axion: false,
     icon: Palette,
   },
   {
@@ -109,11 +138,12 @@ const competitions = [
     title: "National Business Quiz",
     category: "Business",
     description:
-      "Test your knowledge of business, startups, brands and entrepreneurship.",
+      "Test your knowledge of business, brands and entrepreneurship.",
     date: "Coming Soon",
     status: "Upcoming",
     prize: "Prizes & Recognition",
     featured: false,
+    axion: false,
     icon: BriefcaseBusiness,
   },
   {
@@ -126,6 +156,7 @@ const competitions = [
     status: "Upcoming",
     prize: "Prizes & Recognition",
     featured: false,
+    axion: false,
     icon: Brain,
   },
 ];
@@ -153,68 +184,75 @@ export default function ExplorePage() {
   }, [search, category]);
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#020202] text-white">
+    <main className="min-h-screen bg-[#f5f7fa] text-[#111827]">
 
-      {/* =========================================================
-          PREMIUM BACKGROUND
-      ========================================================= */}
-
-      <div className="stampers-grid pointer-events-none fixed inset-0 opacity-[0.07]" />
-
-      <div className="pointer-events-none fixed left-1/2 top-[-250px] h-[650px] w-[850px] -translate-x-1/2 rounded-full bg-[#FFD000]/[0.10] blur-[190px]" />
-
-      <div className="pointer-events-none fixed -left-[250px] top-[35%] h-[500px] w-[500px] rounded-full bg-[#D9A900]/[0.05] blur-[180px]" />
-
-      <div className="pointer-events-none fixed -right-[250px] top-[55%] h-[550px] w-[550px] rounded-full bg-[#FFD000]/[0.05] blur-[190px]" />
-
-      {/* =========================================================
+      {/* =====================================================
           HEADER
-      ========================================================= */}
+      ===================================================== */}
 
-      <section className="relative border-b border-white/[0.07] px-5 pb-14 pt-32 sm:px-7 md:px-8 md:pb-20">
+      <header className="sticky top-0 z-50 border-b border-[#dfe3e8] bg-white">
 
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto flex h-[68px] max-w-[1380px] items-center justify-between px-5 sm:px-8 lg:px-10">
 
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-gray-600 transition hover:text-[#FFD000]"
+            className="flex items-center"
+            aria-label="STAMPERS home"
           >
-            <ArrowRight
-              size={14}
-              className="rotate-180 transition-transform group-hover:-translate-x-1"
+            <img
+              src={STAMPERS_LOGO}
+              alt="STAMPERS"
+              className="block h-auto w-[105px] object-contain sm:w-[115px]"
             />
-
-            Back to STAMPERS
           </Link>
 
+          <Link
+            href="/"
+            className="group flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] !text-[#0b1f3a] transition hover:!text-[#b17c12]"
+          >
+            <ArrowRight
+              size={15}
+              className="rotate-180 transition-transform group-hover:-translate-x-1"
+            />
+            Back
+          </Link>
+
+        </div>
+
+      </header>
+
+      {/* =====================================================
+          HERO
+      ===================================================== */}
+
+      <section className="border-b border-[#dfe3e8] bg-white">
+
+        <div className="mx-auto max-w-[1380px] px-5 pb-10 pt-10 sm:px-8 lg:px-10 lg:pb-12">
+
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="mt-9"
+            transition={{ duration: 0.5 }}
           >
 
             <div className="flex items-center gap-3">
 
-              <span className="h-px w-10 bg-[#FFD000]" />
+              <span className="h-px w-8 bg-[#c89425]" />
 
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#FFD000]">
+              <p className="text-[10px] font-bold uppercase tracking-[0.28em] !text-[#a87510]">
                 Explore Opportunities
               </p>
 
             </div>
 
-            <h1 className="mt-6 max-w-4xl text-5xl font-black leading-[0.95] tracking-[-0.055em] sm:text-6xl md:text-7xl">
-
-              Find Your
-
-              <span className="block bg-gradient-to-r from-[#FFF4A3] via-[#FFD000] to-[#FFB400] bg-clip-text text-transparent">
-                Competition.
+            <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-[-0.04em] !text-[#0b1f3a] sm:text-5xl lg:text-6xl">
+              Find your next
+              <span className="block !text-[#c89425]">
+                opportunity.
               </span>
-
             </h1>
 
-            <p className="mt-7 max-w-2xl text-sm leading-7 text-gray-500 sm:text-base sm:leading-8 md:text-lg">
+            <p className="mt-5 max-w-2xl text-sm leading-7 !text-[#4b5563] sm:text-base">
               Discover hackathons, gaming events, coding contests,
               photography challenges, quizzes, design competitions,
               innovation events and more.
@@ -222,38 +260,36 @@ export default function ExplorePage() {
 
           </motion.div>
 
-          {/* =====================================================
-              SEARCH
-          ===================================================== */}
+          {/* SEARCH */}
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-10 flex max-w-5xl flex-col gap-3 sm:flex-row"
+            transition={{ delay: 0.1 }}
+            className="mt-8 flex max-w-5xl flex-col gap-3 sm:flex-row"
           >
 
             <div className="relative flex-1">
 
               <Search
-                size={19}
-                className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-600"
+                size={18}
+                className="absolute left-4 top-1/2 -translate-y-1/2 !text-[#7b8491]"
               />
 
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search competitions, gaming events, hackathons..."
-                className="h-15 w-full rounded-2xl border border-white/[0.09] bg-white/[0.025] pl-14 pr-12 text-sm text-white outline-none backdrop-blur-xl transition placeholder:text-gray-700 focus:border-[#FFD000]/40 focus:bg-[#FFD000]/[0.025]"
+                className="h-12 w-full border border-[#d5dbe2] bg-[#f9fafb] pl-12 pr-12 text-sm !text-[#111827] outline-none placeholder:!text-[#8b94a1] transition focus:border-[#c89425] focus:bg-white"
               />
 
               {search && (
                 <button
                   type="button"
                   onClick={() => setSearch("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 transition hover:text-[#FFD000]"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 !text-[#6b7280] transition hover:!text-[#b17c12]"
                 >
-                  <X size={18} />
+                  <X size={17} />
                 </button>
               )}
 
@@ -262,13 +298,13 @@ export default function ExplorePage() {
             <button
               type="button"
               onClick={() => setShowFilters(!showFilters)}
-              className={`flex h-15 items-center justify-center gap-2 rounded-2xl border px-6 text-sm font-bold transition ${
+              className={`flex h-12 items-center justify-center gap-2 border px-6 text-sm font-bold transition ${
                 showFilters
-                  ? "border-[#FFD000]/40 bg-[#FFD000]/[0.06] text-[#FFD000]"
-                  : "border-white/[0.09] bg-white/[0.025] text-gray-400 hover:border-[#FFD000]/30 hover:text-[#FFD000]"
+                  ? "border-[#c89425] bg-[#fbf6e8] !text-[#9b6d0f]"
+                  : "border-[#d5dbe2] bg-white !text-[#374151] hover:border-[#c89425] hover:!text-[#9b6d0f]"
               }`}
             >
-              <SlidersHorizontal size={18} />
+              <SlidersHorizontal size={17} />
               Filters
             </button>
 
@@ -291,10 +327,10 @@ export default function ExplorePage() {
                   type="button"
                   key={item}
                   onClick={() => setCategory(item)}
-                  className={`rounded-full px-4 py-2 text-xs font-bold transition ${
+                  className={`border px-4 py-2 text-xs font-bold transition ${
                     category === item
-                      ? "bg-[#FFD000] text-black shadow-[0_0_25px_rgba(255,208,0,0.15)]"
-                      : "border border-white/[0.08] bg-white/[0.02] text-gray-500 hover:border-[#FFD000]/30 hover:text-[#FFD000]"
+                      ? "border-[#c89425] bg-[#c89425] !text-white"
+                      : "border-[#d8dde4] bg-white !text-[#4b5563] hover:border-[#c89425] hover:!text-[#9b6d0f]"
                   }`}
                 >
                   {item}
@@ -309,23 +345,23 @@ export default function ExplorePage() {
 
       </section>
 
-      {/* =========================================================
-          DESKTOP CATEGORY BAR
-      ========================================================= */}
+      {/* =====================================================
+          CATEGORY BAR
+      ===================================================== */}
 
-      <section className="relative hidden border-b border-white/[0.07] md:block">
+      <section className="hidden border-b border-[#dfe3e8] bg-white md:block">
 
-        <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-6 py-5">
+        <div className="mx-auto flex max-w-[1380px] gap-2 overflow-x-auto px-5 py-4 sm:px-8 lg:px-10">
 
           {categories.map((item) => (
             <button
               type="button"
               key={item}
               onClick={() => setCategory(item)}
-              className={`whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-bold transition ${
+              className={`whitespace-nowrap border px-5 py-2.5 text-xs font-bold transition ${
                 category === item
-                  ? "bg-gradient-to-r from-[#FFF3A3] via-[#FFD000] to-[#FFB400] text-black shadow-[0_0_25px_rgba(255,208,0,0.12)]"
-                  : "border border-white/[0.08] text-gray-500 hover:border-[#FFD000]/30 hover:text-[#FFD000]"
+                  ? "border-[#0b1f3a] bg-[#0b1f3a] !text-white"
+                  : "border-[#d8dde4] bg-white !text-[#4b5563] hover:border-[#c89425] hover:!text-[#9b6d0f]"
               }`}
             >
               {item}
@@ -336,21 +372,21 @@ export default function ExplorePage() {
 
       </section>
 
-      {/* =========================================================
+      {/* =====================================================
           RESULTS
-      ========================================================= */}
+      ===================================================== */}
 
-      <section className="relative mx-auto max-w-7xl px-5 py-16 sm:px-7 md:px-8 md:py-20">
+      <section className="mx-auto max-w-[1380px] px-5 py-10 sm:px-8 lg:px-10 lg:py-14">
 
-        <div className="mb-9 flex items-end justify-between">
+        <div className="mb-7 flex items-end justify-between">
 
           <div>
 
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#FFD000]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.25em] !text-[#a87510]">
               Opportunities
             </p>
 
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm font-medium !text-[#5b6470]">
               {filteredCompetitions.length} opportunities available
             </p>
 
@@ -360,7 +396,7 @@ export default function ExplorePage() {
             <button
               type="button"
               onClick={() => setCategory("All")}
-              className="text-xs font-bold text-[#FFD000] transition hover:text-[#FFF3A3]"
+              className="text-xs font-bold !text-[#a87510] transition hover:!text-[#795407]"
             >
               Clear category
             </button>
@@ -372,18 +408,18 @@ export default function ExplorePage() {
 
         {filteredCompetitions.length === 0 ? (
 
-          <div className="rounded-[30px] border border-white/[0.08] bg-white/[0.02] px-6 py-24 text-center">
+          <div className="border border-[#dfe3e8] bg-white px-6 py-24 text-center">
 
             <Search
               size={42}
-              className="mx-auto text-gray-700"
+              className="mx-auto !text-[#aeb5bf]"
             />
 
-            <h2 className="mt-6 text-2xl font-black">
+            <h2 className="mt-6 text-2xl font-semibold !text-[#0b1f3a]">
               No competitions found
             </h2>
 
-            <p className="mt-3 text-sm text-gray-600">
+            <p className="mt-3 text-sm !text-[#5b6470]">
               Try another search or category.
             </p>
 
@@ -397,8 +433,7 @@ export default function ExplorePage() {
 
               const Icon = competition.icon;
 
-              const isGaming =
-                competition.category === "Gaming";
+              const isAxion = competition.axion;
 
               const isHackathon =
                 competition.category === "Hackathon";
@@ -411,7 +446,7 @@ export default function ExplorePage() {
                   key={competition.id}
                   initial={{
                     opacity: 0,
-                    y: 25,
+                    y: 18,
                   }}
                   whileInView={{
                     opacity: 1,
@@ -421,159 +456,219 @@ export default function ExplorePage() {
                     once: true,
                   }}
                   transition={{
-                    duration: 0.5,
-                    delay: index * 0.05,
+                    duration: 0.4,
+                    delay: index * 0.04,
                   }}
-                  whileHover={{
-                    y: -7,
-                  }}
-                  className={`group relative overflow-hidden rounded-[28px] border p-6 transition-all duration-300 ${
-                    isGaming
-                      ? "border-[#FFD000]/30 bg-gradient-to-br from-[#FFD000]/[0.06] via-white/[0.018] to-transparent hover:border-[#FFD000]/60"
-                      : isHackathon
-                        ? "border-[#FFD000]/20 bg-gradient-to-br from-[#FFD000]/[0.035] via-white/[0.018] to-transparent hover:border-[#FFD000]/50"
-                        : "border-white/[0.08] bg-white/[0.018] hover:border-[#FFD000]/30"
+                  className={`group relative flex flex-col border bg-white transition-all duration-300 ${
+                    isAxion
+                      ? "border-[#c89425] shadow-[0_8px_35px_rgba(11,31,58,0.10)] hover:-translate-y-1"
+                      : "border-[#dfe3e8] hover:-translate-y-1 hover:border-[#c7a04b] hover:shadow-[0_8px_30px_rgba(11,31,58,0.07)]"
                   }`}
                 >
 
-                  {/* Card Glow */}
+                  {/* AXION TOP BAR */}
 
-                  <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-[#FFD000]/[0.08] blur-[80px] opacity-0 transition duration-500 group-hover:opacity-100" />
+                  {isAxion && (
+                    <div className="flex h-9 items-center justify-between bg-[#0b1f3a] px-5">
 
-                  {/* Gaming Special Glow */}
+                      <span className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.2em] !text-white">
 
-                  {isGaming && (
-                    <div className="pointer-events-none absolute right-0 top-0 h-40 w-40 bg-[#FFD000]/[0.08] blur-[70px]" />
-                  )}
+                        <Sparkles
+                          size={12}
+                          className="!text-[#e0b64e]"
+                        />
 
-                  {/* Hackathon Special Glow */}
+                        Featured Event
 
-                  {isHackathon && (
-                    <div className="pointer-events-none absolute left-1/2 top-0 h-32 w-64 -translate-x-1/2 rounded-full bg-[#FFD000]/[0.05] blur-[60px]" />
-                  )}
-
-                  {/* Featured */}
-
-                  {competition.featured && (
-                    <div className="absolute right-5 top-5 rounded-full border border-[#FFD000]/30 bg-[#FFD000] px-3 py-1 text-[8px] font-black tracking-[0.18em] text-black">
-                      FEATURED
-                    </div>
-                  )}
-
-                  {/* Icon */}
-
-                  <div
-                    className={`relative flex h-14 w-14 items-center justify-center rounded-2xl border ${
-                      isGaming || isHackathon
-                        ? "border-[#FFD000]/40 bg-gradient-to-br from-[#FFD000]/20 to-[#FFD000]/[0.03]"
-                        : "border-[#FFD000]/20 bg-[#FFD000]/[0.045]"
-                    }`}
-                  >
-                    <Icon
-                      size={24}
-                      className="text-[#FFD000]"
-                    />
-                  </div>
-
-                  {/* Category */}
-
-                  <p className="relative mt-7 text-[9px] font-black uppercase tracking-[0.25em] text-[#FFD000]">
-                    {competition.category}
-                  </p>
-
-                  {/* Title */}
-
-                  <h2 className="relative mt-3 min-h-[58px] text-xl font-black leading-tight text-white sm:text-2xl">
-                    {competition.title}
-                  </h2>
-
-                  {/* Description */}
-
-                  <p className="relative mt-4 min-h-[72px] text-sm leading-6 text-gray-500">
-                    {competition.description}
-                  </p>
-
-                  {/* Details */}
-
-                  <div className="relative mt-7 space-y-3 border-t border-white/[0.07] pt-5">
-
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
-
-                      <CalendarDays
-                        size={15}
-                        className="text-[#FFD000]"
-                      />
-
-                      {competition.date}
-
-                    </div>
-
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
-
-                      <Trophy
-                        size={15}
-                        className="text-[#FFD000]"
-                      />
-
-                      {competition.prize}
-
-                    </div>
-
-                  </div>
-
-                  {/* Status */}
-
-                  <div className="mt-6 flex min-h-[28px] items-center justify-between gap-3">
-
-                    <span
-                      className={`rounded-full border px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.12em] ${
-                        isClosed
-                          ? "border-red-500/20 bg-red-500/[0.06] text-red-400"
-                          : "border-[#FFD000]/20 bg-[#FFD000]/[0.05] text-[#FFD000]"
-                      }`}
-                    >
-                      {competition.status}
-                    </span>
-
-                    {isGaming && (
-                      <span className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-[#FFD000]">
-                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#FFD000]" />
-                        Upcoming Event
                       </span>
+
+                      <span className="text-[9px] font-bold uppercase tracking-[0.18em] !text-[#e0b64e]">
+                        2026
+                      </span>
+
+                    </div>
+                  )}
+
+                  {/* CARD */}
+
+                  <div className="flex flex-1 flex-col p-6">
+
+                    {/* LOGO / ICON */}
+
+                    {isAxion ? (
+
+                      <div className="flex h-[78px] items-center justify-start border-b border-[#e8ebef] pb-4">
+
+                        <img
+                          src={AXION_LOGO}
+                          alt="AXION National Hackathon"
+                          className="h-auto max-h-[54px] w-auto max-w-[210px] object-contain object-left"
+                        />
+
+                      </div>
+
+                    ) : (
+
+                      <div className="flex items-center justify-between">
+
+                        <div
+                          className={`flex h-12 w-12 items-center justify-center border ${
+                            isHackathon
+                              ? "border-[#dfc37a] bg-[#fcf7e9]"
+                              : "border-[#e0e4e9] bg-[#f7f8fa]"
+                          }`}
+                        >
+                          <Icon
+                            size={22}
+                            className={
+                              isHackathon
+                                ? "!text-[#b27e13]"
+                                : "!text-[#0b1f3a]"
+                            }
+                          />
+                        </div>
+
+                        {competition.featured && (
+                          <span className="border border-[#e2c982] bg-[#fcf7e9] px-3 py-1.5 text-[8px] font-bold uppercase tracking-[0.16em] !text-[#9a6d0d]">
+                            Featured
+                          </span>
+                        )}
+
+                      </div>
+
                     )}
 
+                    {/* CATEGORY */}
+
+                    <p className="mt-6 text-[9px] font-bold uppercase tracking-[0.24em] !text-[#a87510]">
+                      {competition.category}
+                    </p>
+
+                    {/* TITLE */}
+
+                    {isAxion ? (
+                      <h2 className="mt-3 text-[23px] font-semibold leading-tight tracking-[-0.02em] !text-[#0b1f3a]">
+                        AXION National Hackathon
+                      </h2>
+                    ) : (
+                      <h2 className="mt-3 min-h-[58px] text-xl font-semibold leading-tight !text-[#0b1f3a]">
+                        {competition.title}
+                      </h2>
+                    )}
+
+                    {/* DESCRIPTION */}
+
+                    <p className="mt-4 min-h-[72px] text-sm leading-6 !text-[#596273]">
+                      {competition.description}
+                    </p>
+
+                    {/* DETAILS */}
+
+                    <div className="mt-6 space-y-3 border-t border-[#e6e9ed] pt-5">
+
+                      <div className="flex items-center gap-3 text-xs font-medium !text-[#596273]">
+
+                        <CalendarDays
+                          size={15}
+                          className="shrink-0 !text-[#b27e13]"
+                        />
+
+                        <span>
+                          {competition.date}
+                        </span>
+
+                      </div>
+
+                      <div className="flex items-center gap-3 text-xs font-medium !text-[#596273]">
+
+                        <Trophy
+                          size={15}
+                          className="shrink-0 !text-[#b27e13]"
+                        />
+
+                        <span>
+                          {competition.prize}
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                    {/* POWERED BY UNSOTP */}
+
+                    {isAxion && (
+                      <div className="mt-4 flex items-center gap-1.5">
+
+                        <span className="text-[7px] font-bold uppercase tracking-[0.12em] !text-[#8a929d]">
+                          Powered by
+                        </span>
+
+                        <img
+                          src={UNSTOP_LOGO}
+                          alt="Unstop"
+                          className="h-[14px] w-[58px] object-contain"
+                        />
+
+                      </div>
+                    )}
+
+                    {/* STATUS */}
+
+                    <div className="mt-5 flex min-h-[28px] items-center justify-between gap-3">
+
+                      <span
+                        className={`border px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.12em] ${
+                          isClosed
+                            ? "border-red-200 bg-red-50 !text-red-600"
+                            : "border-[#e2c982] bg-[#fcf7e9] !text-[#9a6d0d]"
+                        }`}
+                      >
+                        {competition.status}
+                      </span>
+
+                      {isAxion && (
+                        <span className="text-[9px] font-bold uppercase tracking-[0.13em] !text-[#0b1f3a]">
+                          Closes 10 Oct
+                        </span>
+                      )}
+
+                    </div>
+
+                    {/* BUTTON */}
+
+                    <Link
+                      href={
+                        isAxion
+                          ? "/competitions/axion"
+                          : isHackathon
+                            ? "/competitions/1"
+                            : `/competitions/${competition.id}`
+                      }
+                      className={`mt-6 flex items-center justify-center gap-2 border py-3.5 text-xs font-bold uppercase tracking-[0.08em] transition-all ${
+                        isAxion
+                          ? "border-[#0b1f3a] bg-[#0b1f3a] !text-white hover:bg-[#17385e]"
+                          : isClosed
+                            ? "border-[#d5dbe2] bg-[#f7f8fa] !text-[#596273] hover:border-[#0b1f3a] hover:!text-[#0b1f3a]"
+                            : "border-[#0b1f3a] bg-[#0b1f3a] !text-white hover:bg-[#17385e]"
+                      }`}
+                    >
+
+                      <span className="!text-inherit">
+                        {isAxion
+                          ? "Explore AXION"
+                          : isHackathon
+                            ? "View Hackathon"
+                            : "Explore"}
+                      </span>
+
+                      <ArrowRight
+                        size={15}
+                        className="transition-transform group-hover:translate-x-1"
+                      />
+
+                    </Link>
+
                   </div>
-
-                  {/* =================================================
-                      EXPLORE BUTTON
-                      ================================================= */}
-
-                  <Link
-                    href={
-                      isHackathon
-                        ? "/competitions/1"
-                        : `/competitions/${competition.id}`
-                    }
-                    className={`relative mt-6 flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-black transition-all duration-300 ${
-                      isHackathon
-                        ? "border border-[#FFD000]/30 bg-[#FFD000]/[0.04] text-[#FFD000] hover:bg-[#FFD000] hover:text-black hover:shadow-[0_10px_35px_rgba(255,208,0,0.18)]"
-                        : isGaming
-                          ? "bg-gradient-to-r from-[#FFF3A3] via-[#FFD000] to-[#FFB400] text-black shadow-[0_10px_30px_rgba(255,208,0,0.12)] hover:scale-[1.01]"
-                          : "border border-[#FFD000]/20 bg-[#FFD000]/[0.04] text-[#FFD000] hover:bg-[#FFD000] hover:text-black"
-                    }`}
-                  >
-                    {isHackathon
-                      ? "Explore Hackathon"
-                      : isGaming
-                        ? "Coming Soon"
-                        : "Explore"}
-
-                    <ArrowRight
-                      size={17}
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    />
-
-                  </Link>
 
                 </motion.article>
               );
@@ -585,9 +680,33 @@ export default function ExplorePage() {
 
       </section>
 
-      {/* Bottom Fade */}
+      {/* =====================================================
+          FOOTER
+      ===================================================== */}
 
-      <div className="pointer-events-none fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#020202] to-transparent" />
+      <section className="border-t border-[#dfe3e8] bg-white">
+
+        <div className="mx-auto flex max-w-[1380px] flex-col gap-3 px-5 py-7 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-10">
+
+          <div>
+
+            <p className="text-xs font-bold uppercase tracking-[0.18em] !text-[#0b1f3a]">
+              STAMPERS
+            </p>
+
+            <p className="mt-1 text-[11px] !text-[#737b87]">
+              Discover. Build. Compete. Connect.
+            </p>
+
+          </div>
+
+          <p className="text-[10px] font-medium !text-[#8b929c]">
+            © 2026 STAMPERS™
+          </p>
+
+        </div>
+
+      </section>
 
     </main>
   );

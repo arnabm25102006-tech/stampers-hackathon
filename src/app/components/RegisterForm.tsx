@@ -1,4 +1,3 @@
-// 
 "use client";
 
 import { useState } from "react";
@@ -12,20 +11,16 @@ import {
   ArrowLeft,
   ArrowRight,
   Trophy,
-  Sparkles,
   ShieldCheck,
+  ExternalLink,
+  ChevronRight,
+  Lock,
 } from "lucide-react";
 
 import { registerTeam } from "@/lib/register";
 
 export default function RegisterForm() {
-
-  /* =========================
-      STEP
-  ========================= */
-
   const [step, setStep] = useState(1);
-
   const totalSteps = 3;
 
   const nextStep = () => {
@@ -39,51 +34,38 @@ export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
 
   /* =========================
-      TEAM
+     TEAM
   ========================= */
 
   const [teamName, setTeamName] = useState("");
-
   const [college, setCollege] = useState("");
-
   const [leaderName, setLeaderName] = useState("");
-
   const [email, setEmail] = useState("");
-
   const [phone, setPhone] = useState("");
-
   const [department, setDepartment] = useState("");
-
   const [year, setYear] = useState(1);
-
   const [teamSize, setTeamSize] = useState("2");
-
   const [members, setMembers] = useState("");
 
   /* =========================
-      PROJECT
+     PROJECT
   ========================= */
 
   const [projectName, setProjectName] = useState("");
-
   const [domain, setDomain] = useState("");
-
   const [problemStatement, setProblemStatement] = useState("");
-
   const [solution, setSolution] = useState("");
-
   const [techStack, setTechStack] = useState("");
-
   const [github, setGithub] = useState("");
 
   /* =========================
-      PAYMENT
+     PAYMENT
   ========================= */
 
   const [transactionId, setTransactionId] = useState("");
 
   /* =========================
-      SUBMIT
+     SUBMIT
   ========================= */
 
   async function handleSubmit(e: React.FormEvent) {
@@ -110,1294 +92,1137 @@ export default function RegisterForm() {
         github,
         transactionId,
       });
-     
+
       alert("Registration Successful!");
 
       setStep(1);
-
     } catch (err: any) {
-
       alert(err?.message || "Registration Failed");
-
     } finally {
-
       setLoading(false);
-
     }
   }
 
-  return (
+  const steps = [
+    {
+      number: 1,
+      title: "Team",
+      description: "Participant details",
+      icon: Users,
+    },
+    {
+      number: 2,
+      title: "Project",
+      description: "Innovation details",
+      icon: Lightbulb,
+    },
+    {
+      number: 3,
+      title: "Payment",
+      description: "Complete registration",
+      icon: CreditCard,
+    },
+  ];
 
+  return (
     <form
       onSubmit={handleSubmit}
-      className="relative mx-auto mt-20 max-w-7xl overflow-hidden"
+      className="min-h-screen bg-[#f5f7fa] text-[#111827]"
     >
-      {/* ==========================================================
-    PREMIUM BACKGROUND
-========================================================== */}
-
-<div className="absolute inset-0 -z-30 overflow-hidden">
-
-  <motion.div
-    animate={{
-      scale: [1, 1.15, 1],
-      opacity: [0.5, 0.8, 0.5],
-    }}
-    transition={{
-      duration: 12,
-      repeat: Infinity,
-    }}
-    className="absolute left-1/2 top-0 h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-yellow-500/10 blur-[180px]"
-  />
-
-  <motion.div
-    animate={{
-      y: [0, -60, 0],
-    }}
-    transition={{
-      duration: 9,
-      repeat: Infinity,
-    }}
-    className="absolute -right-32 bottom-0 h-[600px] w-[600px] rounded-full bg-orange-500/10 blur-[170px]"
-  />
-
-  <motion.div
-    animate={{
-      x: [0, 80, 0],
-    }}
-    transition={{
-      duration: 11,
-      repeat: Infinity,
-    }}
-    className="absolute -left-32 top-1/2 h-[500px] w-[500px] rounded-full bg-cyan-500/5 blur-[170px]"
-  />
-
-</div>
-
-<div
-  className="absolute inset-0 -z-20 opacity-[0.04]"
-  style={{
-    backgroundImage: `
-      linear-gradient(to right,#ffffff 1px,transparent 1px),
-      linear-gradient(to bottom,#ffffff 1px,transparent 1px)
-    `,
-    backgroundSize: "45px 45px",
-  }}
-/>
-
-<div className="relative overflow-hidden rounded-[42px] border border-yellow-500/20 bg-gradient-to-br from-[#0f0f0f]/95 via-[#090909]/95 to-black/95 p-10 md:p-14 backdrop-blur-3xl shadow-[0_0_120px_rgba(255,215,0,.12)]">
-
-<div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-yellow-400 to-transparent"/>
-
-<div className="absolute -left-40 top-40 h-72 w-72 rounded-full bg-yellow-500/10 blur-[130px]"/>
-
-<div className="absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-orange-500/10 blur-[140px]"/>
-
-<div
-className="pointer-events-none absolute inset-0 opacity-[0.03]"
-style={{
-backgroundImage:
-"radial-gradient(circle,#ffffff 1px,transparent 1px)",
-backgroundSize:"20px 20px",
-}}
-/>
-
-{/* ==========================================================
-    HERO
-========================================================== */}
-
-<motion.div
-initial={{opacity:0,y:40}}
-animate={{opacity:1,y:0}}
-transition={{duration:.8}}
-className="text-center"
->
-
-<div className="inline-flex items-center gap-3 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-7 py-3 backdrop-blur-xl">
-
-<Sparkles className="h-4 w-4 text-yellow-400"/>
-
-<span className="text-xs font-semibold uppercase tracking-[0.45em] text-yellow-400">
-
-STAMPERS NATIONAL HACKATHON 2026
-
-</span>
-
-</div>
-
-<h1 className="mt-10 text-5xl font-black leading-tight text-white md:text-7xl">
-
-Build.
-
-Innovate.
-
-Win.
-
-<span className="mt-5 block bg-gradient-to-r from-yellow-300 via-yellow-500 to-orange-400 bg-clip-text text-transparent">
-
-Registration Portal
-
-</span>
-
-</h1>
-
-<p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-zinc-400">
-
-Join hundreds of innovators from across India.
-Create impactful solutions, collaborate with your
-team and compete for recognition, goodies and exciting rewards.
-
-</p>
-
-</motion.div>
-
-{/* ==========================================================
-    EVENT HIGHLIGHTS
-========================================================== */}
-
-<div className="mt-16 grid gap-6 md:grid-cols-4">
-
-<div className="rounded-3xl border border-yellow-500/20 bg-black/40 p-6">
-
-<p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-
-Registration
-
-</p>
-
-<p className="mt-3 text-2xl font-bold text-yellow-400">
-
-₹20 / Member
-
-</p>
-
-</div>
-
-<div className="rounded-3xl border border-yellow-500/20 bg-black/40 p-6">
-
-<p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-
-Team Size
-
-</p>
-
-<p className="mt-3 text-2xl font-bold text-yellow-400">
-
-1–4 Members
-
-</p>
-
-</div>
-
-<div className="rounded-3xl border border-yellow-500/20 bg-black/40 p-6">
-
-<p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-
-Mode
-
-</p>
-
-<p className="mt-3 text-2xl font-bold text-yellow-400">
-
-Online
-
-</p>
-
-</div>
-
-<div className="rounded-3xl border border-yellow-500/20 bg-black/40 p-6">
-
-<p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-
-Rewards
-
-</p>
-
-<p className="mt-3 text-2xl font-bold text-yellow-400">
-
-Certificates
-
-</p>
-
-</div>
-
-</div>
-
-{/* ==========================================================
-    PROGRESS BAR
-========================================================== */}
-
-<div className="mt-16">
-
-<div className="mb-6 flex items-center justify-between">
-
-<div className="flex items-center gap-4">
-
-<div className={`flex h-14 w-14 items-center justify-center rounded-full transition ${
-step>=1
-?"bg-yellow-400 text-black"
-:"bg-zinc-800 text-zinc-500"
-}`}>
-
-<Users/>
-
-</div>
-
-<span className="font-semibold text-white">
-
-Team
-
-</span>
-
-</div>
-
-<div className="flex items-center gap-4">
-
-<div className={`flex h-14 w-14 items-center justify-center rounded-full transition ${
-step>=2
-?"bg-yellow-400 text-black"
-:"bg-zinc-800 text-zinc-500"
-}`}>
-
-<Lightbulb/>
-
-</div>
-
-<span className="font-semibold text-white">
-
-Project
-
-</span>
-
-</div>
-
-<div className="flex items-center gap-4">
-
-<div className={`flex h-14 w-14 items-center justify-center rounded-full transition ${
-step>=3
-?"bg-yellow-400 text-black"
-:"bg-zinc-800 text-zinc-500"
-}`}>
-
-<CreditCard/>
-
-</div>
-
-<span className="font-semibold text-white">
-
-Payment
-
-</span>
-
-</div>
-
-</div>
-
-<div className="h-2 overflow-hidden rounded-full bg-zinc-800">
-
-<motion.div
-animate={{
-width:
-step===1
-?"33%"
-:step===2
-?"66%"
-:"100%"
-}}
-transition={{duration:.5}}
-className="h-full rounded-full bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500"
-/>
-
-</div>
-
-</div>
-{/* ==========================================================
-    STEP 1 : TEAM DETAILS
-========================================================== */}
-
-<AnimatePresence mode="wait">
-
-{step===1 && (
-
-<motion.div
-key="team"
-initial={{opacity:0,x:50}}
-animate={{opacity:1,x:0}}
-exit={{opacity:0,x:-50}}
-transition={{duration:.45}}
-className="mt-16 rounded-[36px] border border-yellow-500/20 bg-gradient-to-br from-zinc-900/95 to-black p-10 shadow-[0_0_80px_rgba(255,215,0,.08)]"
->
-
-<div className="mb-12">
-
-<div className="inline-flex items-center gap-3 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-5 py-2">
-
-<Users className="h-5 w-5 text-yellow-400"/>
-
-<span className="text-sm font-semibold tracking-[0.25em] text-yellow-400">
-
-STEP 01
-
-</span>
-
-</div>
-
-<h2 className="mt-6 text-4xl font-bold text-white">
-
-Team Information
-
-</h2>
-
-<p className="mt-3 text-zinc-400">
-
-Provide your team leader and institution details.
-
-</p>
-
-</div>
-
-<div className="grid gap-8 md:grid-cols-2">
-
-{/* Team Name */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Team Name
-
-</label>
-
-<input
-required
-value={teamName}
-onChange={(e)=>setTeamName(e.target.value)}
-placeholder="Code Warriors"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-
-{/* College */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-College / University
-
-</label>
-
-<input
-required
-value={college}
-onChange={(e)=>setCollege(e.target.value)}
-placeholder="Institute Name"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-
-{/* Leader */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Team Leader
-
-</label>
-
-<input
-required
-value={leaderName}
-onChange={(e)=>setLeaderName(e.target.value)}
-placeholder="Leader Name"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-
-{/* Email */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Email Address
-
-</label>
-
-<input
-required
-type="email"
-value={email}
-onChange={(e)=>setEmail(e.target.value)}
-placeholder="leader@example.com"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-
-{/* Phone */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Phone Number
-
-</label>
-
-<input
-required
-value={phone}
-onChange={(e)=>setPhone(e.target.value)}
-placeholder="+91XXXXXXXXXX"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-
-{/* Department */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Department
-
-</label>
-
-<input
-required
-value={department}
-onChange={(e)=>setDepartment(e.target.value)}
-placeholder="Computer Science & Engineering"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white transition-all duration-300 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-{/* Academic Year */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Academic Year
-
-</label>
-
-<select
-value={year}
-onChange={(e)=>setYear(Number(e.target.value))}
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
->
-
-<option value={1}>1st Year</option>
-<option value={2}>2nd Year</option>
-<option value={3}>3rd Year</option>
-<option value={4}>4th Year</option>
-
-</select>
-
-</div>
-
-{/* Team Size */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Team Size
-
-</label>
-
-<select
-value={teamSize}
-onChange={(e)=>setTeamSize(e.target.value)}
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
->
-
-<option value="1">1 Member</option>
-<option value="2">2 Members</option>
-<option value="3">3 Members</option>
-<option value="4">4 Members</option>
-
-</select>
-
-</div>
-
-</div>
-
-{/* Team Members */}
-
-<div className="mt-8">
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Team Members (One per line)
-
-</label>
-
-<textarea
-rows={6}
-value={members}
-onChange={(e)=>setMembers(e.target.value)}
-placeholder={`Member 1
+      {/* =========================================================
+          TOP HEADER
+      ========================================================= */}
+
+      <header className="border-b border-[#e5e7eb] bg-white">
+        <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-10">
+          <div className="flex items-center gap-4">
+            <div className="flex h-10 items-center justify-center rounded-md border border-[#e5e7eb] bg-white px-3">
+              <img
+                src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png"
+                alt="STAMPERS"
+                className="h-6 w-auto object-contain"
+              />
+            </div>
+
+            <div className="hidden h-7 w-px bg-[#e5e7eb] sm:block" />
+
+            <div className="hidden sm:block">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9ca3af]">
+                Registration
+              </p>
+
+              <p className="text-sm font-semibold text-[#111827]">
+                National Hackathon 2026
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="hidden items-center gap-2 text-xs text-[#6b7280] sm:flex">
+              <Lock className="h-3.5 w-3.5" />
+              Secure registration
+            </div>
+
+            <div className="h-8 w-px bg-[#e5e7eb] sm:block hidden" />
+
+            <a
+              href="/"
+              className="flex items-center gap-2 text-xs font-semibold text-[#374151] transition hover:text-[#111827]"
+            >
+              Exit
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* =========================================================
+          MAIN
+      ========================================================= */}
+
+      <main className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
+        {/* =======================================================
+            EVENT BAR
+        ======================================================= */}
+
+        <div className="mb-6 border border-[#e5e7eb] bg-white">
+          <div className="flex flex-col gap-5 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-7">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-[#16a34a]" />
+
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6b7280]">
+                  Registration Open
+                </span>
+              </div>
+
+              <h1 className="mt-2 text-xl font-bold tracking-tight text-[#111827] sm:text-2xl">
+                STAMPERS National Hackathon 2026
+              </h1>
+
+              <p className="mt-1 text-sm text-[#6b7280]">
+                Submit your team and innovation details to participate.
+              </p>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-6 border-t border-[#e5e7eb] pt-4 sm:border-l sm:border-t-0 sm:pl-7 sm:pt-0">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#9ca3af]">
+                  Fee
+                </p>
+                <p className="mt-1 text-base font-bold text-[#111827]">
+                  ₹20 <span className="font-normal text-[#6b7280]">/ member</span>
+                </p>
+              </div>
+
+              <div className="h-9 w-px bg-[#e5e7eb]" />
+
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#9ca3af]">
+                  Mode
+                </p>
+                <p className="mt-1 text-base font-bold text-[#111827]">
+                  Online
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* =======================================================
+            WORKSPACE
+        ======================================================= */}
+
+        <div className="grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
+          {/* =====================================================
+              SIDEBAR
+          ===================================================== */}
+
+          <aside className="hidden lg:block">
+            <div className="sticky top-6 border border-[#e5e7eb] bg-white">
+              <div className="border-b border-[#e5e7eb] px-5 py-5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9ca3af]">
+                  Registration
+                </p>
+
+                <p className="mt-1 text-sm font-semibold text-[#111827]">
+                  Application steps
+                </p>
+              </div>
+
+              <div className="p-3">
+                {steps.map((item, index) => {
+                  const Icon = item.icon;
+                  const active = step === item.number;
+                  const completed = step > item.number;
+
+                  return (
+                    <div key={item.number}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (item.number < step) {
+                            setStep(item.number);
+                          }
+                        }}
+                        disabled={item.number > step}
+                        className={`flex w-full items-center gap-3 px-3 py-3 text-left transition ${
+                          active
+                            ? "bg-[#f3f4f6]"
+                            : completed
+                              ? "hover:bg-[#f9fafb]"
+                              : "opacity-50"
+                        }`}
+                      >
+                        <div
+                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md border ${
+                            active
+                              ? "border-[#111827] bg-[#111827] text-white"
+                              : completed
+                                ? "border-[#16a34a] bg-[#f0fdf4] text-[#16a34a]"
+                                : "border-[#e5e7eb] bg-white text-[#9ca3af]"
+                          }`}
+                        >
+                          {completed ? (
+                            <CheckCircle2 className="h-4 w-4" />
+                          ) : (
+                            <Icon className="h-4 w-4" />
+                          )}
+                        </div>
+
+                        <div className="min-w-0">
+                          <p
+                            className={`text-sm font-semibold ${
+                              active
+                                ? "text-[#111827]"
+                                : "text-[#374151]"
+                            }`}
+                          >
+                            {item.title}
+                          </p>
+
+                          <p className="mt-0.5 text-[11px] text-[#9ca3af]">
+                            {item.description}
+                          </p>
+                        </div>
+
+                        {active && (
+                          <ChevronRight className="ml-auto h-4 w-4 text-[#9ca3af]" />
+                        )}
+                      </button>
+
+                      {index < steps.length - 1 && (
+                        <div className="ml-[30px] h-3 border-l border-[#e5e7eb]" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="border-t border-[#e5e7eb] px-5 py-5">
+                <div className="flex items-start gap-3">
+                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#6b7280]" />
+
+                  <p className="text-[11px] leading-5 text-[#6b7280]">
+                    Please enter accurate information. Your registration
+                    details will be used for event communication and
+                    verification.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* =====================================================
+              CONTENT
+          ===================================================== */}
+
+          <section className="min-w-0">
+            {/* Mobile stepper */}
+
+            <div className="mb-5 border border-[#e5e7eb] bg-white p-4 lg:hidden">
+              <div className="flex items-center justify-between">
+                {steps.map((item, index) => {
+                  const Icon = item.icon;
+                  const active = step === item.number;
+                  const completed = step > item.number;
+
+                  return (
+                    <div
+                      key={item.number}
+                      className="flex flex-1 items-center"
+                    >
+                      <div className="flex flex-col items-center">
+                        <div
+                          className={`flex h-9 w-9 items-center justify-center rounded-md border ${
+                            active
+                              ? "border-[#111827] bg-[#111827] text-white"
+                              : completed
+                                ? "border-[#16a34a] bg-[#f0fdf4] text-[#16a34a]"
+                                : "border-[#e5e7eb] bg-white text-[#9ca3af]"
+                          }`}
+                        >
+                          {completed ? (
+                            <CheckCircle2 className="h-4 w-4" />
+                          ) : (
+                            <Icon className="h-4 w-4" />
+                          )}
+                        </div>
+
+                        <span
+                          className={`mt-1.5 text-[10px] font-semibold ${
+                            active ? "text-[#111827]" : "text-[#9ca3af]"
+                          }`}
+                        >
+                          {item.title}
+                        </span>
+                      </div>
+
+                      {index < steps.length - 1 && (
+                        <div
+                          className={`mx-2 mt-[-16px] h-px flex-1 ${
+                            step > item.number
+                              ? "bg-[#16a34a]"
+                              : "bg-[#e5e7eb]"
+                          }`}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="border border-[#e5e7eb] bg-white">
+              {/* =================================================
+                  STEP 1
+              ================================================= */}
+
+              <AnimatePresence mode="wait">
+                {step === 1 && (
+                  <motion.div
+                    key="team"
+                    initial={{ opacity: 0, x: 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -12 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="border-b border-[#e5e7eb] px-5 py-6 sm:px-8">
+                      <div className="flex items-start justify-between gap-5">
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9ca3af]">
+                            Step 01
+                          </p>
+
+                          <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#111827]">
+                            Team information
+                          </h2>
+
+                          <p className="mt-1.5 max-w-2xl text-sm leading-6 text-[#6b7280]">
+                            Provide the team leader, institution and participant
+                            information.
+                          </p>
+                        </div>
+
+                        <div className="hidden h-10 w-10 items-center justify-center rounded-md border border-[#e5e7eb] bg-[#f9fafb] sm:flex">
+                          <Users className="h-4 w-4 text-[#374151]" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="px-5 py-7 sm:px-8 sm:py-8">
+                      <div className="grid gap-x-6 gap-y-6 md:grid-cols-2">
+                        <Field
+                          label="Team Name"
+                          required
+                          value={teamName}
+                          onChange={setTeamName}
+                          placeholder="Code Warriors"
+                        />
+
+                        <Field
+                          label="College / University"
+                          required
+                          value={college}
+                          onChange={setCollege}
+                          placeholder="Institute Name"
+                        />
+
+                        <Field
+                          label="Team Leader"
+                          required
+                          value={leaderName}
+                          onChange={setLeaderName}
+                          placeholder="Leader Name"
+                        />
+
+                        <Field
+                          label="Email Address"
+                          required
+                          type="email"
+                          value={email}
+                          onChange={setEmail}
+                          placeholder="leader@example.com"
+                        />
+
+                        <Field
+                          label="Phone Number"
+                          required
+                          value={phone}
+                          onChange={setPhone}
+                          placeholder="+91XXXXXXXXXX"
+                        />
+
+                        <Field
+                          label="Department"
+                          required
+                          value={department}
+                          onChange={setDepartment}
+                          placeholder="Computer Science & Engineering"
+                        />
+
+                        <SelectField
+                          label="Academic Year"
+                          value={year}
+                          onChange={(value) => setYear(Number(value))}
+                          options={[
+                            { value: 1, label: "1st Year" },
+                            { value: 2, label: "2nd Year" },
+                            { value: 3, label: "3rd Year" },
+                            { value: 4, label: "4th Year" },
+                          ]}
+                        />
+
+                        <SelectField
+                          label="Team Size"
+                          value={teamSize}
+                          onChange={setTeamSize}
+                          options={[
+                            { value: "1", label: "1 Member" },
+                            { value: "2", label: "2 Members" },
+                            { value: "3", label: "3 Members" },
+                            { value: "4", label: "4 Members" },
+                          ]}
+                        />
+                      </div>
+
+                      <div className="mt-7">
+                        <label className="mb-2 block text-xs font-semibold text-[#374151]">
+                          Team Members
+                        </label>
+
+                        <textarea
+                          rows={5}
+                          value={members}
+                          onChange={(e) => setMembers(e.target.value)}
+                          placeholder={`Member 1
 Member 2
 Member 3
 Member 4`}
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-<p className="mt-3 text-sm text-zinc-500">
-
-Maximum 4 participants including the team leader.
-
-</p>
-
-</div>
-
-{/* Premium Information Card */}
-
-<div className="mt-10 rounded-3xl border border-yellow-500/20 bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-transparent p-8">
-
-<div className="flex items-start gap-5">
-
-<div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-500/20">
-
-<ShieldCheck className="h-8 w-8 text-yellow-400"/>
-
-</div>
-
-<div>
-
-<h3 className="text-2xl font-bold text-white">
-
-Before You Continue
-
-</h3>
-
-<ul className="mt-5 space-y-3 text-zinc-400 leading-7">
-
-<li>• Verify all participant names carefully.</li>
-
-<li>• The email address will receive all updates.</li>
-
-<li>• Phone number must remain active.</li>
-
-<li>• Team leader represents the entire team.</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-{/* Navigation */}
-
-<div className="mt-12 flex justify-end">
-
-<button
-type="button"
-onClick={nextStep}
-className="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 px-10 py-4 text-lg font-bold text-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(255,215,0,.35)]"
->
-
-Continue
-
-<ArrowRight size={20}/>
-
-</button>
-
-</div>
-
-</motion.div>
-
-)}
-
-</AnimatePresence>
-{/* ==========================================================
-    STEP 2 : PROJECT INFORMATION
-========================================================== */}
-
-<AnimatePresence mode="wait">
-
-{step===2 && (
-
-<motion.div
-key="project"
-initial={{opacity:0,x:50}}
-animate={{opacity:1,x:0}}
-exit={{opacity:0,x:-50}}
-transition={{duration:.45}}
-className="mt-16 rounded-[36px] border border-yellow-500/20 bg-gradient-to-br from-zinc-900/95 to-black p-10 shadow-[0_0_80px_rgba(255,215,0,.08)]"
->
-
-<div className="mb-12">
-
-<div className="inline-flex items-center gap-3 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-5 py-2">
-
-<Lightbulb className="h-5 w-5 text-yellow-400"/>
-
-<span className="text-sm font-semibold tracking-[0.25em] text-yellow-400">
-
-STEP 02
-
-</span>
-
-</div>
-
-<h2 className="mt-6 text-4xl font-bold text-white">
-
-Project Information
-
-</h2>
-
-<p className="mt-3 text-zinc-400">
-
-Tell us about your innovative idea and technical solution.
-
-</p>
-
-</div>
-
-<div className="space-y-8">
-
-{/* Project Name */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Project Name
-
-</label>
-
-<input
-required
-value={projectName}
-onChange={(e)=>setProjectName(e.target.value)}
-placeholder="AI Smart Healthcare"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-
-{/* Domain */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Project Domain
-
-</label>
-
-<select
-required
-value={domain}
-onChange={(e)=>setDomain(e.target.value)}
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
->
-
-<option value="">Choose Domain</option>
-
-<option>Artificial Intelligence</option>
-<option>Machine Learning</option>
-<option>Web Development</option>
-<option>Cyber Security</option>
-<option>Blockchain</option>
-<option>Cloud Computing</option>
-<option>Internet of Things</option>
-<option>Healthcare</option>
-<option>Education</option>
-<option>Agriculture</option>
-<option>Open Innovation</option>
-
-</select>
-
-</div>
-
-{/* Problem Statement */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Problem Statement
-
-</label>
-
-<textarea
-required
-rows={7}
-value={problemStatement}
-onChange={(e)=>setProblemStatement(e.target.value)}
-placeholder="Describe the real-world problem that your project aims to solve..."
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-{/* Proposed Solution */}
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Proposed Solution
-
-</label>
-
-<textarea
-required
-rows={7}
-value={solution}
-onChange={(e)=>setSolution(e.target.value)}
-placeholder="Explain how your solution works, what makes it unique, and how it solves the problem..."
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-
-{/* Tech Stack & GitHub */}
-
-<div className="grid gap-8 md:grid-cols-2">
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-Technology Stack
-
-</label>
-
-<input
-value={techStack}
-onChange={(e)=>setTechStack(e.target.value)}
-placeholder="Next.js, React, Node.js, Supabase..."
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-
-<div>
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-GitHub Repository
-
-</label>
-
-<input
-value={github}
-onChange={(e)=>setGithub(e.target.value)}
-placeholder="https://github.com/username/project"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-4 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-</div>
-
-</div>
-
-{/* Premium Tips */}
-
-<div className="mt-10 rounded-3xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/10 via-cyan-500/5 to-transparent p-8">
-
-<div className="flex items-start gap-5">
-
-<div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-500/20">
-
-<Trophy className="h-8 w-8 text-cyan-400"/>
-
-</div>
-
-<div>
-
-<h3 className="text-2xl font-bold text-white">
-
-Winning Project Tips
-
-</h3>
-
-<p className="mt-4 leading-7 text-zinc-400">
-
-The strongest submissions clearly explain the problem,
-show innovation, demonstrate technical feasibility,
-and describe how the project can create real-world impact.
-
-</p>
-
-<div className="mt-6 grid gap-4 md:grid-cols-2">
-
-<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
-
-<p className="font-semibold text-yellow-400">
-
-Innovation
-
-</p>
-
-<p className="mt-2 text-sm text-zinc-400">
-
-Highlight what makes your solution different.
-
-</p>
-
-</div>
-
-<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
-
-<p className="font-semibold text-yellow-400">
-
-Impact
-
-</p>
-
-<p className="mt-2 text-sm text-zinc-400">
-
-Describe how users benefit from your solution.
-
-</p>
-
-</div>
-
-<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
-
-<p className="font-semibold text-yellow-400">
-
-Scalability
-
-</p>
-
-<p className="mt-2 text-sm text-zinc-400">
-
-Explain how your project can grow in the future.
-
-</p>
-
-</div>
-
-<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
-
-<p className="font-semibold text-yellow-400">
-
-Presentation
-
-</p>
-
-<p className="mt-2 text-sm text-zinc-400">
-
-Keep your explanation concise and easy to understand.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-{/* Navigation */}
-
-<div className="mt-12 flex items-center justify-between">
-
-<button
-type="button"
-onClick={prevStep}
-className="inline-flex items-center gap-3 rounded-2xl border border-zinc-700 bg-black/40 px-8 py-4 text-white transition-all duration-300 hover:border-yellow-400 hover:text-yellow-400"
->
-
-<ArrowLeft size={20}/>
-
-Back
-
-</button>
-
-<button
-type="button"
-onClick={nextStep}
-className="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 px-10 py-4 text-lg font-bold text-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(255,215,0,.35)]"
->
-
-Continue
-
-<ArrowRight size={20}/>
-
-</button>
-
-</div>
-
-</div>
-
-</motion.div>
-
-)}
-
-</AnimatePresence>
-{/* ==========================================================
-    STEP 3 : PAYMENT
-========================================================== */}
-
-<AnimatePresence mode="wait">
-
-{step===3 && (
-
-<motion.div
-key="payment"
-initial={{opacity:0,x:50}}
-animate={{opacity:1,x:0}}
-exit={{opacity:0,x:-50}}
-transition={{duration:.45}}
-className="mt-16 rounded-[36px] border border-yellow-500/20 bg-gradient-to-br from-zinc-900/95 to-black p-10 shadow-[0_0_80px_rgba(255,215,0,.08)]"
->
-
-<div className="mb-12">
-
-<div className="inline-flex items-center gap-3 rounded-full border border-yellow-500/20 bg-yellow-500/10 px-5 py-2">
-
-<CreditCard className="h-5 w-5 text-yellow-400"/>
-
-<span className="text-sm font-semibold tracking-[0.25em] text-yellow-400">
-
-STEP 03
-
-</span>
-
-</div>
-
-<h2 className="mt-6 text-4xl font-bold text-white">
-
-Registration Payment
-
-</h2>
-
-<p className="mt-3 text-zinc-400">
-
-Complete your payment to finish the registration.
-
-</p>
-
-</div>
-
-<div className="grid gap-10 lg:grid-cols-2">
-
-{/* Payment Summary */}
-
-<div className="rounded-3xl border border-yellow-500/20 bg-black/40 p-8">
-
-<h3 className="text-2xl font-bold text-white">
-
-Payment Summary
-
-</h3>
-
-<div className="mt-8 space-y-6">
-
-<div className="flex items-center justify-between border-b border-zinc-800 pb-4">
-
-<span className="text-zinc-400">
-
-Registration Fee
-
-</span>
-
-<span className="font-bold text-yellow-400">
-
-₹20 / Member
-
-</span>
-
-</div>
-
-<div className="flex items-center justify-between border-b border-zinc-800 pb-4">
-
-<span className="text-zinc-400">
-
-Team Size
-
-</span>
-
-<span className="font-semibold text-white">
-
-{teamSize} Members
-
-</span>
-
-</div>
-
-<div className="flex items-center justify-between border-b border-zinc-800 pb-4">
-
-<span className="text-zinc-400">
-
-Total Amount
-
-</span>
-
-<span className="text-3xl font-black text-yellow-400">
-
-₹{Number(teamSize) * 20}
-
-</span>
-
-</div>
-
-<div className="flex items-center justify-between">
-
-<span className="text-zinc-400">
-
-Payment Mode
-
-</span>
-
-<span className="font-semibold text-white">
-
-UPI
-
-</span>
-
-</div>
-
-</div>
-
-<div className="mt-10 rounded-3xl border border-yellow-500/20 bg-yellow-500/10 p-6">
-
-<h4 className="font-semibold text-yellow-400">
-
-Instructions
-
-</h4>
-
-<ul className="mt-4 space-y-3 text-sm leading-7 text-zinc-300">
-
-<li>• Scan the QR Code.</li>
-
-<li>• Complete the payment.</li>
-
-<li>• Copy your UPI Transaction ID.</li>
-
-<li>• Enter the Transaction ID below.</li>
-
-<li>• Click Complete Registration.</li>
-
-</ul>
-
-</div>
-
-</div>
-
-{/* QR Card */}
-
-<div className="rounded-3xl border border-yellow-500/20 bg-black/40 p-8">
-
-<h3 className="text-center text-2xl font-bold text-white">
-
-Scan & Pay
-
-</h3>
-
-<p className="mt-3 text-center text-zinc-400">
-
-Google Pay • PhonePe • Paytm • BHIM
-
-</p>
-
-<div className="mt-8 flex justify-center">
-
-<div className="rounded-[30px] bg-white p-5 shadow-[0_0_50px_rgba(255,215,0,.2)]">
-
-<img
-src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/payment/unnamed.png"
-alt="Payment QR"
-className="h-72 w-72 rounded-2xl object-contain"
-/>
-
-</div>
-
-</div>
-
-<p className="mt-6 text-center text-sm text-zinc-500">
-
-After payment, enter your UPI Transaction ID below.
-
-</p>
-
-</div>
-
-</div>
-
-{/* Transaction ID */}
-
-<div className="mt-10">
-
-<label className="mb-3 block text-sm text-zinc-400">
-
-UPI Transaction ID *
-
-</label>
-
-<input
-required
-value={transactionId}
-onChange={(e)=>setTransactionId(e.target.value)}
-placeholder="Example : T240716123456789"
-className="w-full rounded-2xl border border-zinc-700 bg-black/60 px-6 py-5 text-white outline-none transition-all duration-300 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30"
-/>
-
-<p className="mt-3 text-sm text-zinc-500">
-
-This Transaction ID will be used to verify your payment.
-
-</p>
-
-</div>
-{/* Final Checklist */}
-
-<div className="mt-10 rounded-3xl border border-green-500/20 bg-gradient-to-r from-green-500/10 via-green-500/5 to-transparent p-8">
-
-<h3 className="flex items-center gap-3 text-2xl font-bold text-white">
-
-<CheckCircle2 className="h-7 w-7 text-green-400"/>
-
-Final Checklist
-
-</h3>
-
-<div className="mt-6 grid gap-4 md:grid-cols-2">
-
-<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
-
-<p className="font-semibold text-green-400">
-
-✓ Team Details
-
-</p>
-
-<p className="mt-2 text-sm text-zinc-400">
-
-All participant information is correct.
-
-</p>
-
-</div>
-
-<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
-
-<p className="font-semibold text-green-400">
-
-✓ Project Information
-
-</p>
-
-<p className="mt-2 text-sm text-zinc-400">
-
-Your project details are complete.
-
-</p>
-
-</div>
-
-<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
-
-<p className="font-semibold text-green-400">
-
-✓ Payment
-
-</p>
-
-<p className="mt-2 text-sm text-zinc-400">
-
-Registration fee has been paid.
-
-</p>
-
-</div>
-
-<div className="rounded-2xl border border-zinc-700 bg-black/40 p-5">
-
-<p className="font-semibold text-green-400">
-
-✓ Ready to Submit
-
-</p>
-
-<p className="mt-2 text-sm text-zinc-400">
-
-Click the button below to complete your registration.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-{/* Navigation */}
-
-<div className="mt-12 flex items-center justify-between">
-
-<button
-type="button"
-onClick={prevStep}
-className="inline-flex items-center gap-3 rounded-2xl border border-zinc-700 bg-black/40 px-8 py-4 text-white transition-all duration-300 hover:border-yellow-400 hover:text-yellow-400"
->
-
-<ArrowLeft size={20}/>
-
-Back
-
-</button>
-
-<button
-type="submit"
-disabled={loading}
-className="inline-flex items-center gap-4 rounded-2xl bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 px-12 py-5 text-lg font-bold text-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(255,215,0,.4)] disabled:cursor-not-allowed disabled:opacity-60"
->
-
-{loading ? (
-
-<>
-
-<div className="h-6 w-6 animate-spin rounded-full border-4 border-black border-t-transparent"/>
-
-Registering...
-
-</>
-
-) : (
-
-<>
-
-Complete Registration
-
-<CheckCircle2 size={22}/>
-
-</>
-
-)}
-
-</button>
-
-</div>
-
-</motion.div>
-
-)}
-
-</AnimatePresence>
-
-</div>
-
-</form>
-
-);
-
+                          className="w-full resize-y border border-[#d1d5db] bg-white px-4 py-3 text-sm text-[#111827] outline-none transition placeholder:text-[#9ca3af] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]"
+                        />
+
+                        <p className="mt-2 text-[11px] text-[#9ca3af]">
+                          Maximum 4 participants including the team leader.
+                        </p>
+                      </div>
+
+                      <div className="mt-7 border border-[#e5e7eb] bg-[#f9fafb] p-5">
+                        <div className="flex items-start gap-4">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center border border-[#e5e7eb] bg-white">
+                            <ShieldCheck className="h-4 w-4 text-[#374151]" />
+                          </div>
+
+                          <div>
+                            <h3 className="text-sm font-bold text-[#111827]">
+                              Before you continue
+                            </h3>
+
+                            <ul className="mt-2 space-y-1.5 text-xs leading-5 text-[#6b7280]">
+                              <li>
+                                • Verify all participant names carefully.
+                              </li>
+                              <li>
+                                • The email address will receive event
+                                updates.
+                              </li>
+                              <li>
+                                • Make sure the phone number remains active.
+                              </li>
+                              <li>
+                                • The team leader represents the team.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <StepFooter>
+                      <button
+                        type="button"
+                        onClick={nextStep}
+                        className="inline-flex items-center justify-center gap-2 bg-[#111827] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#374151]"
+                      >
+                        Continue
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    </StepFooter>
+                  </motion.div>
+                )}
+
+                {/* =================================================
+                    STEP 2
+                ================================================= */}
+
+                {step === 2 && (
+                  <motion.div
+                    key="project"
+                    initial={{ opacity: 0, x: 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -12 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="border-b border-[#e5e7eb] px-5 py-6 sm:px-8">
+                      <div className="flex items-start justify-between gap-5">
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9ca3af]">
+                            Step 02
+                          </p>
+
+                          <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#111827]">
+                            Project information
+                          </h2>
+
+                          <p className="mt-1.5 max-w-2xl text-sm leading-6 text-[#6b7280]">
+                            Tell us about your idea, the problem it addresses
+                            and the technology behind it.
+                          </p>
+                        </div>
+
+                        <div className="hidden h-10 w-10 items-center justify-center rounded-md border border-[#e5e7eb] bg-[#f9fafb] sm:flex">
+                          <Lightbulb className="h-4 w-4 text-[#374151]" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="px-5 py-7 sm:px-8 sm:py-8">
+                      <div className="space-y-6">
+                        <Field
+                          label="Project Name"
+                          required
+                          value={projectName}
+                          onChange={setProjectName}
+                          placeholder="AI Smart Healthcare"
+                        />
+
+                        <SelectField
+                          label="Project Domain"
+                          required
+                          value={domain}
+                          onChange={setDomain}
+                          placeholder="Choose Domain"
+                          options={[
+                            {
+                              value: "Artificial Intelligence",
+                              label: "Artificial Intelligence",
+                            },
+                            {
+                              value: "Machine Learning",
+                              label: "Machine Learning",
+                            },
+                            {
+                              value: "Web Development",
+                              label: "Web Development",
+                            },
+                            {
+                              value: "Cyber Security",
+                              label: "Cyber Security",
+                            },
+                            {
+                              value: "Blockchain",
+                              label: "Blockchain",
+                            },
+                            {
+                              value: "Cloud Computing",
+                              label: "Cloud Computing",
+                            },
+                            {
+                              value: "Internet of Things",
+                              label: "Internet of Things",
+                            },
+                            {
+                              value: "Healthcare",
+                              label: "Healthcare",
+                            },
+                            {
+                              value: "Education",
+                              label: "Education",
+                            },
+                            {
+                              value: "Agriculture",
+                              label: "Agriculture",
+                            },
+                            {
+                              value: "Open Innovation",
+                              label: "Open Innovation",
+                            },
+                          ]}
+                        />
+
+                        <TextAreaField
+                          label="Problem Statement"
+                          required
+                          rows={6}
+                          value={problemStatement}
+                          onChange={setProblemStatement}
+                          placeholder="Describe the real-world problem that your project aims to solve..."
+                        />
+
+                        <TextAreaField
+                          label="Proposed Solution"
+                          required
+                          rows={6}
+                          value={solution}
+                          onChange={setSolution}
+                          placeholder="Explain how your solution works, what makes it unique, and how it solves the problem..."
+                        />
+
+                        <div className="grid gap-6 md:grid-cols-2">
+                          <Field
+                            label="Technology Stack"
+                            value={techStack}
+                            onChange={setTechStack}
+                            placeholder="Next.js, React, Node.js, Supabase..."
+                          />
+
+                          <Field
+                            label="GitHub Repository"
+                            value={github}
+                            onChange={setGithub}
+                            placeholder="https://github.com/username/project"
+                          />
+                        </div>
+
+                        <div className="border border-[#e5e7eb] bg-[#f9fafb] p-5">
+                          <div className="flex items-start gap-4">
+                            <div className="flex h-9 w-9 shrink-0 items-center justify-center border border-[#e5e7eb] bg-white">
+                              <Trophy className="h-4 w-4 text-[#374151]" />
+                            </div>
+
+                            <div>
+                              <h3 className="text-sm font-bold text-[#111827]">
+                                Project submission guidance
+                              </h3>
+
+                              <p className="mt-2 text-xs leading-5 text-[#6b7280]">
+                                Strong submissions clearly explain the problem,
+                                demonstrate innovation, describe technical
+                                feasibility and communicate the potential
+                                real-world impact.
+                              </p>
+
+                              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                                <Tip
+                                  title="Innovation"
+                                  text="Highlight what makes your solution different."
+                                />
+
+                                <Tip
+                                  title="Impact"
+                                  text="Describe how users benefit from your solution."
+                                />
+
+                                <Tip
+                                  title="Scalability"
+                                  text="Explain how the project can grow."
+                                />
+
+                                <Tip
+                                  title="Presentation"
+                                  text="Keep your explanation clear and concise."
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <StepFooter>
+                      <button
+                        type="button"
+                        onClick={prevStep}
+                        className="inline-flex items-center justify-center gap-2 border border-[#d1d5db] bg-white px-6 py-3 text-sm font-semibold text-[#374151] transition hover:border-[#111827] hover:text-[#111827]"
+                      >
+                        <ArrowLeft className="h-4 w-4" />
+                        Back
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={nextStep}
+                        className="inline-flex items-center justify-center gap-2 bg-[#111827] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#374151]"
+                      >
+                        Continue
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    </StepFooter>
+                  </motion.div>
+                )}
+
+                {/* =================================================
+                    STEP 3
+                ================================================= */}
+
+                {step === 3 && (
+                  <motion.div
+                    key="payment"
+                    initial={{ opacity: 0, x: 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -12 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="border-b border-[#e5e7eb] px-5 py-6 sm:px-8">
+                      <div className="flex items-start justify-between gap-5">
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9ca3af]">
+                            Step 03
+                          </p>
+
+                          <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#111827]">
+                            Registration payment
+                          </h2>
+
+                          <p className="mt-1.5 max-w-2xl text-sm leading-6 text-[#6b7280]">
+                            Complete the registration payment and provide the
+                            transaction reference.
+                          </p>
+                        </div>
+
+                        <div className="hidden h-10 w-10 items-center justify-center rounded-md border border-[#e5e7eb] bg-[#f9fafb] sm:flex">
+                          <CreditCard className="h-4 w-4 text-[#374151]" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="px-5 py-7 sm:px-8 sm:py-8">
+                      <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+                        {/* Payment summary */}
+
+                        <div className="border border-[#e5e7eb] bg-[#f9fafb]">
+                          <div className="border-b border-[#e5e7eb] px-5 py-5">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9ca3af]">
+                              Order summary
+                            </p>
+
+                            <h3 className="mt-1 text-lg font-bold text-[#111827]">
+                              Hackathon registration
+                            </h3>
+                          </div>
+
+                          <div className="px-5 py-5">
+                            <div className="space-y-4">
+                              <SummaryRow
+                                label="Registration fee"
+                                value="₹20 / Member"
+                              />
+
+                              <SummaryRow
+                                label="Team size"
+                                value={`${teamSize} Members`}
+                              />
+
+                              <div className="border-t border-[#e5e7eb] pt-4">
+                                <div className="flex items-end justify-between">
+                                  <span className="text-sm font-semibold text-[#374151]">
+                                    Total amount
+                                  </span>
+
+                                  <span className="text-2xl font-bold text-[#111827]">
+                                    ₹{Number(teamSize) * 20}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <SummaryRow
+                                label="Payment method"
+                                value="UPI"
+                              />
+                            </div>
+
+                            <div className="mt-6 border border-[#e5e7eb] bg-white p-4">
+                              <p className="text-xs font-bold text-[#111827]">
+                                Payment instructions
+                              </p>
+
+                              <ol className="mt-3 space-y-2 text-xs leading-5 text-[#6b7280]">
+                                <li>1. Scan the QR code.</li>
+                                <li>2. Complete the payment.</li>
+                                <li>3. Copy your UPI Transaction ID.</li>
+                                <li>4. Enter the ID in the field provided.</li>
+                                <li>5. Complete registration.</li>
+                              </ol>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* QR payment */}
+
+                        <div className="border border-[#e5e7eb] bg-white">
+                          <div className="border-b border-[#e5e7eb] px-5 py-5 text-center">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9ca3af]">
+                              Secure UPI payment
+                            </p>
+
+                            <h3 className="mt-1 text-lg font-bold text-[#111827]">
+                              Scan & Pay
+                            </h3>
+
+                            <p className="mt-1 text-xs text-[#6b7280]">
+                              Google Pay • PhonePe • Paytm • BHIM
+                            </p>
+                          </div>
+
+                          <div className="flex flex-col items-center px-5 py-7">
+                            <div className="border border-[#d1d5db] bg-white p-4">
+                              <img
+                                src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/payment/unnamed.png"
+                                alt="Payment QR"
+                                className="h-64 w-64 object-contain sm:h-72 sm:w-72"
+                              />
+                            </div>
+
+                            <div className="mt-5 flex items-center gap-2 text-xs text-[#6b7280]">
+                              <Lock className="h-3.5 w-3.5" />
+                              Complete the payment before submitting.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Transaction ID */}
+
+                      <div className="mt-7 border border-[#e5e7eb] bg-white p-5 sm:p-6">
+                        <label className="mb-2 block text-xs font-semibold text-[#374151]">
+                          UPI Transaction ID{" "}
+                          <span className="text-[#dc2626]">*</span>
+                        </label>
+
+                        <input
+                          required
+                          value={transactionId}
+                          onChange={(e) => setTransactionId(e.target.value)}
+                          placeholder="Example: T240716123456789"
+                          className="w-full border border-[#d1d5db] bg-white px-4 py-3 text-sm text-[#111827] outline-none transition placeholder:text-[#9ca3af] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]"
+                        />
+
+                        <p className="mt-2 text-[11px] text-[#9ca3af]">
+                          This transaction ID will be used to verify your
+                          registration payment.
+                        </p>
+                      </div>
+
+                      {/* Final checklist */}
+
+                      <div className="mt-7 border border-[#d1fae5] bg-[#f0fdf4] p-5 sm:p-6">
+                        <div className="flex items-center gap-3">
+                          <CheckCircle2 className="h-5 w-5 text-[#16a34a]" />
+
+                          <h3 className="text-sm font-bold text-[#166534]">
+                            Final verification
+                          </h3>
+                        </div>
+
+                        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                          <CheckItem
+                            title="Team details"
+                            text="Participant information is ready."
+                          />
+
+                          <CheckItem
+                            title="Project information"
+                            text="Project details have been provided."
+                          />
+
+                          <CheckItem
+                            title="Payment"
+                            text="Registration fee is ready to verify."
+                          />
+
+                          <CheckItem
+                            title="Submission"
+                            text="Ready to complete registration."
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <StepFooter>
+                      <button
+                        type="button"
+                        onClick={prevStep}
+                        className="inline-flex items-center justify-center gap-2 border border-[#d1d5db] bg-white px-6 py-3 text-sm font-semibold text-[#374151] transition hover:border-[#111827] hover:text-[#111827]"
+                      >
+                        <ArrowLeft className="h-4 w-4" />
+                        Back
+                      </button>
+
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="inline-flex items-center justify-center gap-2 bg-[#111827] px-7 py-3 text-sm font-semibold text-white transition hover:bg-[#374151] disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {loading ? (
+                          <>
+                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                            Registering...
+                          </>
+                        ) : (
+                          <>
+                            Complete Registration
+                            <CheckCircle2 className="h-4 w-4" />
+                          </>
+                        )}
+                      </button>
+                    </StepFooter>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      {/* =========================================================
+          FOOTER
+      ========================================================= */}
+
+      <footer className="border-t border-[#e5e7eb] bg-white">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-2 px-5 py-5 text-center text-[11px] text-[#9ca3af] sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10">
+          <p>© 2026 STAMPERS™</p>
+
+          <p>
+            National Hackathon Registration Portal
+          </p>
+        </div>
+      </footer>
+    </form>
+  );
+}
+
+/* =============================================================
+   REUSABLE FIELD
+============================================================= */
+
+function Field({
+  label,
+  required = false,
+  type = "text",
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  required?: boolean;
+  type?: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-xs font-semibold text-[#374151]">
+        {label}{" "}
+        {required && <span className="text-[#dc2626]">*</span>}
+      </label>
+
+      <input
+        required={required}
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full border border-[#d1d5db] bg-white px-4 py-3 text-sm text-[#111827] outline-none transition placeholder:text-[#9ca3af] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]"
+      />
+    </div>
+  );
+}
+
+/* =============================================================
+   TEXT AREA
+============================================================= */
+
+function TextAreaField({
+  label,
+  required = false,
+  rows = 6,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  required?: boolean;
+  rows?: number;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-xs font-semibold text-[#374151]">
+        {label}{" "}
+        {required && <span className="text-[#dc2626]">*</span>}
+      </label>
+
+      <textarea
+        required={required}
+        rows={rows}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full resize-y border border-[#d1d5db] bg-white px-4 py-3 text-sm leading-6 text-[#111827] outline-none transition placeholder:text-[#9ca3af] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]"
+      />
+    </div>
+  );
+}
+
+/* =============================================================
+   SELECT
+============================================================= */
+
+function SelectField({
+  label,
+  required = false,
+  value,
+  onChange,
+  options,
+  placeholder,
+}: {
+  label: string;
+  required?: boolean;
+  value: string | number;
+  onChange: (value: string) => void;
+  options: { value: string | number; label: string }[];
+  placeholder?: string;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-xs font-semibold text-[#374151]">
+        {label}{" "}
+        {required && <span className="text-[#dc2626]">*</span>}
+      </label>
+
+      <select
+        required={required}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full border border-[#d1d5db] bg-white px-4 py-3 text-sm text-[#111827] outline-none transition focus:border-[#111827] focus:ring-1 focus:ring-[#111827]"
+      >
+        {placeholder && (
+          <option value="">
+            {placeholder}
+          </option>
+        )}
+
+        {options.map((option) => (
+          <option key={String(option.value)} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+/* =============================================================
+   STEP FOOTER
+============================================================= */
+
+function StepFooter({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col-reverse gap-3 border-t border-[#e5e7eb] bg-[#fafafa] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      {children}
+    </div>
+  );
+}
+
+/* =============================================================
+   TIP
+============================================================= */
+
+function Tip({
+  title,
+  text,
+}: {
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="border border-[#e5e7eb] bg-white p-4">
+      <p className="text-xs font-bold text-[#111827]">
+        {title}
+      </p>
+
+      <p className="mt-1 text-[11px] leading-5 text-[#6b7280]">
+        {text}
+      </p>
+    </div>
+  );
+}
+
+/* =============================================================
+   SUMMARY ROW
+============================================================= */
+
+function SummaryRow({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-5">
+      <span className="text-xs text-[#6b7280]">
+        {label}
+      </span>
+
+      <span className="text-xs font-semibold text-[#111827]">
+        {value}
+      </span>
+    </div>
+  );
+}
+
+/* =============================================================
+   CHECK ITEM
+============================================================= */
+
+function CheckItem({
+  title,
+  text,
+}: {
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="flex items-start gap-3 border border-[#d1fae5] bg-white p-4">
+      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#16a34a]" />
+
+      <div>
+        <p className="text-xs font-bold text-[#166534]">
+          {title}
+        </p>
+
+        <p className="mt-1 text-[11px] leading-5 text-[#6b7280]">
+          {text}
+        </p>
+      </div>
+    </div>
+  );
 }
