@@ -383,6 +383,220 @@ export default function Home() {
             <ChevronRight size={13} />
           </div>
         </section>
+             
+{/* =========================================================
+    AXION HACKATHON — LIVE MOVING SUBMISSION SECTION
+========================================================== */}
+<section className="relative overflow-hidden border-y border-[#D39A24]/30 bg-[#071426] text-white">
+  {/* Background effects */}
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="absolute -right-20 -top-28 h-80 w-80 rounded-full bg-[#D39A24]/10 blur-3xl" />
+    <div className="absolute -bottom-36 left-[25%] h-72 w-72 rounded-full bg-blue-500/[0.07] blur-3xl" />
+    <div
+      className="absolute inset-0 opacity-[0.035]"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+        backgroundSize: "38px 38px",
+      }}
+      aria-hidden="true"
+    />
+  </div>
+
+  {/* MOVING SUBMISSION TICKER */}
+  <div className="relative overflow-hidden border-b border-[#D39A24]/20 bg-[#040D19]/80 py-3">
+    <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#040D19] to-transparent sm:w-16" />
+    <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#040D19] to-transparent sm:w-16" />
+
+    <div className="flex w-max animate-axion-marquee hover:[animation-play-state:paused]">
+      {[0, 1].map((copy) => (
+        <div
+          key={copy}
+          className="flex shrink-0 items-center"
+          aria-hidden={copy === 1}
+        >
+          {[1, 2, 3, 4].map((item) => (
+            <div
+              key={item}
+              className="flex shrink-0 items-center gap-4 px-5 sm:gap-5 sm:px-8"
+            >
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+              </span>
+
+              <span className="whitespace-nowrap text-[10px] font-black uppercase tracking-[0.18em] text-emerald-300 sm:text-xs">
+                PPT SUBMISSION IS LIVE
+              </span>
+
+              <span className="text-[#D39A24]">✦</span>
+
+              <span className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.16em] text-white/70 sm:text-xs">
+                AXION NATIONAL HACKATHON · ROUND 1
+              </span>
+
+              <span className="text-[#D39A24]">✦</span>
+
+              <Link
+                href="/axion/submit"
+                tabIndex={copy === 1 ? -1 : 0}
+                className="whitespace-nowrap text-[10px] font-black uppercase tracking-[0.15em] text-[#F0C76A] transition hover:text-white sm:text-xs"
+              >
+                SUBMIT YOUR PPT →
+              </Link>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* MAIN SUBMISSION CARD */}
+  <div className="relative mx-auto max-w-[1450px] px-5 py-8 sm:px-8 sm:py-12 lg:px-16">
+    <div className="relative overflow-hidden border border-[#D39A24]/35 bg-gradient-to-br from-[#102746] via-[#0B1D35] to-[#081426] shadow-[0_20px_80px_rgba(0,0,0,0.28)]">
+      <div
+        aria-hidden="true"
+        className="absolute right-0 top-0 h-full w-1 bg-gradient-to-b from-transparent via-[#D39A24] to-transparent"
+      />
+
+      <div className="grid gap-8 p-6 sm:p-9 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-12 lg:p-12">
+        {/* LEFT CONTENT */}
+        <div className="relative min-w-0">
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 border border-emerald-400/30 bg-emerald-400/[0.08] px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-300">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              Submission Live
+            </span>
+
+            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#D39A24]">
+              STAMPERS × Unstop
+            </span>
+          </div>
+
+          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/45">
+            AXION NATIONAL HACKATHON · ROUND 1
+          </p>
+
+          <h2 className="max-w-4xl text-3xl font-black uppercase leading-[1.08] tracking-[-0.045em] sm:text-5xl lg:text-6xl">
+            Your Ideas.
+            <br />
+            Your Innovation.
+            <br />
+            <span className="bg-gradient-to-r from-[#F4D58A] via-[#D39A24] to-[#F1C968] bg-clip-text text-transparent">
+              Submit Your PPT.
+            </span>
+          </h2>
+
+          <p className="mt-5 max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
+            The Round 1 submission portal is live. Present the problem you
+            want to solve and the solution your team has envisioned. Upload
+            your project presentation in PDF format and take the next step
+            in AXION.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {[
+              "PDF FORMAT ONLY",
+              "MAXIMUM 10 MB",
+              "ROUND 1 EVALUATION",
+            ].map((item) => (
+              <span
+                key={item}
+                className="border border-white/10 bg-white/[0.035] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.13em] text-white/65"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-7 flex items-start gap-3 border-l-2 border-[#D39A24] pl-4">
+            <span className="mt-0.5 text-[#D39A24]">
+              <ArrowRight size={15} aria-hidden="true" />
+            </span>
+            <p className="text-xs leading-6 text-white/55">
+              Ensure your team details, problem statement and proposed
+              solution are complete before submitting.
+            </p>
+          </div>
+        </div>
+
+        {/* RIGHT CTA PANEL */}
+        <div className="relative w-full lg:w-[290px]">
+          <div className="border border-[#D39A24]/30 bg-[#061326]/75 p-5 sm:p-6">
+            <div className="mb-5 flex items-center justify-between">
+              <span className="text-[9px] font-black uppercase tracking-[0.22em] text-white/45">
+                Submission Portal
+              </span>
+              <span className="text-[10px] font-bold text-[#D39A24]">
+                ROUND 01
+              </span>
+            </div>
+
+            <div className="mb-5 border-y border-white/10 py-5">
+              <p className="text-4xl font-black tracking-tight text-white">
+                LIVE<span className="text-[#D39A24]">.</span>
+              </p>
+              <p className="mt-2 text-xs leading-5 text-white/50">
+                Submit your project proposal for Round 1 evaluation.
+              </p>
+            </div>
+
+            <Link
+              href="/axion/submit"
+              className="group flex w-full items-center justify-between gap-3 bg-[#D39A24] px-5 py-4 text-xs font-black uppercase tracking-[0.12em] text-[#081426] transition duration-300 hover:bg-[#F0BB4E] hover:shadow-[0_0_28px_rgba(211,154,36,0.22)]"
+            >
+              <span>Submit Your PPT</span>
+              <ArrowRight
+                size={17}
+                aria-hidden="true"
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </Link>
+
+            <p className="mt-4 text-center text-[9px] leading-5 text-white/35">
+              AXION BY STAMPERS
+              <br />
+              POWERED BY UNSTOP
+            </p>
+          </div>
+
+          <div className="mt-3 flex items-center justify-center gap-2 text-[9px] font-bold uppercase tracking-[0.15em] text-white/35">
+            <span className="h-px w-6 bg-[#D39A24]/40" />
+            Build · Present · Innovate
+            <span className="h-px w-6 bg-[#D39A24]/40" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* TICKER ANIMATION */}
+  <style jsx>{`
+    .animate-axion-marquee {
+      animation: axion-marquee 34s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes axion-marquee {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-axion-marquee {
+        animation: none;
+      }
+    }
+  `}</style>
+</section>
+
 
 
         {/* =========================================================

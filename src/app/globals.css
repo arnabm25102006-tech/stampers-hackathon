@@ -1386,3 +1386,24 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
+/* AXION continuous submission ticker */
+@keyframes axion-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-axion-marquee {
+  animation: axion-marquee 34s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-axion-marquee {
+    animation: none;
+  }
+}
