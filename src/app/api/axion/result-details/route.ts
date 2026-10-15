@@ -5,13 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 export const dynamic = "force-dynamic";
 
 function jsonError(message: string, status: number) {
-  return NextResponse.json(
-    { success: false, error: message },
-    {
-      status,
-      headers: { "Cache-Control": "no-store" },
-    }
-  );
+  return NextResponse.json({ error: message }, { status });
 }
 
 function getSupabase() {
@@ -28,36 +22,6 @@ function getSupabase() {
       persistSession: false,
     },
   });
-}
-
-function normalizeName(value: unknown): string {
-  return typeof value === "string"
-    ? value.trim().replace(/\s+/g, " ").toLowerCase()
-    : "";
-}
-
-function resultResponse(data: {
-  teamName: string | null;
-  leaderName: string;
-  applicationNumber: string;
-  rank: number | null;
-  marks: number | null;
-  status: "promoted" | "not_promoted";
-  finalRoundEligible: boolean;
-  paymentStatus: string;
-  paymentAmount: number | null;
-  paymentSubmittedAt: string | null;
-  paymentVerifiedAt: string | null;
-}) {
-  return NextResponse.json(
-    {
-      success: true,
-      ...data,
-    },
-    {
-      headers: { "Cache-Control": "no-store" },
-    }
-  );
 }
 
 export async function POST(request: Request) {
@@ -91,7 +55,7 @@ export async function POST(request: Request) {
 
     const supabase = getSupabase();
 
-    // 1. Look for the application in the merit list.
+    // First check whether the applicant appears in the merit list.
     const { data: team, error: resultError } = await supabase
       .from("axion_public_results")
       .select(
@@ -106,57 +70,49 @@ export async function POST(request: Request) {
     }
 
     if (team) {
-      if (normalizeName(team.leader_name) !== normalizeName(leaderName)) {
+      if (
+        typeof team.leader_name !== "string" ||
+        team.leader_name.trim().toLowerCase() !==
+          leaderName.toLowerCase()
+      ) {
         return jsonError(
           "Application details do not match our records.",
           404
         );
       }
 
-      const promoted =
-        typeof team.result_status === "string" &&
-        team.result_status.trim().toLowerCase() === "promoted";
+      const promoted = team.result_status === "promoted";
 
-      // Only promoted teams need a final-payment status.
-      let paymentStatus = promoted ? "not_submitted" : "not_eligible";
-      let paymentAmount: number | null = null;
-      let paymentSubmittedAt: string | null = null;
-      let paymentVerifiedAt: string | null = null;
+      const { data: payment, error: paymentError } = await supabase
+        .from("axion_final_payments")
+        .select("amount, payment_status, submitted_at, verified_at")
+        .eq("application_number", team.application_number)
+        .maybeSingle();
 
-      if (promoted) {
-        const { data: payment, error: paymentError } = await supabase
-          .from("axion_final_payments")
-          .select("amount, payment_status, submitted_at, verified_at")
-          .eq("application_number", team.application_number)
-          .maybeSingle();
-
-        if (paymentError) {
-          console.error("Payment lookup failed:", paymentError);
-          return jsonError("Unable to load payment status.", 500);
-        }
-
-        paymentStatus = payment?.payment_status ?? "not_submitted";
-        paymentAmount = payment?.amount ?? null;
-        paymentSubmittedAt = payment?.submitted_at ?? null;
-        paymentVerifiedAt = payment?.verified_at ?? null;
+      if (paymentError) {
+        console.error("Payment lookup failed:", paymentError);
+        return jsonError("Unable to load payment status.", 500);
       }
 
-      return resultResponse({
-        teamName: team.team_name ?? "Team",
-        leaderName: team.leader_name,
-        applicationNumber: team.application_number,
-        rank: team.team_rank ?? null,
-        marks: team.marks ?? null,
-        status: promoted ? "promoted" : "not_promoted",
-        finalRoundEligible: promoted,
-        paymentStatus,
-        paymentAmount,
-        paymentSubmittedAt,
-        paymentVerifiedAt,
-      });
+      return NextResponse.json(
+        {
+          teamName: team.team_name,
+          leaderName: team.leader_name,
+          applicationNumber: team.application_number,
+          rank: team.team_rank,
+          marks: team.marks,
+          status: promoted ? "promoted" : "not_promoted",
+          finalRoundEligible: promoted,
+          paymentStatus: payment?.payment_status ?? "not_submitted",
+          paymentAmount: payment?.amount ?? null,
+          paymentSubmittedAt: payment?.submitted_at ?? null,
+          paymentVerifiedAt: payment?.verified_at ?? null,
+        },
+        { headers: { "Cache-Control": "no-store" } }
+      );
     }
 
-    // 2. Not in the merit list? Check the original submission.
+    // Not in the merit list: check that the application was actually submitted.
     const { data: submission, error: submissionError } = await supabase
       .from("axion_round1_submissions")
       .select("application_number, team_name, leader_name")
@@ -164,41 +120,39 @@ export async function POST(request: Request) {
       .maybeSingle();
 
     if (submissionError) {
-      console.error("Round 1 submission lookup failed:", submissionError);
-      return jsonError(
-        "Unable to check the submitted application.",
-        500
-      );
+      console.error("Submission lookup failed:", submissionError);
+      return jsonError("Unable to check the submitted application.", 500);
     }
 
-    if (!submission) {
-      return jsonError(
-        "No submitted application was found for these details.",
-        404
-      );
-    }
-
-    if (normalizeName(submission.leader_name) !== normalizeName(leaderName)) {
+    if (
+      !submission ||
+      typeof submission.leader_name !== "string" ||
+      submission.leader_name.trim().toLowerCase() !==
+        leaderName.toLowerCase()
+    ) {
       return jsonError(
         "Application details do not match our records.",
         404
       );
     }
 
-    // 3. Application exists, but the team is not in the merit list.
-    return resultResponse({
-      teamName: submission.team_name ?? "Team",
-      leaderName: submission.leader_name,
-      applicationNumber: submission.application_number,
-      rank: null,
-      marks: null,
-      status: "not_promoted",
-      finalRoundEligible: false,
-      paymentStatus: "not_eligible",
-      paymentAmount: null,
-      paymentSubmittedAt: null,
-      paymentVerifiedAt: null,
-    });
+    // Submitted application exists, but no merit-list entry was found.
+    return NextResponse.json(
+      {
+        teamName: submission.team_name,
+        leaderName: submission.leader_name,
+        applicationNumber: submission.application_number,
+        rank: null,
+        marks: null,
+        status: "not_promoted",
+        finalRoundEligible: false,
+        paymentStatus: "not_eligible",
+        paymentAmount: null,
+        paymentSubmittedAt: null,
+        paymentVerifiedAt: null,
+      },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
     console.error("Result-details API error:", error);
     return jsonError("Unable to load application details.", 500);

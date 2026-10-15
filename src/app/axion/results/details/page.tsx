@@ -14,21 +14,17 @@ type ResultData = {
   applicationNumber: string;
   teamName: string;
   leaderName: string;
-  rank: number | null;
-  marks: number | null;
+  rank: number;
+  marks: number;
   status: Status;
   finalRoundEligible: boolean;
-  paymentStatus?: string;
 };
 
 function ResultDetailsContent() {
   const params = useSearchParams();
   const router = useRouter();
 
-  const application = (params.get("application") ?? "")
-    .trim()
-    .toUpperCase();
-
+  const application = (params.get("application") ?? "").trim().toUpperCase();
   const leader = (params.get("leader") ?? "").trim();
 
   const [result, setResult] = useState<ResultData | null>(null);
@@ -44,9 +40,7 @@ function ResultDetailsContent() {
       setResult(null);
 
       if (!application || !leader) {
-        setError(
-          "Application number or team leader name is missing. Please check your result again."
-        );
+        setError("Application details are missing. Please check your result again.");
         setLoading(false);
         return;
       }
@@ -54,9 +48,7 @@ function ResultDetailsContent() {
       try {
         const response = await fetch("/api/axion/result-details", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           cache: "no-store",
           body: JSON.stringify({
             applicationNumber: application,
@@ -69,53 +61,36 @@ function ResultDetailsContent() {
         if (cancelled) return;
 
         if (!response.ok) {
-          setError(
-            typeof data.error === "string"
-              ? data.error
-              : "Unable to verify this application."
-          );
+          setError(data.error ?? "Unable to verify this application.");
           return;
         }
 
-        // Rank and marks may legitimately be null for applicants
-        // who submitted Round 1 but were not promoted.
         if (
           !data.teamName ||
           !data.leaderName ||
-          !data.applicationNumber ||
+          typeof data.rank !== "number" ||
+          typeof data.marks !== "number" ||
           !["promoted", "not_promoted", "pending"].includes(data.status)
         ) {
-          setError(
-            "The result service returned incomplete data. Please contact STAMPERS."
-          );
+          setError("The result service returned incomplete data. Please contact STAMPERS.");
           return;
         }
 
         setResult({
-          applicationNumber: String(data.applicationNumber),
-          teamName: String(data.teamName),
-          leaderName: String(data.leaderName),
-          rank: typeof data.rank === "number" ? data.rank : null,
-          marks: typeof data.marks === "number" ? data.marks : null,
-          status: data.status as Status,
+          applicationNumber: data.applicationNumber,
+          teamName: data.teamName,
+          leaderName: data.leaderName,
+          rank: data.rank,
+          marks: data.marks,
+          status: data.status,
           finalRoundEligible: data.finalRoundEligible === true,
-          paymentStatus:
-            typeof data.paymentStatus === "string"
-              ? data.paymentStatus
-              : undefined,
         });
-      } catch (err) {
-        console.error("Unable to load AXION result:", err);
-
+      } catch {
         if (!cancelled) {
-          setError(
-            "Unable to connect to the result service. Please try again."
-          );
+          setError("Unable to connect to the result service. Please try again.");
         }
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        if (!cancelled) setLoading(false);
       }
     }
 
@@ -142,19 +117,6 @@ function ResultDetailsContent() {
         ? "text-red-300"
         : "text-amber-200";
 
-  const canPay =
-    result?.status === "promoted" &&
-    result.finalRoundEligible === true;
-
-  const paymentLabel =
-    result?.paymentStatus === "paid"
-      ? "PAYMENT VERIFIED"
-      : result?.paymentStatus === "pending"
-        ? "PAYMENT UNDER VERIFICATION"
-        : result?.paymentStatus === "rejected"
-          ? "PAYMENT REJECTED · RESUBMIT"
-          : "PAY NOW · ₹200";
-
   return (
     <main className="min-h-screen bg-[#07111f] px-4 py-8 text-white sm:px-7 sm:py-12">
       <div className="mx-auto max-w-7xl">
@@ -165,7 +127,6 @@ function ResultDetailsContent() {
               alt="STAMPERS logo"
               className="h-14 w-14 rounded-lg bg-white object-contain p-1"
             />
-
             <span>
               <strong className="block text-lg tracking-[0.16em]">
                 STAMPERS
@@ -191,15 +152,13 @@ function ResultDetailsContent() {
 
           <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl">
             YOUR APPLICATION
-            <span className="block text-amber-300">
-              RESULT DASHBOARD
-            </span>
+            <span className="block text-amber-300">RESULT DASHBOARD</span>
           </h1>
 
           <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400">
             Your application details, ranking and result are shown below.
-            Final-round payment is available only to teams promoted to
-            the final round.
+            Final-round payment is available only to applications approved
+            by the organisers.
           </p>
         </section>
 
@@ -216,7 +175,6 @@ function ResultDetailsContent() {
           >
             <h2 className="font-bold">Unable to display your result</h2>
             <p className="mt-2 text-sm">{error}</p>
-
             <button
               onClick={() => router.push("/axion/results")}
               className="mt-4 rounded-lg bg-white px-4 py-2 text-sm font-bold text-slate-950"
@@ -265,57 +223,32 @@ function ResultDetailsContent() {
 
                   <tbody>
                     <tr className="border-t border-white/10">
-                      <td className="p-4 font-semibold">
-                        {result.teamName}
-                      </td>
-
+                      <td className="p-4 font-semibold">{result.teamName}</td>
                       <td className="p-4">{result.leaderName}</td>
-
-                      <td className="p-4">
-                        {result.applicationNumber}
-                      </td>
-
+                      <td className="p-4">{result.applicationNumber}</td>
                       <td className="p-4 font-semibold text-amber-200">
-                        {result.rank === null ? "—" : `#${result.rank}`}
+                        #{result.rank}
                       </td>
-
-                      <td className="p-4 font-semibold">
-                        {result.marks === null ? "—" : result.marks}
-                      </td>
-
+                      <td className="p-4 font-semibold">{result.marks}</td>
                       <td className={`p-4 font-bold ${statusColor}`}>
                         {statusLabel}
                       </td>
-
                       <td className="p-4">
-                        {canPay ? (
-                          result.paymentStatus === "paid" ? (
-                            <span className="whitespace-nowrap font-semibold text-emerald-300">
-                              PAYMENT VERIFIED
-                            </span>
-                          ) : (
-                            <Link
-                              href={`/axion/final-payment?application=${encodeURIComponent(
-                                result.applicationNumber
-                              )}&leader=${encodeURIComponent(
-                                result.leaderName
-                              )}`}
-                              className="inline-flex whitespace-nowrap rounded-lg bg-amber-300 px-4 py-2 font-bold text-slate-950 transition hover:bg-amber-200"
-                            >
-                              {paymentLabel}
-                            </Link>
-                          )
-                        ) : (
-                          <span
-                            className={`whitespace-nowrap ${
-                              result.status === "not_promoted"
-                                ? "font-semibold text-red-300"
-                                : "text-slate-500"
-                            }`}
+                        {result.finalRoundEligible &&
+                        result.status === "promoted" ? (
+                          <Link
+                            href={`/axion/final-payment?application=${encodeURIComponent(result.applicationNumber)}&leader=${encodeURIComponent(result.leaderName)}`}
+                            className="inline-flex whitespace-nowrap rounded-lg bg-amber-300 px-4 py-2 font-bold text-slate-950 transition hover:bg-amber-200"
                           >
-                            {result.status === "not_promoted"
-                              ? "Not eligible"
-                              : "Awaiting result"}
+                            Pay Now · ₹200
+                          </Link>
+                        ) : (
+                          <span className="whitespace-nowrap text-slate-500">
+                            {result.status === "pending"
+                              ? "Awaiting result"
+                              : result.status === "not_promoted"
+                                ? "Not eligible"
+                                : "Awaiting approval"}
                           </span>
                         )}
                       </td>
@@ -325,19 +258,15 @@ function ResultDetailsContent() {
               </div>
 
               <p className="border-t border-white/10 px-5 py-4 text-xs leading-6 text-slate-400">
-                Rank and marks reflect the data stored in the result
-                database. Applications without a merit-list result may
-                display a dash for rank and marks.
+                Rank and marks reflect the data stored in the result database.
+                Final-round eligibility is verified separately from Round 1 promotion.
               </p>
             </div>
 
-            {canPay && (
-              <p className="mt-5 text-xs leading-6 text-slate-500">
-                The final-round fee is ₹200. Payment remains subject
-                to verification by the STAMPERS team. Submitting a UPI
-                reference does not itself confirm receipt of payment.
-              </p>
-            )}
+            <p className="mt-5 text-xs leading-6 text-slate-500">
+              Payment remains subject to verification. A submitted UPI
+              reference does not by itself confirm receipt of payment.
+            </p>
           </>
         )}
       </div>
