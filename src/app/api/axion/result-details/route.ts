@@ -55,7 +55,6 @@ export async function POST(request: Request) {
 
     const supabase = getSupabase();
 
-    // First check whether the applicant appears in the merit list.
     const { data: team, error: resultError } = await supabase
       .from("axion_public_results")
       .select(
@@ -99,8 +98,8 @@ export async function POST(request: Request) {
           teamName: team.team_name,
           leaderName: team.leader_name,
           applicationNumber: team.application_number,
-          rank: team.team_rank,
-          marks: team.marks,
+          rank: team.team_rank == null ? null : Number(team.team_rank),
+          marks: team.marks == null ? null : Number(team.marks),
           status: promoted ? "promoted" : "not_promoted",
           finalRoundEligible: promoted,
           paymentStatus: payment?.payment_status ?? "not_submitted",
@@ -112,7 +111,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Not in the merit list: check that the application was actually submitted.
     const { data: submission, error: submissionError } = await supabase
       .from("axion_round1_submissions")
       .select("application_number, team_name, leader_name")
@@ -121,7 +119,10 @@ export async function POST(request: Request) {
 
     if (submissionError) {
       console.error("Submission lookup failed:", submissionError);
-      return jsonError("Unable to check the submitted application.", 500);
+      return jsonError(
+        "Unable to check the submitted application.",
+        500
+      );
     }
 
     if (
@@ -136,7 +137,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Submitted application exists, but no merit-list entry was found.
     return NextResponse.json(
       {
         teamName: submission.team_name,
@@ -144,7 +144,7 @@ export async function POST(request: Request) {
         applicationNumber: submission.application_number,
         rank: null,
         marks: null,
-        status: "not_promoted",
+        status: "pending",
         finalRoundEligible: false,
         paymentStatus: "not_eligible",
         paymentAmount: null,
