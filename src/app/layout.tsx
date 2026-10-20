@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 
 import "@fontsource/plus-jakarta-sans/400.css";
@@ -12,7 +13,9 @@ import "@fontsource/space-grotesk/600.css";
 import "@fontsource/space-grotesk/700.css";
 
 import "./globals.css";
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
+
 export const metadata: Metadata = {
   title: {
     default: "STAMPERS",
@@ -59,8 +62,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
-      <Analytics />
+      <body>
+        {children}
+
+        <Analytics />
+
+        <Script
+          id="google-adsense"
+          async
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7077725283193979"
+          crossOrigin="anonymous"
+        />
+      </body>
     </html>
   );
 }
