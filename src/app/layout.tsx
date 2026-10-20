@@ -3,21 +3,31 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
-const logoUrl =
+const stampersLogo =
   "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.stampers.in"),
+
   title: "STAMPERS | Think. Build. Compete.",
+
   description:
-    "STAMPERS is a platform for hackathons, competitions, innovation, and student opportunities.",
+    "Discover hackathons, competitions, challenges, communities, and opportunities with STAMPERS.",
+
   icons: {
     icon: [
       {
-        url: logoUrl,
+        url: stampersLogo,
         type: "image/png",
       },
     ],
-    apple: logoUrl,
+    shortcut: stampersLogo,
+    apple: [
+      {
+        url: stampersLogo,
+        type: "image/png",
+      },
+    ],
   },
 };
 
@@ -35,6 +45,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
+
       <body>
         {children}
         <Analytics />
