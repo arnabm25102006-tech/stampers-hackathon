@@ -1,5 +1,14 @@
+
+import type { Metadata } from "next";
+import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import Script from "next/script";
+
+export const metadata: Metadata = {
+  title: "STAMPERS | Think. Build. Compete.",
+  description:
+    "STAMPERS is a platform for hackathons, competitions, innovation, and student opportunities.",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
