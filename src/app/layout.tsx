@@ -1,4 +1,5 @@
-
+import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 export default function RootLayout({
   children,
 }: Readonly<{
