@@ -3,9 +3,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
-const stampersLogo =
-  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png";
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.stampers.in"),
 
@@ -15,19 +12,9 @@ export const metadata: Metadata = {
     "Discover hackathons, competitions, challenges, communities, and opportunities with STAMPERS.",
 
   icons: {
-    icon: [
-      {
-        url: stampersLogo,
-        type: "image/png",
-      },
-    ],
-    shortcut: stampersLogo,
-    apple: [
-      {
-        url: stampersLogo,
-        type: "image/png",
-      },
-    ],
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
 };
 
