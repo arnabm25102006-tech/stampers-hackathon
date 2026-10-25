@@ -12,12 +12,8 @@ import {
   CalendarDays,
   Mail,
   ShieldCheck,
-  Globe,
   Palette,
-  BriefcaseBusiness,
   Network,
-  Sparkles,
-  Building2,
 } from "lucide-react";
 
 const STAMPERS_LOGO =
@@ -151,8 +147,8 @@ const values = [
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="h-[3px] w-8 shrink-0 bg-blue-600" />
-      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+      <span className="h-[2px] w-9 shrink-0 bg-sky-400" />
+      <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-sky-300">
         {children}
       </span>
     </div>
@@ -171,11 +167,13 @@ function SectionHeading({
   return (
     <div className="max-w-3xl">
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="mt-4 text-3xl font-bold leading-tight tracking-[-0.045em] text-[#10233F] sm:text-5xl">
+
+      <h2 className="mt-5 text-3xl font-bold leading-tight tracking-[-0.045em] text-white sm:text-5xl">
         {title}
       </h2>
+
       {description && (
-        <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
+        <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
           {description}
         </p>
       )}
@@ -185,9 +183,9 @@ function SectionHeading({
 
 export default function ManagementPage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-white text-[#142238]">
+    <main className="min-h-screen overflow-hidden bg-[#060916] text-white">
       {/* NAVIGATION */}
-      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#060916]/90 backdrop-blur-xl">
         <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-16">
           <Link
             href="/"
@@ -207,19 +205,19 @@ export default function ManagementPage() {
           >
             <a
               href="#leadership"
-              className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-600 transition hover:text-blue-600"
+              className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 transition hover:text-sky-300"
             >
               Leadership
             </a>
             <a
               href="#departments"
-              className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-600 transition hover:text-blue-600"
+              className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 transition hover:text-sky-300"
             >
               Departments
             </a>
             <a
               href="#values"
-              className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-600 transition hover:text-blue-600"
+              className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400 transition hover:text-sky-300"
             >
               Our values
             </a>
@@ -227,7 +225,7 @@ export default function ManagementPage() {
 
           <Link
             href="/"
-            className="inline-flex h-10 shrink-0 items-center gap-2 rounded-md border border-slate-200 px-3 text-xs font-bold text-[#10233F] transition hover:border-blue-500 hover:text-blue-600 sm:px-4"
+            className="inline-flex h-10 shrink-0 items-center gap-2 border border-white/10 px-3 text-xs font-bold text-white transition hover:border-sky-400 hover:text-sky-300 sm:px-4"
           >
             <ArrowLeft size={15} />
             <span>Home</span>
@@ -236,23 +234,24 @@ export default function ManagementPage() {
       </header>
 
       {/* HERO */}
-      <section className="relative border-b border-slate-200 bg-[#F4F7FB]">
-        <div className="pointer-events-none absolute inset-0 opacity-25 [background-image:linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] [background-size:48px_48px]" />
-        <div className="pointer-events-none absolute -right-20 -top-24 h-96 w-96 rounded-full bg-blue-100 blur-3xl" />
+      <section className="relative border-b border-white/[0.08] bg-[#080D1D]">
+        <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:linear-gradient(to_right,#64748b_1px,transparent_1px),linear-gradient(to_bottom,#64748b_1px,transparent_1px)] [background-size:48px_48px]" />
+
+        <div className="pointer-events-none absolute -right-20 -top-24 h-96 w-96 rounded-full bg-blue-600/10 blur-3xl" />
 
         <div className="relative mx-auto grid max-w-[1440px] gap-12 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-16">
           <div>
             <Eyebrow>People, purpose & leadership</Eyebrow>
 
-            <h1 className="mt-7 max-w-4xl text-5xl font-bold leading-[0.98] tracking-[-0.065em] text-[#10233F] sm:text-7xl lg:text-[84px]">
+            <h1 className="mt-7 max-w-4xl text-5xl font-bold leading-[0.98] tracking-[-0.065em] text-white sm:text-7xl lg:text-[84px]">
               The people
               <br />
               behind
               <br />
-              <span className="text-blue-600">STAMPERS.</span>
+              <span className="text-sky-400">STAMPERS.</span>
             </h1>
 
-            <p className="mt-7 max-w-xl text-base leading-8 text-slate-600 sm:text-lg">
+            <p className="mt-7 max-w-xl text-base leading-8 text-slate-400 sm:text-lg">
               Meet the core team behind STAMPERS, bringing together
               technology, marketing, growth and creative execution to create
               opportunities for student innovation.
@@ -261,35 +260,40 @@ export default function ManagementPage() {
             <div className="mt-9 flex flex-wrap gap-3">
               <a
                 href="#leadership"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#10233F] px-5 py-3 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-blue-600"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 bg-sky-400 px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#06101F] transition hover:bg-sky-300"
               >
-                Meet our team <ArrowRight size={15} />
+                Meet our team
+                <ArrowRight
+                  size={15}
+                  className="transition-transform group-hover:translate-x-1"
+                />
               </a>
 
               <a
                 href="#departments"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#10233F] transition hover:border-blue-500 hover:text-blue-600"
+                className="inline-flex min-h-12 items-center justify-center border border-white/15 px-5 py-3 text-xs font-bold uppercase tracking-wider text-white transition hover:border-sky-400 hover:text-sky-300"
               >
                 Explore departments
               </a>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-slate-200 pt-6">
-              <span className="text-[10px] font-bold uppercase tracking-[0.13em] text-slate-500">
+            <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/10 pt-6">
+              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">
                 Think. Build. Compete.
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.13em] text-slate-500">
+              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">
                 Established 2026
               </span>
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(16,35,63,0.08)] sm:p-9">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-5">
-              <span className="text-[10px] font-bold uppercase tracking-[0.17em] text-slate-500">
+          {/* ORGANIZATION PROFILE */}
+          <div className="relative overflow-hidden border border-white/10 bg-[#0B1225] p-6 sm:p-9">
+            <div className="flex items-center justify-between border-b border-white/10 pb-5">
+              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
                 Organization profile
               </span>
-              <ShieldCheck size={21} className="text-blue-600" />
+              <ShieldCheck size={21} className="text-sky-400" />
             </div>
 
             <div className="flex min-h-36 items-center justify-center py-7">
@@ -300,37 +304,33 @@ export default function ManagementPage() {
               />
             </div>
 
-            <p className="text-[10px] font-bold uppercase tracking-[0.17em] text-blue-600">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-sky-300">
               Our mission
             </p>
 
-            <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-[#10233F] sm:text-3xl">
+            <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
               Built by students.
               <br />
               Driven by ideas.
             </h2>
 
-            <p className="mt-4 text-sm leading-7 text-slate-600">
+            <p className="mt-4 text-sm leading-7 text-slate-400">
               STAMPERS connects students with hackathons, competitions and
               opportunities to build, collaborate and showcase their ideas.
             </p>
 
             <div className="mt-7 grid grid-cols-2 gap-3">
-              <div className="rounded-lg bg-[#F4F7FB] p-4">
-                <Users size={19} className="text-blue-600" />
-                <p className="mt-3 text-sm font-bold text-[#10233F]">
-                  Community
-                </p>
+              <div className="border border-white/[0.08] bg-white/[0.025] p-4">
+                <Users size={19} className="text-sky-400" />
+                <p className="mt-3 text-sm font-bold text-white">Community</p>
                 <p className="mt-1 text-xs leading-5 text-slate-500">
                   People working together
                 </p>
               </div>
 
-              <div className="rounded-lg bg-[#F4F7FB] p-4">
-                <Target size={19} className="text-blue-600" />
-                <p className="mt-3 text-sm font-bold text-[#10233F]">
-                  Innovation
-                </p>
+              <div className="border border-white/[0.08] bg-white/[0.025] p-4">
+                <Target size={19} className="text-sky-400" />
+                <p className="mt-3 text-sm font-bold text-white">Innovation</p>
                 <p className="mt-1 text-xs leading-5 text-slate-500">
                   Ideas into action
                 </p>
@@ -353,39 +353,39 @@ export default function ManagementPage() {
             {leadership.map((person) => (
               <article
                 key={person.name}
-                className="group overflow-hidden rounded-xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(16,35,63,0.09)]"
+                className="group overflow-hidden border border-white/[0.09] bg-[#0A1020] transition duration-300 hover:-translate-y-1 hover:border-sky-400/40 hover:bg-[#0D1529]"
               >
-                <div className="relative flex min-h-44 items-center justify-center overflow-hidden border-b border-slate-100 bg-[#F4F7FB]">
-                  <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] [background-size:24px_24px]" />
+                <div className="relative flex min-h-44 items-center justify-center overflow-hidden border-b border-white/[0.08] bg-[#0C1428]">
+                  <div className="absolute inset-0 opacity-[0.13] [background-image:linear-gradient(to_right,#64748b_1px,transparent_1px),linear-gradient(to_bottom,#64748b_1px,transparent_1px)] [background-size:24px_24px]" />
 
-                  <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-blue-100 bg-white text-2xl font-bold tracking-tight text-[#10233F] shadow-sm transition duration-300 group-hover:border-blue-300 group-hover:text-blue-600">
+                  <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-sky-400/30 bg-[#101D35] text-2xl font-bold tracking-tight text-sky-300 transition duration-300 group-hover:border-sky-300 group-hover:bg-sky-400 group-hover:text-[#06101F]">
                     {person.initials}
                   </div>
 
-                  <span className="absolute right-4 top-4 text-[10px] font-bold tracking-[0.15em] text-slate-400">
+                  <span className="absolute right-4 top-4 text-[10px] font-bold tracking-[0.15em] text-slate-500">
                     {person.number}
                   </span>
                 </div>
 
                 <div className="p-6">
-                  <span className="inline-flex rounded-md bg-blue-50 px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.12em] text-blue-700">
+                  <span className="inline-flex border border-sky-400/15 bg-sky-400/[0.07] px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] text-sky-300">
                     {person.department}
                   </span>
 
-                  <h3 className="mt-4 text-xl font-bold tracking-tight text-[#10233F]">
+                  <h3 className="mt-4 text-xl font-bold tracking-tight text-white">
                     {person.name}
                   </h3>
 
-                  <p className="mt-2 min-h-10 text-sm font-semibold leading-5 text-blue-600">
+                  <p className="mt-2 min-h-10 text-sm font-semibold leading-5 text-sky-300">
                     {person.role}
                   </p>
 
-                  <p className="mt-4 min-h-24 text-sm leading-7 text-slate-600">
+                  <p className="mt-4 min-h-24 text-sm leading-7 text-slate-400">
                     {person.description}
                   </p>
 
-                  <div className="mt-5 border-t border-slate-100 pt-4">
-                    <p className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-400">
+                  <div className="mt-5 border-t border-white/[0.08] pt-4">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-500">
                       Key responsibilities
                     </p>
 
@@ -393,18 +393,18 @@ export default function ManagementPage() {
                       {person.responsibilities.map((responsibility) => (
                         <li
                           key={responsibility}
-                          className="flex items-start gap-2 text-xs leading-5 text-slate-600"
+                          className="flex items-start gap-2 text-xs leading-5 text-slate-400"
                         >
-                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600" />
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-sky-400" />
                           {responsibility}
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="mt-5 h-px bg-slate-100 transition group-hover:bg-blue-100" />
+                  <div className="mt-5 h-px bg-white/[0.08] transition group-hover:bg-sky-400/30" />
 
-                  <p className="mt-4 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
+                  <p className="mt-4 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
                     STAMPERS · Core team
                   </p>
                 </div>
@@ -417,7 +417,7 @@ export default function ManagementPage() {
       {/* ORGANIZATIONAL STRUCTURE */}
       <section
         id="departments"
-        className="scroll-mt-24 border-y border-slate-200 bg-[#F4F7FB] py-20 sm:py-28"
+        className="scroll-mt-24 border-y border-white/[0.08] bg-[#080D1B] py-20 sm:py-28"
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
           <SectionHeading
@@ -433,25 +433,27 @@ export default function ManagementPage() {
               return (
                 <article
                   key={department.number}
-                  className="rounded-xl border border-slate-200 bg-white p-7 transition duration-200 hover:border-blue-200 hover:shadow-md sm:p-8"
+                  className="group border border-white/[0.08] bg-[#0A1020] p-7 transition duration-200 hover:border-sky-400/40 hover:bg-[#0D1529] sm:p-8"
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                    <div className="flex h-12 w-12 items-center justify-center border border-sky-400/15 bg-sky-400/[0.07] text-sky-300 transition group-hover:bg-sky-400 group-hover:text-[#06101F]">
                       <Icon size={22} />
                     </div>
 
-                    <span className="text-[10px] font-bold tracking-[0.15em] text-slate-400">
+                    <span className="text-[10px] font-bold tracking-[0.15em] text-slate-500">
                       FUNCTION {department.number}
                     </span>
                   </div>
 
-                  <h3 className="mt-7 text-lg font-bold text-[#10233F]">
+                  <h3 className="mt-7 text-lg font-bold text-white">
                     {department.name}
                   </h3>
 
-                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                  <p className="mt-3 text-sm leading-7 text-slate-400">
                     {department.description}
                   </p>
+
+                  <div className="mt-6 h-px w-8 bg-sky-400/60 transition-all group-hover:w-14" />
                 </article>
               );
             })}
@@ -472,17 +474,17 @@ export default function ManagementPage() {
             {values.map((value) => (
               <article
                 key={value.number}
-                className="border-t-2 border-slate-200 pt-6 transition-colors hover:border-blue-600"
+                className="border-t-2 border-white/10 pt-6 transition-colors hover:border-sky-400"
               >
-                <span className="text-xs font-bold tracking-wider text-blue-600">
+                <span className="text-xs font-bold tracking-wider text-sky-300">
                   {value.number}
                 </span>
 
-                <h3 className="mt-4 text-xl font-bold text-[#10233F]">
+                <h3 className="mt-4 text-xl font-bold text-white">
                   {value.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-7 text-slate-600">
+                <p className="mt-3 text-sm leading-7 text-slate-400">
                   {value.description}
                 </p>
               </article>
@@ -493,18 +495,21 @@ export default function ManagementPage() {
 
       {/* CONTACT CTA */}
       <section className="px-5 pb-20 sm:px-8 sm:pb-28 lg:px-16">
-        <div className="mx-auto max-w-[1440px] overflow-hidden rounded-2xl bg-[#10233F] px-7 py-12 text-white sm:px-12 sm:py-16 lg:px-16">
-          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div className="relative mx-auto max-w-[1440px] overflow-hidden border border-sky-400/20 bg-[#0A1225] px-7 py-12 sm:px-12 sm:py-16 lg:px-16">
+          <div className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full border border-sky-400/10" />
+          <div className="pointer-events-none absolute -right-4 -top-16 h-52 w-52 rounded-full border border-sky-400/10" />
+
+          <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div className="max-w-2xl">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-200">
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-sky-300">
                 Connect with STAMPERS
               </p>
 
-              <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
+              <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
                 Let&apos;s build something meaningful.
               </h2>
 
-              <p className="mt-5 text-sm leading-7 text-slate-300">
+              <p className="mt-5 text-sm leading-7 text-slate-400">
                 Interested in collaboration, sponsorship or contributing
                 to our student community? Get in touch with STAMPERS.
               </p>
@@ -512,18 +517,21 @@ export default function ManagementPage() {
 
             <a
               href="mailto:stampersbusiness@gmail.com"
-              className="inline-flex min-h-12 items-center justify-center gap-2 self-start rounded-md bg-white px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#10233F] transition hover:bg-blue-50 lg:self-center"
+              className="group inline-flex min-h-12 items-center justify-center gap-2 self-start bg-sky-400 px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#06101F] transition hover:bg-sky-300 lg:self-center"
             >
               <Mail size={15} />
               Contact STAMPERS
-              <ArrowUpRight size={15} />
+              <ArrowUpRight
+                size={15}
+                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
             </a>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-slate-200 bg-white">
+      <footer className="border-t border-white/[0.08] bg-[#050812]">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-4 px-5 py-7 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-16">
           <Link href="/" aria-label="STAMPERS homepage">
             <img
@@ -539,7 +547,7 @@ export default function ManagementPage() {
 
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 transition hover:text-blue-600"
+            className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 transition hover:text-sky-300"
           >
             Return to homepage <ArrowUpRight size={14} />
           </Link>
