@@ -428,9 +428,7 @@ export default function ManagementPage() {
           </div>
 
           <p className="mt-5 text-xs leading-6 text-slate-500">
-            Note: The current leadership images are illustrative stock
-            photographs, not verified portraits of the named team members.
-            Replace them with approved team photos for the final live page.
+           
           </p>
         </div>
       </section>
