@@ -1,337 +1,301 @@
+
 "use client";
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState, type ReactNode } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 export default function Entrance({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const [showIntro, setShowIntro] = useState(true);
   const [scanned, setScanned] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const scanTimer = setTimeout(() => {
+    if (reduceMotion) {
       setScanned(true);
-    }, 2600);
-
-    const exitTimer = setTimeout(() => {
       setShowIntro(false);
-    }, 4600);
+      return;
+    }
+
+    const scanTimer = window.setTimeout(() => {
+      setScanned(true);
+    }, 2100);
+
+    const exitTimer = window.setTimeout(() => {
+      setShowIntro(false);
+    }, 3500);
 
     return () => {
-      clearTimeout(scanTimer);
-      clearTimeout(exitTimer);
+      window.clearTimeout(scanTimer);
+      window.clearTimeout(exitTimer);
     };
-  }, []);
+  }, [reduceMotion]);
 
   return (
     <>
-      <AnimatePresence mode="wait">
+      {/* INTRO SCREEN */}
+      <AnimatePresence>
         {showIntro && (
           <motion.div
+            key="stampers-intro"
             initial={{ opacity: 1 }}
             exit={{
               opacity: 0,
-              scale: 1.03,
+              scale: 1.025,
               transition: {
-                duration: 0.8,
+                duration: 0.65,
                 ease: "easeInOut",
               },
             }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#020202] text-white"
+            role="status"
+            aria-label="STAMPERS introduction"
+            className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#061225] text-white"
           >
-            {/* TECH GRID */}
+            {/* BACKGROUND GRID */}
+            <div
+              aria-hidden="true"
+              className="stampers-grid pointer-events-none absolute inset-0 opacity-[0.15]"
+            />
 
-            <div className="absolute inset-0 stampers-grid opacity-[0.12]" />
-
-            {/* GOLD ATMOSPHERIC GLOW */}
-
+            {/* BLUE ATMOSPHERIC GLOW */}
             <motion.div
+              aria-hidden="true"
               animate={{
-                scale: [1, 1.15, 1],
-                opacity: [0.15, 0.3, 0.15],
+                scale: [1, 1.12, 1],
+                opacity: [0.16, 0.32, 0.16],
               }}
               transition={{
-                duration: 3,
+                duration: 3.5,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="absolute left-1/2 top-1/2 h-[650px] w-[650px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFD000]/20 blur-[150px]"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[min(80vw,650px)] w-[min(80vw,650px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/20 blur-[110px]"
             />
 
-            {/* OUTER RING */}
-
-            <motion.div
-              initial={{
-                scale: 0.7,
-                opacity: 0,
-              }}
-              animate={{
-                scale: 1,
-                opacity: 1,
-              }}
-              transition={{
-                duration: 1.2,
-              }}
-              className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#FFD000]/20"
+            {/* SECONDARY BLUE GLOW */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-40 -right-32 h-96 w-96 rounded-full bg-blue-600/20 blur-[110px]"
             />
 
+            {/* OUTER ORBIT */}
             <motion.div
-              animate={{
-                rotate: 360,
-              }}
+              aria-hidden="true"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1 }}
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[min(78vw,520px)] w-[min(78vw,520px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/15"
+            />
+
+            {/* ROTATING DASHED ORBIT */}
+            <motion.div
+              aria-hidden="true"
+              animate={{ rotate: 360 }}
               transition={{
-                duration: 8,
+                duration: 18,
                 repeat: Infinity,
                 ease: "linear",
               }}
-              className="absolute left-1/2 top-1/2 h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#FFD000]/30"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[min(70vw,470px)] w-[min(70vw,470px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-blue-300/20"
             />
 
-            {/* CORNER HUD */}
-
-            <div className="absolute left-6 top-6 font-mono text-[8px] tracking-[0.3em] text-[#FFD000]/70 sm:left-10 sm:top-10">
-              STAMPERS // SYSTEM
+            {/* CORNER SYSTEM DETAILS */}
+            <div className="absolute left-5 top-5 font-mono text-[8px] leading-5 tracking-[0.2em] text-cyan-200/65 sm:left-10 sm:top-9 sm:text-[10px]">
+              STAMPERS / SYSTEM
               <br />
               INITIALIZING...
             </div>
 
-            <div className="absolute right-6 top-6 text-right font-mono text-[8px] tracking-[0.3em] text-[#FFD000]/70 sm:right-10 sm:top-10">
-              SECURE CONNECTION
+            <div className="absolute right-5 top-5 text-right font-mono text-[8px] leading-5 tracking-[0.2em] text-cyan-200/65 sm:right-10 sm:top-9 sm:text-[10px]">
+              PLATFORM STATUS
               <br />
               ONLINE
             </div>
 
-            <div className="absolute bottom-6 left-6 font-mono text-[8px] tracking-[0.3em] text-gray-600 sm:left-10 sm:bottom-10">
+            <div className="absolute bottom-5 left-5 font-mono text-[8px] tracking-[0.15em] text-slate-500 sm:bottom-9 sm:left-10 sm:text-[9px]">
               PLATFORM_VERSION 2K26
             </div>
 
-            <div className="absolute bottom-6 right-6 font-mono text-[8px] tracking-[0.3em] text-gray-600 sm:right-10 sm:bottom-10">
-              INDIA // 001
+            <div className="absolute bottom-5 right-5 font-mono text-[8px] tracking-[0.15em] text-slate-500 sm:bottom-9 sm:right-10 sm:text-[9px]">
+              DISCOVER / CREATE
             </div>
 
-            {/* MAIN */}
-
-            <div className="relative z-20 flex w-full max-w-3xl flex-col items-center px-6 text-center">
-
-              {/* SMALL LABEL */}
-
+            {/* MAIN CONTENT */}
+            <div className="relative z-10 flex w-full max-w-4xl flex-col items-center px-5 text-center sm:px-8">
+              {/* EYEBROW */}
               <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 15,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.6,
-                }}
-                className="mb-8 flex items-center gap-3"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55 }}
+                className="mb-7 flex items-center gap-3 sm:mb-9"
               >
-                <span className="h-px w-10 bg-gradient-to-r from-transparent to-[#FFD000]" />
+                <span className="h-px w-7 bg-gradient-to-r from-transparent to-cyan-300 sm:w-12" />
 
-                <span className="text-[9px] font-black uppercase tracking-[0.45em] text-[#FFD000]">
+                <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-cyan-200 sm:text-[10px] sm:tracking-[0.45em]">
                   NEXT GENERATION PLATFORM
                 </span>
 
-                <span className="h-px w-10 bg-gradient-to-l from-transparent to-[#FFD000]" />
+                <span className="h-px w-7 bg-gradient-to-l from-transparent to-cyan-300 sm:w-12" />
               </motion.div>
 
-              {/* LOGO / NAME */}
-
+              {/* BRAND REVEAL */}
               <motion.div
-                initial={{
-                  opacity: 0,
-                  scale: 0.85,
-                }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                }}
+                initial={{ opacity: 0, scale: 0.88, y: 12 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{
-                  duration: 0.9,
-                  delay: 0.2,
+                  duration: 0.85,
+                  delay: 0.15,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
+                className="relative"
               >
-                <h1 className="text-6xl font-black tracking-[-0.07em] sm:text-8xl md:text-9xl">
+                <h1 className="whitespace-nowrap text-[clamp(2.5rem,10vw,7.5rem)] font-black leading-none tracking-[-0.075em] text-white">
                   STAMPERS
-                  <span className="stampers-gold-text">
+                  <span className="align-top text-[0.25em] tracking-normal text-cyan-300">
                     ™
                   </span>
                 </h1>
+
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 0.6,
+                    ease: "easeOut",
+                  }}
+                  className="mx-auto mt-4 h-[2px] w-2/3 origin-center bg-gradient-to-r from-transparent via-cyan-300 to-transparent"
+                />
               </motion.div>
 
               {/* SCANNER */}
-
-              <div className="relative mt-12 h-16 w-full max-w-xl overflow-hidden rounded-xl border border-[#FFD000]/20 bg-white/[0.025]">
-
-                {/* horizontal scan */}
-
-                <motion.div
-                  initial={{
-                    left: "-10%",
-                  }}
-                  animate={{
-                    left: "110%",
-                  }}
-                  transition={{
-                    duration: 2.4,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute top-0 h-full w-[3px] bg-[#FFD000] shadow-[0_0_25px_#FFD000,0_0_60px_#FFD000]"
+              <div className="relative mt-10 h-14 w-full max-w-xl overflow-hidden rounded-xl border border-cyan-300/20 bg-white/[0.035] sm:mt-12 sm:h-16">
+                {/* SCAN TRACK */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(34,211,238,0.035),transparent)]"
                 />
 
-                {/* scan glow */}
-
+                {/* SCANNING BEAM */}
                 <motion.div
-                  initial={{
-                    left: "-20%",
-                  }}
-                  animate={{
-                    left: "100%",
-                  }}
+                  initial={{ x: "-10%" }}
+                  animate={{ x: "110%" }}
                   transition={{
-                    duration: 2.4,
+                    duration: 2.1,
                     ease: "easeInOut",
                   }}
-                  className="absolute top-0 h-full w-32 bg-gradient-to-r from-transparent via-[#FFD000]/20 to-transparent blur-xl"
+                  className="absolute inset-y-0 left-0 w-[2px] bg-cyan-300 shadow-[0_0_18px_3px_rgba(34,211,238,0.7)]"
                 />
 
-                <div className="absolute inset-0 flex items-center justify-center">
+                {/* SCAN LIGHT */}
+                <motion.div
+                  initial={{ x: "-130%" }}
+                  animate={{ x: "400%" }}
+                  transition={{
+                    duration: 2.1,
+                    ease: "easeInOut",
+                  }}
+                  className="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-transparent via-cyan-300/20 to-transparent blur-md"
+                />
 
+                {/* SCAN LABEL */}
+                <div className="absolute inset-0 flex items-center justify-center gap-3">
                   <motion.span
-                    animate={{
-                      opacity: [0.4, 1, 0.4],
-                    }}
+                    animate={{ opacity: [0.45, 1, 0.45] }}
                     transition={{
-                      duration: 0.8,
+                      duration: 1,
                       repeat: Infinity,
                     }}
-                    className="font-mono text-[9px] font-bold tracking-[0.4em] text-[#FFD000]"
-                  >
-                    {scanned
-                      ? "SCAN COMPLETE"
-                      : "SCANNING PLATFORM..."}
-                  </motion.span>
+                    className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.9)]"
+                  />
 
+                  <span className="font-mono text-[9px] font-bold tracking-[0.25em] text-cyan-200 sm:text-[10px] sm:tracking-[0.4em]">
+                    {scanned ? "SCAN COMPLETE" : "SCANNING PLATFORM..."}
+                  </span>
                 </div>
-
               </div>
 
-              {/* STATUS */}
-
+              {/* CONNECTION STATUS */}
               <motion.div
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-                transition={{
-                  delay: 1,
-                }}
-                className="mt-5 flex items-center gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+                className="mt-5 flex items-center gap-2.5"
               >
                 <motion.span
-                  animate={{
-                    opacity: [0.3, 1, 0.3],
-                  }}
+                  animate={{ opacity: [0.3, 1, 0.3] }}
                   transition={{
-                    duration: 1,
+                    duration: 1.4,
                     repeat: Infinity,
                   }}
-                  className="h-2 w-2 rounded-full bg-[#FFD000] shadow-[0_0_12px_#FFD000]"
+                  className="h-1.5 w-1.5 rounded-full bg-cyan-300"
                 />
 
-                <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-gray-500">
+                <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-slate-400 sm:text-[9px] sm:tracking-[0.3em]">
                   {scanned
-                    ? "IDENTITY VERIFIED"
+                    ? "WELCOME / ACCESS GRANTED"
                     : "CONNECTING TO STAMPERS"}
                 </span>
               </motion.div>
 
-              {/* WELCOME MESSAGE */}
-
+              {/* WELCOME REVEAL */}
               <AnimatePresence>
-
                 {scanned && (
                   <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 25,
-                      scale: 0.95,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                      scale: 1,
-                    }}
-                    transition={{
-                      duration: 0.7,
-                      ease: "easeOut",
-                    }}
-                    className="mt-12"
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.55, ease: "easeOut" }}
+                    className="mt-9 sm:mt-11"
                   >
-
-                    <p className="text-xs font-bold uppercase tracking-[0.5em] text-gray-500">
-                      YOU ARE WELCOME TO
+                    <p className="text-[9px] font-semibold uppercase tracking-[0.35em] text-slate-400 sm:text-[10px] sm:tracking-[0.5em]">
+                      WELCOME TO
                     </p>
 
-                    <h2 className="stampers-gold-text mt-4 text-3xl font-black uppercase tracking-[-0.03em] sm:text-5xl">
-                      STAMPERS™
+                    <h2 className="mt-3 text-2xl font-black uppercase tracking-[-0.035em] text-white sm:text-4xl">
+                      STAMPERS
+                      <span className="text-cyan-300">™</span>
                     </h2>
 
-                    <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.35em] text-gray-600">
-                      DISCOVER • COMPETE • CREATE
+                    <p className="mt-3 text-[8px] font-bold uppercase tracking-[0.22em] text-cyan-200/70 sm:text-[10px] sm:tracking-[0.35em]">
+                      DISCOVER · COMPETE · CREATE
                     </p>
-
                   </motion.div>
                 )}
-
               </AnimatePresence>
-
             </div>
 
             {/* BOTTOM PROGRESS */}
-
-            <div className="absolute bottom-0 left-0 h-[2px] w-full bg-white/[0.05]">
-
+            <div
+              aria-hidden="true"
+              className="absolute bottom-0 left-0 h-[2px] w-full bg-white/[0.06]"
+            >
               <motion.div
-                initial={{
-                  width: "0%",
-                }}
-                animate={{
-                  width: "100%",
-                }}
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
                 transition={{
-                  duration: 4.5,
+                  duration: 3.5,
                   ease: "linear",
                 }}
-                className="h-full bg-gradient-to-r from-[#8F5D00] via-[#FFD000] to-[#FFF3A3] shadow-[0_0_15px_#FFD000]"
+                className="h-full bg-gradient-to-r from-blue-600 via-cyan-300 to-white shadow-[0_0_14px_rgba(34,211,238,0.7)]"
               />
-
             </div>
-
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* WEBSITE */}
-
+      {/* WEBSITE CONTENT */}
       <motion.div
-        initial={{
-          opacity: 0,
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showIntro ? 0 : 1 }}
+        transition={{ duration: 0.65, ease: "easeOut" }}
+        style={{
+          visibility: showIntro ? "hidden" : "visible",
         }}
-        animate={{
-          opacity: showIntro ? 0 : 1,
-        }}
-        transition={{
-          duration: 0.8,
-        }}
+        aria-hidden={showIntro ? true : undefined}
       >
         {children}
       </motion.div>
