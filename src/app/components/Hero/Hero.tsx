@@ -1,6 +1,6 @@
+
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -8,6 +8,8 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
+  ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 
 type Slide = {
@@ -16,158 +18,108 @@ type Slide = {
   title: string;
   subtitle: string;
   description: string;
-  accent: string;
   date: string;
   status: string;
-  image: string;
-  logo?: string;
-  primaryText: string;
+  primaryLabel: string;
   primaryHref: string;
-  secondaryText?: string;
-  secondaryHref?: string;
+  secondaryLabel: string;
+  secondaryHref: string;
 };
-
-/*
-|--------------------------------------------------------------------------
-| HERO CONTENT
-|--------------------------------------------------------------------------
-| Keep image/logo values empty until you upload the actual assets.
-|
-| Later these can be connected to your STAMPERS/Unstop content system.
-|--------------------------------------------------------------------------
-*/
 
 const slides: Slide[] = [
   {
     id: "axion",
-    eyebrow: "UPCOMING EVENT",
+    eyebrow: "STAMPERS SIGNATURE EVENT",
     title: "AXION",
     subtitle: "National Hackathon",
     description:
-      "A national-level innovation challenge by STAMPERS, powered by Unstop, built around the theme Open Innovation.",
-    accent: "OPEN INNOVATION",
-    date: "11 OCTOBER 2026",
-    status: "REGISTRATION CLOSED · 10 OCTOBER",
-    image: "",
-    logo: "",
-    primaryText: "Explore AXION",
+      "A national innovation challenge by STAMPERS, powered by Unstop. Bringing student developers and problem-solvers together to build, experiment and compete.",
+    date: "25–26 OCTOBER 2026",
+    status: "FINAL ROUND · 24-HOUR ONLINE HACKATHON",
+    primaryLabel: "Explore AXION",
     primaryHref: "#axion",
-    secondaryText: "Powered by Unstop",
+    secondaryLabel: "Powered by Unstop",
     secondaryHref: "https://unstop.com/",
   },
   {
-    id: "national-hackathon",
-    eyebrow: "PREVIOUS HIGHLIGHT",
+    id: "previous",
+    eyebrow: "OUR JOURNEY",
     title: "STAMPERS",
     subtitle: "National Hackathon 2026",
     description:
-      "Our national hackathon brought together students and teams from universities across India and beyond.",
-    accent: "369 TEAMS · 713 CANDIDATES",
-    date: "14 — 15 AUGUST 2026",
-    status: "EVENT COMPLETED",
-    image: "",
-    logo: "",
-    primaryText: "View Highlights",
+      "A student innovation initiative connecting teams across India through technology, creativity and practical problem-solving.",
+    date: "14–15 AUGUST 2026",
+    status: "PREVIOUS EVENT · RESULTS AVAILABLE",
+    primaryLabel: "View Results",
     primaryHref: "#previous-hackathon",
+    secondaryLabel: "Discover STAMPERS",
+    secondaryHref: "#about",
   },
 ];
 
+const STAMPERS_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png";
+
 export default function Hero() {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  const currentSlide = slides[activeSlide];
+  const currentSlide = slides[active];
 
   const nextSlide = () => {
-    setActiveSlide((current) => (current + 1) % slides.length);
+    setActive((prev) => (prev + 1) % slides.length);
   };
 
   const previousSlide = () => {
-    setActiveSlide(
-      (current) => (current - 1 + slides.length) % slides.length
-    );
+    setActive((prev) => (prev - 1 + slides.length) % slides.length);
   };
-
-  const goToSlide = (index: number) => {
-    setActiveSlide(index);
-  };
-
-  /*
-  |--------------------------------------------------------------------------
-  | AUTOPLAY
-  |--------------------------------------------------------------------------
-  */
 
   useEffect(() => {
-    if (isPaused) return;
+    if (paused) return;
 
-    const interval = window.setInterval(() => {
-      nextSlide();
+    const timer = window.setInterval(() => {
+      setActive((prev) => (prev + 1) % slides.length);
     }, 7000);
 
-    return () => window.clearInterval(interval);
-  }, [isPaused]);
-
-  /*
-  |--------------------------------------------------------------------------
-  | KEYBOARD NAVIGATION
-  |--------------------------------------------------------------------------
-  */
+    return () => window.clearInterval(timer);
+  }, [paused]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowRight") {
-        nextSlide();
+        setActive((prev) => (prev + 1) % slides.length);
       }
 
       if (event.key === "ArrowLeft") {
-        previousSlide();
+        setActive((prev) => (prev - 1 + slides.length) % slides.length);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  /*
-  |--------------------------------------------------------------------------
-  | MOBILE SWIPE
-  |--------------------------------------------------------------------------
-  */
-
-  const handleTouchStart = (event: React.TouchEvent) => {
-    touchStartX.current = event.changedTouches[0].clientX;
+  const handleTouchStart = (event: React.TouchEvent<HTMLElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+    touchEndX.current = null;
   };
 
-  const handleTouchEnd = (event: React.TouchEvent) => {
-    touchEndX.current = event.changedTouches[0].clientX;
+  const handleTouchMove = (event: React.TouchEvent<HTMLElement>) => {
+    touchEndX.current = event.touches[0]?.clientX ?? null;
+  };
 
-    if (
-      touchStartX.current === null ||
-      touchEndX.current === null
-    ) {
-      return;
-    }
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
 
-    const distance =
-      touchStartX.current - touchEndX.current;
+    const distance = touchStartX.current - touchEndX.current;
 
-    const minimumSwipeDistance = 50;
-
-    if (Math.abs(distance) < minimumSwipeDistance) {
-      return;
-    }
-
-    if (distance > 0) {
-      nextSlide();
-    } else {
-      previousSlide();
+    if (Math.abs(distance) >= 50) {
+      if (distance > 0) nextSlide();
+      else previousSlide();
     }
 
     touchStartX.current = null;
@@ -176,237 +128,264 @@ export default function Hero() {
 
   return (
     <section
-      className="relative min-h-[calc(100svh-64px)] overflow-hidden bg-[#050505] text-white lg:min-h-[calc(100svh-72px)]"
+      className="relative min-h-[720px] overflow-hidden bg-[#081426] text-white sm:min-h-[760px] lg:min-h-[820px]"
       aria-label="STAMPERS featured events"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
       onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* =========================================================
-          SLIDE BACKGROUNDS
-      ========================================================== */}
+      {/* Background treatment */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_76%_30%,rgba(37,99,235,0.22),transparent_36%),radial-gradient(ellipse_at_20%_85%,rgba(59,130,246,0.09),transparent_34%)]" />
 
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            activeSlide === index
-              ? "opacity-100"
-              : "pointer-events-none opacity-0"
-          }`}
-        >
-          {slide.image ? (
-            <>
-              <Image
-                src={slide.image}
-                alt=""
-                fill
-                priority={index === 0}
-                sizes="100vw"
-                className="object-cover"
-              />
+        <div className="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(to_right,#94a3b8_1px,transparent_1px),linear-gradient(to_bottom,#94a3b8_1px,transparent_1px)] [background-size:64px_64px]" />
 
-              <div className="absolute inset-0 bg-black/55" />
-            </>
-          ) : (
-            <div
-              className={`absolute inset-0 ${
-                index === 0
-                  ? "bg-[radial-gradient(circle_at_75%_25%,rgba(37,99,235,0.32),transparent_28%),radial-gradient(circle_at_20%_70%,rgba(211,154,36,0.08),transparent_25%),linear-gradient(135deg,#030303,#101827,#050505)]"
-                  : "bg-[radial-gradient(circle_at_75%_25%,rgba(211,154,36,0.16),transparent_28%),linear-gradient(135deg,#050505,#171717,#050505)]"
-              }`}
-            />
-          )}
-        </div>
-      ))}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#081426] via-[#081426]/95 to-[#081426]/65" />
 
-      {/* =========================================================
-          CINEMATIC OVERLAY
-      ========================================================== */}
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#081426] to-transparent" />
 
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.68)_35%,rgba(0,0,0,0.24)_75%,rgba(0,0,0,0.42)_100%)]" />
+        <div className="absolute right-[12%] top-[16%] hidden h-[420px] w-[420px] rounded-full border border-white/[0.07] lg:block" />
 
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,rgba(0,0,0,0.88)_0%,transparent_58%)]" />
+        <div className="absolute right-[15%] top-[20%] hidden h-[340px] w-[340px] rounded-full border border-blue-300/[0.12] lg:block" />
 
-      {/* Subtle grain */}
-
-      <div className="pointer-events-none absolute inset-0 opacity-[0.045] [background-image:radial-gradient(#ffffff_0.7px,transparent_0.7px)] [background-size:5px_5px]" />
-
-      {/* =========================================================
-          TOP EVENT STATUS
-      ========================================================== */}
-
-      <div className="absolute left-5 right-5 top-7 z-20 flex items-center justify-between sm:left-8 sm:right-8 lg:left-12 lg:right-12">
-        <div className="flex items-center gap-3">
-          <span className="h-[2px] w-8 bg-[#D39A24] sm:w-10" />
-
-          <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-white/50 sm:text-[10px]">
-            {currentSlide.eyebrow}
-          </span>
-        </div>
-
-        <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
-          STAMPERS / 2026
-        </span>
+        <div className="absolute right-[19%] top-[24%] hidden h-[260px] w-[260px] rounded-full border border-white/[0.08] lg:block" />
       </div>
 
-      {/* =========================================================
-          MAIN CONTENT
-      ========================================================== */}
+      {/* Slides */}
+      {slides.map((slide, index) => {
+        const isActive = index === active;
 
-      <div className="relative z-10 flex min-h-[calc(100svh-64px)] items-end lg:min-h-[calc(100svh-72px)]">
-        <div className="w-full px-5 pb-28 sm:px-8 sm:pb-32 lg:px-12 lg:pb-32">
-          <div className="mx-auto max-w-[1440px]">
-            <div className="max-w-5xl">
-              {/* Event logo */}
+        return (
+          <div
+            key={slide.id}
+            aria-hidden={!isActive}
+            className={`absolute inset-0 transition-opacity duration-700 ${
+              isActive ? "opacity-100" : "pointer-events-none opacity-0"
+            }`}
+          >
+            <div className="mx-auto flex min-h-[720px] max-w-[1440px] items-center px-5 pb-28 pt-24 sm:min-h-[760px] sm:px-8 lg:min-h-[820px] lg:px-16">
+              <div className="relative z-10 grid w-full items-center gap-12 lg:grid-cols-[1.12fr_0.88fr]">
+                {/* Main content */}
+                <div className="max-w-3xl">
+                  <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2.5 backdrop-blur-sm">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-50" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-400" />
+                    </span>
 
-              {currentSlide.logo ? (
-                <div className="mb-7">
-                  <Image
-                    src={currentSlide.logo}
-                    alt=""
-                    width={220}
-                    height={70}
-                    className="h-auto max-h-16 w-auto object-contain object-left"
-                  />
+                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-300 sm:text-[10px]">
+                      {slide.eyebrow}
+                    </span>
+                  </div>
+
+                  <div className="mb-5 flex items-center gap-3">
+                    <img
+                      src={STAMPERS_LOGO}
+                      alt="STAMPERS"
+                      className="h-7 w-auto max-w-36 object-contain object-left brightness-0 invert opacity-80 sm:h-9"
+                    />
+
+                    <span className="h-5 w-px bg-white/20" />
+
+                    <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-white/40">
+                      Est. 2026
+                    </span>
+                  </div>
+
+                  <h1 className="max-w-4xl text-[clamp(4rem,11vw,9.5rem)] font-black leading-[0.8] tracking-[-0.085em] text-white">
+                    {slide.title}
+                    <span className="text-blue-500">.</span>
+                  </h1>
+
+                  <h2 className="mt-7 text-xl font-semibold tracking-[-0.035em] text-slate-200 sm:text-2xl lg:text-3xl">
+                    {slide.subtitle}
+                  </h2>
+
+                  <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base sm:leading-8">
+                    {slide.description}
+                  </p>
+
+                  <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+                    <span className="text-xs font-bold uppercase tracking-[0.15em] text-blue-300">
+                      {slide.date}
+                    </span>
+
+                    <span className="hidden h-1 w-1 rounded-full bg-white/30 sm:block" />
+
+                    <span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-slate-500 sm:text-[10px]">
+                      {slide.status}
+                    </span>
+                  </div>
+
+                  <div className="mt-9 flex flex-wrap gap-3">
+                    <Link
+                      href={slide.primaryHref}
+                      className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-md bg-blue-600 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-white shadow-lg shadow-blue-950/20 transition hover:bg-blue-500"
+                    >
+                      {slide.primaryLabel}
+                      <ArrowRight
+                        size={16}
+                        className="transition-transform group-hover:translate-x-1"
+                      />
+                    </Link>
+
+                    <Link
+                      href={slide.secondaryHref}
+                      target={
+                        slide.secondaryHref.startsWith("http")
+                          ? "_blank"
+                          : undefined
+                      }
+                      rel={
+                        slide.secondaryHref.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-md border border-white/15 bg-white/[0.03] px-6 py-3.5 text-xs font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.07]"
+                    >
+                      {slide.secondaryLabel}
+
+                      {slide.secondaryHref.startsWith("http") ? (
+                        <ExternalLink size={14} />
+                      ) : (
+                        <ArrowRight
+                          size={15}
+                          className="transition-transform group-hover:translate-x-1"
+                        />
+                      )}
+                    </Link>
+                  </div>
                 </div>
-              ) : null}
 
-              {/* Title */}
+                {/* Featured event panel */}
+                <div className="relative hidden lg:block">
+                  <div className="absolute -inset-5 rounded-3xl border border-white/[0.06]" />
 
-              <h1
-                key={`${currentSlide.id}-title`}
-                className="stamper-slide-up font-[family-name:var(--font-space)] text-[clamp(4.5rem,15vw,11rem)] font-black uppercase leading-[0.74] tracking-[-0.085em]"
-              >
-                {currentSlide.title}
-              </h1>
+                  <div className="relative overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.045] p-8 shadow-2xl shadow-black/20 backdrop-blur-xl">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-5">
+                      <div>
+                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500">
+                          Featured initiative
+                        </p>
+                        <p className="mt-2 text-sm font-semibold text-white">
+                          {slide.id === "axion"
+                            ? "AXION / 2026"
+                            : "STAMPERS / 2026"}
+                        </p>
+                      </div>
 
-              {/* Subtitle */}
+                      <Sparkles size={19} className="text-blue-400" />
+                    </div>
 
-              <h2
-                key={`${currentSlide.id}-subtitle`}
-                className="stamper-slide-up mt-5 max-w-4xl font-[family-name:var(--font-space)] text-[clamp(1.25rem,3vw,3rem)] font-bold uppercase leading-none tracking-[-0.04em] text-white/85"
-              >
-                {currentSlide.subtitle}
-              </h2>
+                    <div className="relative flex min-h-[290px] items-center justify-center overflow-hidden">
+                      <div className="absolute h-56 w-56 rounded-full bg-blue-500/10 blur-3xl" />
 
-              {/* Metadata */}
+                      <div className="relative text-center">
+                        <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-2xl border border-blue-300/20 bg-blue-500/10">
+                          <img
+                            src={STAMPERS_LOGO}
+                            alt=""
+                            className="h-14 w-14 object-contain brightness-0 invert"
+                          />
+                        </div>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] font-black uppercase tracking-[0.16em] sm:text-[10px]">
-                <span className="text-[#E5B84D]">
-                  {currentSlide.accent}
-                </span>
+                        <p className="text-4xl font-black tracking-[-0.06em] text-white">
+                          {slide.title}
+                        </p>
 
-                <span className="hidden h-1 w-1 rounded-full bg-white/25 sm:block" />
+                        <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                          {slide.subtitle}
+                        </p>
+                      </div>
+                    </div>
 
-                <span className="text-white/50">
-                  {currentSlide.date}
-                </span>
+                    <div className="grid grid-cols-2 gap-3 border-t border-white/10 pt-5">
+                      <div className="rounded-lg border border-white/[0.07] bg-black/10 p-4">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                          Format
+                        </p>
+                        <p className="mt-2 text-sm font-semibold text-white">
+                          {slide.id === "axion"
+                            ? "24-hour online"
+                            : "National event"}
+                        </p>
+                      </div>
 
-                <span className="hidden h-1 w-1 rounded-full bg-white/25 sm:block" />
+                      <div className="rounded-lg border border-white/[0.07] bg-black/10 p-4">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                          Presented by
+                        </p>
+                        <p className="mt-2 text-sm font-semibold text-white">
+                          STAMPERS
+                        </p>
+                      </div>
+                    </div>
 
-                <span className="text-white/35">
-                  {currentSlide.status}
-                </span>
-              </div>
-
-              {/* Description */}
-
-              <p
-                key={`${currentSlide.id}-description`}
-                className="stamper-slide-up mt-6 max-w-xl text-xs leading-7 text-white/55 sm:text-sm sm:leading-8"
-              >
-                {currentSlide.description}
-              </p>
-
-              {/* Actions */}
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  href={currentSlide.primaryHref}
-                  className="inline-flex min-h-12 items-center gap-3 bg-white px-5 text-[10px] font-black uppercase tracking-[0.14em] text-black transition hover:bg-[#D39A24] hover:text-white"
-                >
-                  {currentSlide.primaryText}
-                  <ArrowRight size={15} />
-                </Link>
-
-                {currentSlide.secondaryText &&
-                currentSlide.secondaryHref ? (
-                  <a
-                    href={currentSlide.secondaryHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-12 items-center gap-3 border border-white/15 bg-black/10 px-5 text-[10px] font-black uppercase tracking-[0.14em] text-white/70 backdrop-blur-md transition hover:border-white/35 hover:text-white"
-                  >
-                    {currentSlide.secondaryText}
-                    <ExternalLink size={13} />
-                  </a>
-                ) : null}
+                    <div className="mt-5 flex items-center gap-2 text-[10px] font-medium text-slate-500">
+                      <ShieldCheck size={14} className="text-blue-400" />
+                      Student innovation and collaboration
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        );
+      })}
+
+      {/* Slide controls */}
+      <div className="absolute inset-x-0 bottom-0 z-20">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 pb-7 sm:px-8 sm:pb-9 lg:px-16">
+          <div className="flex items-center gap-3">
+            {slides.map((slide, index) => (
+              <button
+                key={slide.id}
+                type="button"
+                onClick={() => setActive(index)}
+                aria-label={`Go to ${slide.title} slide`}
+                aria-pressed={index === active}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  index === active
+                    ? "w-12 bg-blue-500"
+                    : "w-6 bg-white/25 hover:bg-white/50"
+                }`}
+              />
+            ))}
+
+            <span className="ml-2 font-mono text-[10px] tracking-[0.18em] text-white/35">
+              0{active + 1} / 0{slides.length}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={previousSlide}
+              aria-label="Previous slide"
+              className="flex h-10 w-10 items-center justify-center rounded-md border border-white/15 bg-white/[0.04] text-white/70 transition hover:border-blue-400/60 hover:bg-blue-500/10 hover:text-white"
+            >
+              <ChevronLeft size={18} />
+            </button>
+
+            <button
+              type="button"
+              onClick={nextSlide}
+              aria-label="Next slide"
+              className="flex h-10 w-10 items-center justify-center rounded-md border border-white/15 bg-white/[0.04] text-white/70 transition hover:border-blue-400/60 hover:bg-blue-500/10 hover:text-white"
+            >
+              <ChevronRight size={18} />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* =========================================================
-          SLIDER CONTROLS
-      ========================================================== */}
-
-      <div className="absolute bottom-7 left-5 right-5 z-30 flex items-center justify-between sm:left-8 sm:right-8 lg:left-12 lg:right-12">
-        {/* Progress */}
-
-        <div className="flex items-center gap-2">
-          {slides.map((slide, index) => (
-            <button
-              key={slide.id}
-              type="button"
-              aria-label={`Go to ${slide.title}`}
-              aria-current={
-                activeSlide === index ? "true" : undefined
-              }
-              onClick={() => goToSlide(index)}
-              className={`h-[3px] transition-all duration-500 ${
-                activeSlide === index
-                  ? "w-11 bg-[#D39A24] sm:w-14"
-                  : "w-5 bg-white/25 hover:bg-white/45"
-              }`}
-            />
-          ))}
-
-          <span className="ml-2 text-[9px] font-bold tracking-[0.2em] text-white/30">
-            0{activeSlide + 1} / 0{slides.length}
-          </span>
-        </div>
-
-        {/* Desktop controls */}
-
-        <div className="hidden gap-2 sm:flex">
-          <button
-            type="button"
-            aria-label="Previous event"
-            onClick={previousSlide}
-            className="flex h-10 w-10 items-center justify-center border border-white/15 bg-black/10 text-white/50 backdrop-blur-md transition hover:border-[#D39A24] hover:text-white"
-          >
-            <ChevronLeft size={17} strokeWidth={1.5} />
-          </button>
-
-          <button
-            type="button"
-            aria-label="Next event"
-            onClick={nextSlide}
-            className="flex h-10 w-10 items-center justify-center border border-white/15 bg-black/10 text-white/50 backdrop-blur-md transition hover:border-[#D39A24] hover:text-white"
-          >
-            <ChevronRight size={17} strokeWidth={1.5} />
-          </button>
-        </div>
-
-        {/* Mobile swipe hint */}
-
-        <div className="flex items-center gap-2 text-[8px] font-bold uppercase tracking-[0.18em] text-white/25 sm:hidden">
-          Swipe
-          <ChevronRight size={12} />
-        </div>
+      {/* Mobile slide hint */}
+      <div className="pointer-events-none absolute bottom-[86px] left-1/2 z-20 -translate-x-1/2 sm:hidden">
+        <span className="text-[8px] font-semibold uppercase tracking-[0.22em] text-white/30">
+          Swipe to explore
+        </span>
       </div>
     </section>
   );

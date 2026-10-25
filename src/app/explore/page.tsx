@@ -1,7 +1,8 @@
+
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Search,
   Trophy,
@@ -17,6 +18,11 @@ import {
   Lightbulb,
   BriefcaseBusiness,
   Sparkles,
+  ArrowUpRight,
+  CheckCircle2,
+  Clock3,
+  FilterX,
+  Zap,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -39,20 +45,39 @@ const categories = [
   "Quiz",
   "Business",
   "Innovation",
-];
+] as const;
 
-const competitions = [
+type Category = (typeof categories)[number];
+
+type EventStatus = "Completed" | "Registration Closed" | "Coming Soon";
+
+type Opportunity = {
+  id: string | number;
+  title: string;
+  category: Exclude<Category, "All">;
+  description: string;
+  date: string;
+  status: EventStatus;
+  prize: string;
+  featured: boolean;
+  axion?: boolean;
+  href: string;
+  icon: typeof Trophy;
+};
+
+const competitions: Opportunity[] = [
   {
     id: "axion",
     title: "AXION National Hackathon",
     category: "Hackathon",
     description:
-      "Build innovative solutions for real-world problems through Open Innovation.",
-    date: "11 October 2026",
-    status: "Upcoming",
-    prize: "Details announced soon",
+      "A national innovation challenge by STAMPERS, powered by Unstop. Celebrating the teams that made it to the final round.",
+    date: "25–26 October 2026",
+    status: "Completed",
+    prize: "24-hour online hackathon",
     featured: true,
     axion: true,
+    href: "/competitions/axion",
     icon: Trophy,
   },
   {
@@ -60,25 +85,25 @@ const competitions = [
     title: "STAMPERS National Hackathon 2K26",
     category: "Hackathon",
     description:
-      "Build innovative solutions for real-world problems through open innovation.",
+      "Students came together to build, collaborate and present innovative solutions to real-world problems.",
     date: "14–15 August 2026",
     status: "Registration Closed",
-    prize: "Exciting Prizes & Goodies",
+    prize: "Prizes and goodies",
     featured: true,
-    axion: false,
+    href: "/competitions/1",
     icon: Trophy,
   },
   {
     id: 2,
-    title: "STAMPERS National Gaming Championship",
+    title: "National Gaming Championship",
     category: "Gaming",
     description:
-      "Compete, dominate and showcase your gaming skills in an upcoming national-level gaming event.",
-    date: "Coming Soon",
-    status: "Upcoming",
-    prize: "Prizes, Recognition & Goodies",
+      "Bring your squad, sharpen your skills and get ready for competitive gaming with the STAMPERS community.",
+    date: "Date to be announced",
+    status: "Coming Soon",
+    prize: "Details to be announced",
     featured: true,
-    axion: false,
+    href: "/competitions/2",
     icon: Gamepad2,
   },
   {
@@ -86,12 +111,12 @@ const competitions = [
     title: "National Photography Challenge",
     category: "Photography",
     description:
-      "Show the world your perspective through creativity, composition and storytelling.",
-    date: "Coming Soon",
-    status: "Upcoming",
-    prize: "Prizes & Recognition",
+      "Capture your perspective, tell a story through your lens and showcase your creative vision.",
+    date: "Date to be announced",
+    status: "Coming Soon",
+    prize: "Details to be announced",
     featured: true,
-    axion: false,
+    href: "/competitions/3",
     icon: Camera,
   },
   {
@@ -99,12 +124,12 @@ const competitions = [
     title: "Future Coders Challenge",
     category: "Coding",
     description:
-      "Challenge your programming and problem-solving skills through exciting coding challenges.",
-    date: "Coming Soon",
-    status: "Upcoming",
-    prize: "Prizes & Certificates",
+      "Challenge your logic, write better code and put your problem-solving skills to the test.",
+    date: "Date to be announced",
+    status: "Coming Soon",
+    prize: "Details to be announced",
     featured: false,
-    axion: false,
+    href: "/competitions/4",
     icon: Code2,
   },
   {
@@ -112,12 +137,12 @@ const competitions = [
     title: "Young Innovators Challenge",
     category: "Innovation",
     description:
-      "Present ideas that can create meaningful impact in the real world.",
-    date: "Coming Soon",
-    status: "Upcoming",
-    prize: "Recognition & Goodies",
+      "Turn ambitious ideas into practical concepts that can make a difference in the real world.",
+    date: "Date to be announced",
+    status: "Coming Soon",
+    prize: "Details to be announced",
     featured: false,
-    axion: false,
+    href: "/competitions/5",
     icon: Lightbulb,
   },
   {
@@ -125,25 +150,25 @@ const competitions = [
     title: "Creative Design Challenge",
     category: "Design",
     description:
-      "Turn your imagination into powerful visual experiences.",
-    date: "Coming Soon",
-    status: "Upcoming",
-    prize: "Prizes & Certificates",
+      "Explore visual design, digital experiences and creative solutions through your own unique style.",
+    date: "Date to be announced",
+    status: "Coming Soon",
+    prize: "Details to be announced",
     featured: false,
-    axion: false,
+    href: "/competitions/6",
     icon: Palette,
   },
   {
     id: 7,
-    title: "National Business Quiz",
+    title: "National Business Challenge",
     category: "Business",
     description:
-      "Test your knowledge of business, brands and entrepreneurship.",
-    date: "Coming Soon",
-    status: "Upcoming",
-    prize: "Prizes & Recognition",
+      "Explore entrepreneurship, strategy, branding and the ideas shaping tomorrow's businesses.",
+    date: "Date to be announced",
+    status: "Coming Soon",
+    prize: "Details to be announced",
     featured: false,
-    axion: false,
+    href: "/competitions/7",
     icon: BriefcaseBusiness,
   },
   {
@@ -151,563 +176,535 @@ const competitions = [
     title: "National Innovation Quiz",
     category: "Quiz",
     description:
-      "Challenge your knowledge of technology, innovation, startups and the future.",
-    date: "Coming Soon",
-    status: "Upcoming",
-    prize: "Prizes & Recognition",
+      "Test your knowledge of technology, startups, innovation and emerging ideas.",
+    date: "Date to be announced",
+    status: "Coming Soon",
+    prize: "Details to be announced",
     featured: false,
-    axion: false,
+    href: "/competitions/8",
     icon: Brain,
   },
 ];
 
+const statusStyles: Record<EventStatus, string> = {
+  Completed: "border-slate-200 bg-slate-100 text-slate-600",
+  "Registration Closed":
+    "border-blue-200 bg-blue-50 text-blue-800",
+  "Coming Soon":
+    "border-cyan-200 bg-cyan-50 text-cyan-800",
+};
+
 export default function ExplorePage() {
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState<Category>("All");
   const [showFilters, setShowFilters] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   const filteredCompetitions = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
     return competitions.filter((competition) => {
       const matchesCategory =
         category === "All" || competition.category === category;
 
-      const query = search.toLowerCase().trim();
+      const searchableText = [
+        competition.title,
+        competition.category,
+        competition.description,
+        competition.status,
+      ]
+        .join(" ")
+        .toLowerCase();
 
-      const matchesSearch =
-        !query ||
-        competition.title.toLowerCase().includes(query) ||
-        competition.category.toLowerCase().includes(query) ||
-        competition.description.toLowerCase().includes(query);
-
-      return matchesCategory && matchesSearch;
+      return (
+        matchesCategory &&
+        (!query || searchableText.includes(query))
+      );
     });
   }, [search, category]);
 
+  const hasFilters = Boolean(search.trim()) || category !== "All";
+
+  function clearFilters() {
+    setSearch("");
+    setCategory("All");
+  }
+
   return (
-    <main className="min-h-screen bg-[#f5f7fa] text-[#111827]">
-
-      {/* =====================================================
-          HEADER
-      ===================================================== */}
-
-      <header className="sticky top-0 z-50 border-b border-[#dfe3e8] bg-white">
-
-        <div className="mx-auto flex h-[68px] max-w-[1380px] items-center justify-between px-5 sm:px-8 lg:px-10">
-
-          <Link
-            href="/"
-            className="flex items-center"
-            aria-label="STAMPERS home"
-          >
+    <main className="min-h-screen overflow-hidden bg-[#f5f8fc] text-slate-900">
+      {/* NAVIGATION */}
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-xl">
+        <div className="mx-auto flex h-[72px] max-w-[1380px] items-center justify-between px-5 sm:px-8 lg:px-10">
+          <Link href="/" aria-label="STAMPERS home">
             <img
               src={STAMPERS_LOGO}
               alt="STAMPERS"
-              className="block h-auto w-[105px] object-contain sm:w-[115px]"
+              className="h-auto w-[110px] object-contain sm:w-[125px]"
             />
           </Link>
 
           <Link
             href="/"
-            className="group flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] !text-[#0b1f3a] transition hover:!text-[#b17c12]"
+            className="group inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#0b1f3a] transition hover:border-[#0b1f3a] hover:bg-[#0b1f3a] hover:text-white"
           >
             <ArrowRight
               size={15}
               className="rotate-180 transition-transform group-hover:-translate-x-1"
             />
-            Back
+            Back to Home
           </Link>
-
         </div>
-
       </header>
 
-      {/* =====================================================
-          HERO
-      ===================================================== */}
+      {/* HERO */}
+      <section className="relative isolate overflow-hidden border-b border-blue-100 bg-white">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_15%,rgba(34,211,238,0.13),transparent_35%),radial-gradient(ellipse_at_10%_100%,rgba(37,99,235,0.08),transparent_40%)]" />
 
-      <section className="border-b border-[#dfe3e8] bg-white">
+        <div className="pointer-events-none absolute -right-24 top-8 -z-10 h-72 w-72 rounded-full border border-blue-200/60 sm:right-10 sm:h-96 sm:w-96">
+          <div className="absolute inset-8 rounded-full border border-cyan-200/70" />
+          <div className="absolute inset-16 rounded-full border border-blue-100" />
+        </div>
 
-        <div className="mx-auto max-w-[1380px] px-5 pb-10 pt-10 sm:px-8 lg:px-10 lg:pb-12">
-
+        <div className="mx-auto max-w-[1380px] px-5 pb-12 pt-12 sm:px-8 sm:pb-16 sm:pt-16 lg:px-10 lg:pb-20 lg:pt-20">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.55 }}
           >
-
-            <div className="flex items-center gap-3">
-
-              <span className="h-px w-8 bg-[#c89425]" />
-
-              <p className="text-[10px] font-bold uppercase tracking-[0.28em] !text-[#a87510]">
-                Explore Opportunities
-              </p>
-
+            <div className="inline-flex items-center gap-2.5 rounded-full border border-blue-100 bg-blue-50/80 px-4 py-2">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-600" />
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#173c70]">
+                The STAMPERS opportunity hub
+              </span>
             </div>
 
-            <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-[-0.04em] !text-[#0b1f3a] sm:text-5xl lg:text-6xl">
-              Find your next
-              <span className="block !text-[#c89425]">
-                opportunity.
+            <h1 className="mt-7 max-w-4xl text-[clamp(2.8rem,7.5vw,6rem)] font-semibold leading-[0.96] tracking-[-0.065em] text-[#0b1f3a]">
+              Your next big thing
+              <span className="mt-2 block bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                starts here.
               </span>
             </h1>
 
-            <p className="mt-5 max-w-2xl text-sm leading-7 !text-[#4b5563] sm:text-base">
-              Discover hackathons, gaming events, coding contests,
-              photography challenges, quizzes, design competitions,
-              innovation events and more.
+            <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base sm:leading-8">
+              Discover competitions, meet new challenges and showcase
+              what you can do. Find opportunities to learn, create,
+              compete and grow with STAMPERS.
             </p>
 
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a
+                href="#opportunities"
+                className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#0b1f3a] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-950/10 transition hover:bg-blue-800"
+              >
+                Explore opportunities
+                <ArrowRight
+                  size={16}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </a>
+
+              <Link
+                href="/"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-[#0b1f3a] transition hover:border-blue-300 hover:bg-blue-50"
+              >
+                Discover STAMPERS
+                <ArrowUpRight size={16} />
+              </Link>
+            </div>
           </motion.div>
 
           {/* SEARCH */}
-
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mt-8 flex max-w-5xl flex-col gap-3 sm:flex-row"
+            transition={{ duration: 0.45, delay: 0.1 }}
+            className="mt-10 max-w-4xl rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_14px_50px_rgba(11,31,58,0.07)] sm:mt-12"
           >
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <label className="relative min-w-0 flex-1">
+                <Search
+                  size={19}
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") setSearch("");
+                  }}
+                  placeholder="Search hackathons, gaming, coding..."
+                  aria-label="Search opportunities"
+                  className="h-[50px] w-full rounded-xl bg-slate-50 pl-12 pr-11 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:bg-blue-50/60 focus:ring-2 focus:ring-blue-100"
+                />
 
-            <div className="relative flex-1">
+                {search && (
+                  <button
+                    type="button"
+                    aria-label="Clear search"
+                    onClick={() => setSearch("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-slate-400 hover:bg-white hover:text-slate-800"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </label>
 
-              <Search
-                size={18}
-                className="absolute left-4 top-1/2 -translate-y-1/2 !text-[#7b8491]"
-              />
-
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search competitions, gaming events, hackathons..."
-                className="h-12 w-full border border-[#d5dbe2] bg-[#f9fafb] pl-12 pr-12 text-sm !text-[#111827] outline-none placeholder:!text-[#8b94a1] transition focus:border-[#c89425] focus:bg-white"
-              />
-
-              {search && (
-                <button
-                  type="button"
-                  onClick={() => setSearch("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 !text-[#6b7280] transition hover:!text-[#b17c12]"
-                >
-                  <X size={17} />
-                </button>
-              )}
-
+              <button
+                type="button"
+                aria-expanded={showFilters}
+                aria-controls="mobile-filters"
+                onClick={() => setShowFilters((value) => !value)}
+                className={`inline-flex h-[50px] items-center justify-center gap-2 rounded-xl border px-5 text-sm font-semibold transition ${
+                  showFilters
+                    ? "border-blue-700 bg-blue-50 text-blue-800"
+                    : "border-slate-200 bg-white text-[#0b1f3a] hover:border-blue-300 hover:bg-blue-50"
+                }`}
+              >
+                <SlidersHorizontal size={17} />
+                Categories
+                <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] text-blue-800">
+                  {category === "All" ? "All" : "1"}
+                </span>
+              </button>
             </div>
-
-            <button
-              type="button"
-              onClick={() => setShowFilters(!showFilters)}
-              className={`flex h-12 items-center justify-center gap-2 border px-6 text-sm font-bold transition ${
-                showFilters
-                  ? "border-[#c89425] bg-[#fbf6e8] !text-[#9b6d0f]"
-                  : "border-[#d5dbe2] bg-white !text-[#374151] hover:border-[#c89425] hover:!text-[#9b6d0f]"
-              }`}
-            >
-              <SlidersHorizontal size={17} />
-              Filters
-            </button>
-
           </motion.div>
 
-          {/* MOBILE FILTER */}
-
+          {/* MOBILE FILTERS */}
           <div
-            className={`overflow-hidden transition-all duration-300 ${
+            id="mobile-filters"
+            className={`grid transition-all duration-300 md:hidden ${
               showFilters
-                ? "mt-5 max-h-60 opacity-100"
-                : "max-h-0 opacity-0"
+                ? "mt-4 grid-rows-[1fr] opacity-100"
+                : "grid-rows-[0fr] opacity-0"
             }`}
           >
-
-            <div className="flex flex-wrap gap-2">
-
-              {categories.map((item) => (
-                <button
-                  type="button"
-                  key={item}
-                  onClick={() => setCategory(item)}
-                  className={`border px-4 py-2 text-xs font-bold transition ${
-                    category === item
-                      ? "border-[#c89425] bg-[#c89425] !text-white"
-                      : "border-[#d8dde4] bg-white !text-[#4b5563] hover:border-[#c89425] hover:!text-[#9b6d0f]"
-                  }`}
-                >
-                  {item}
-                </button>
-              ))}
-
+            <div className="overflow-hidden">
+              <div className="flex flex-wrap gap-2 pt-1">
+                {categories.map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    aria-pressed={category === item}
+                    onClick={() => setCategory(item)}
+                    className={`rounded-full border px-3.5 py-2 text-xs font-semibold transition ${
+                      category === item
+                        ? "border-blue-700 bg-blue-700 text-white"
+                        : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-800"
+                    }`}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
             </div>
-
           </div>
 
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-slate-500">
+            <span className="inline-flex items-center gap-2">
+              <Trophy size={15} className="text-blue-600" />
+              Competitions
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Zap size={15} className="text-cyan-600" />
+              New challenges
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <CheckCircle2 size={15} className="text-blue-600" />
+              Student opportunities
+            </span>
+          </div>
         </div>
-
       </section>
 
-      {/* =====================================================
-          CATEGORY BAR
-      ===================================================== */}
-
-      <section className="hidden border-b border-[#dfe3e8] bg-white md:block">
-
-        <div className="mx-auto flex max-w-[1380px] gap-2 overflow-x-auto px-5 py-4 sm:px-8 lg:px-10">
-
+      {/* DESKTOP CATEGORIES */}
+      <section className="sticky top-[72px] z-30 hidden border-b border-slate-200 bg-white/95 backdrop-blur-lg md:block">
+        <div className="mx-auto flex max-w-[1380px] items-center gap-2 overflow-x-auto px-5 py-3 sm:px-8 lg:px-10">
           {categories.map((item) => (
             <button
-              type="button"
               key={item}
+              type="button"
+              aria-pressed={category === item}
               onClick={() => setCategory(item)}
-              className={`whitespace-nowrap border px-5 py-2.5 text-xs font-bold transition ${
+              className={`shrink-0 rounded-full border px-4 py-2.5 text-xs font-semibold transition focus:outline-none focus:ring-4 focus:ring-blue-100 ${
                 category === item
-                  ? "border-[#0b1f3a] bg-[#0b1f3a] !text-white"
-                  : "border-[#d8dde4] bg-white !text-[#4b5563] hover:border-[#c89425] hover:!text-[#9b6d0f]"
+                  ? "border-[#0b1f3a] bg-[#0b1f3a] text-white shadow-sm"
+                  : "border-transparent bg-transparent text-slate-600 hover:border-blue-100 hover:bg-blue-50 hover:text-blue-800"
               }`}
             >
               {item}
             </button>
           ))}
-
         </div>
-
       </section>
 
-      {/* =====================================================
-          RESULTS
-      ===================================================== */}
-
-      <section className="mx-auto max-w-[1380px] px-5 py-10 sm:px-8 lg:px-10 lg:py-14">
-
-        <div className="mb-7 flex items-end justify-between">
-
+      {/* OPPORTUNITIES */}
+      <section
+        id="opportunities"
+        className="mx-auto max-w-[1380px] scroll-mt-36 px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
+      >
+        <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-
-            <p className="text-[10px] font-bold uppercase tracking-[0.25em] !text-[#a87510]">
-              Opportunities
+            <p className="text-[10px] font-bold uppercase tracking-[0.23em] text-blue-700">
+              Find your opportunity
             </p>
-
-            <p className="mt-2 text-sm font-medium !text-[#5b6470]">
-              {filteredCompetitions.length} opportunities available
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#0b1f3a] sm:text-4xl">
+              Explore what’s next.
+            </h2>
+            <p className="mt-3 text-sm text-slate-500" aria-live="polite">
+              {filteredCompetitions.length}{" "}
+              {filteredCompetitions.length === 1
+                ? "opportunity"
+                : "opportunities"}{" "}
+              found
+              {category !== "All" ? ` in ${category}` : ""}
             </p>
-
           </div>
 
-          {category !== "All" && (
+          {hasFilters && (
             <button
               type="button"
-              onClick={() => setCategory("All")}
-              className="text-xs font-bold !text-[#a87510] transition hover:!text-[#795407]"
+              onClick={clearFilters}
+              className="inline-flex w-fit items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-blue-800"
             >
-              Clear category
+              <FilterX size={15} />
+              Clear filters
             </button>
           )}
-
         </div>
 
-        {/* EMPTY STATE */}
-
         {filteredCompetitions.length === 0 ? (
-
-          <div className="border border-[#dfe3e8] bg-white px-6 py-24 text-center">
-
-            <Search
-              size={42}
-              className="mx-auto !text-[#aeb5bf]"
-            />
-
-            <h2 className="mt-6 text-2xl font-semibold !text-[#0b1f3a]">
-              No competitions found
-            </h2>
-
-            <p className="mt-3 text-sm !text-[#5b6470]">
-              Try another search or category.
+          <div className="rounded-3xl border border-dashed border-blue-200 bg-white px-6 py-20 text-center">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+              <Search size={27} />
+            </div>
+            <h3 className="mt-5 text-xl font-semibold text-[#0b1f3a]">
+              Nothing found this time
+            </h3>
+            <p className="mt-2 text-sm text-slate-500">
+              Try a different keyword or explore all categories.
             </p>
-
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="mt-6 rounded-xl bg-[#0b1f3a] px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
+            >
+              Show all opportunities
+            </button>
           </div>
-
         ) : (
-
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-
+          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {filteredCompetitions.map((competition, index) => {
-
               const Icon = competition.icon;
-
-              const isAxion = competition.axion;
-
+              const isAxion = Boolean(competition.axion);
               const isHackathon =
                 competition.category === "Hackathon";
-
-              const isClosed =
-                competition.status === "Registration Closed";
 
               return (
                 <motion.article
                   key={competition.id}
-                  initial={{
-                    opacity: 0,
-                    y: 18,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  viewport={{
-                    once: true,
-                  }}
+                  initial={
+                    reduceMotion ? false : { opacity: 0, y: 18 }
+                  }
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.12 }}
                   transition={{
                     duration: 0.4,
-                    delay: index * 0.04,
+                    delay: Math.min(index * 0.04, 0.16),
                   }}
-                  className={`group relative flex flex-col border bg-white transition-all duration-300 ${
+                  className={`group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border bg-white transition duration-300 hover:-translate-y-1 ${
                     isAxion
-                      ? "border-[#c89425] shadow-[0_8px_35px_rgba(11,31,58,0.10)] hover:-translate-y-1"
-                      : "border-[#dfe3e8] hover:-translate-y-1 hover:border-[#c7a04b] hover:shadow-[0_8px_30px_rgba(11,31,58,0.07)]"
+                      ? "border-blue-200 shadow-[0_12px_45px_rgba(37,99,235,0.10)] hover:border-blue-400 hover:shadow-[0_20px_55px_rgba(37,99,235,0.15)]"
+                      : "border-slate-200 shadow-[0_5px_25px_rgba(11,31,58,0.025)] hover:border-blue-200 hover:shadow-[0_16px_45px_rgba(11,31,58,0.08)]"
                   }`}
                 >
-
-                  {/* AXION TOP BAR */}
-
                   {isAxion && (
-                    <div className="flex h-9 items-center justify-between bg-[#0b1f3a] px-5">
-
-                      <span className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.2em] !text-white">
-
+                    <div className="flex items-center justify-between bg-[#0b1f3a] px-5 py-2.5">
+                      <span className="inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white">
                         <Sparkles
                           size={12}
-                          className="!text-[#e0b64e]"
+                          className="text-cyan-300"
                         />
-
-                        Featured Event
-
+                        Featured event
                       </span>
-
-                      <span className="text-[9px] font-bold uppercase tracking-[0.18em] !text-[#e0b64e]">
-                        2026
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-cyan-300">
+                        AXION 2026
                       </span>
-
                     </div>
                   )}
 
-                  {/* CARD */}
-
-                  <div className="flex flex-1 flex-col p-6">
-
-                    {/* LOGO / ICON */}
-
-                    {isAxion ? (
-
-                      <div className="flex h-[78px] items-center justify-start border-b border-[#e8ebef] pb-4">
-
+                  <div className="flex flex-1 flex-col p-5 sm:p-6">
+                    {/* CARD TOP */}
+                    <div className="flex min-h-[64px] items-start justify-between gap-3">
+                      {isAxion ? (
                         <img
                           src={AXION_LOGO}
                           alt="AXION National Hackathon"
-                          className="h-auto max-h-[54px] w-auto max-w-[210px] object-contain object-left"
+                          className="max-h-[58px] max-w-[210px] object-contain object-left"
                         />
-
-                      </div>
-
-                    ) : (
-
-                      <div className="flex items-center justify-between">
-
+                      ) : (
                         <div
-                          className={`flex h-12 w-12 items-center justify-center border ${
+                          className={`flex h-12 w-12 items-center justify-center rounded-xl border ${
                             isHackathon
-                              ? "border-[#dfc37a] bg-[#fcf7e9]"
-                              : "border-[#e0e4e9] bg-[#f7f8fa]"
+                              ? "border-blue-100 bg-blue-50 text-blue-700"
+                              : "border-slate-200 bg-slate-50 text-[#0b1f3a]"
                           }`}
                         >
-                          <Icon
-                            size={22}
-                            className={
-                              isHackathon
-                                ? "!text-[#b27e13]"
-                                : "!text-[#0b1f3a]"
-                            }
-                          />
+                          <Icon size={22} strokeWidth={1.8} />
                         </div>
+                      )}
 
-                        {competition.featured && (
-                          <span className="border border-[#e2c982] bg-[#fcf7e9] px-3 py-1.5 text-[8px] font-bold uppercase tracking-[0.16em] !text-[#9a6d0d]">
-                            Featured
-                          </span>
-                        )}
+                      {competition.featured && !isAxion && (
+                        <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider text-blue-800">
+                          Featured
+                        </span>
+                      )}
+                    </div>
 
-                      </div>
-
-                    )}
-
-                    {/* CATEGORY */}
-
-                    <p className="mt-6 text-[9px] font-bold uppercase tracking-[0.24em] !text-[#a87510]">
+                    <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700">
                       {competition.category}
                     </p>
 
-                    {/* TITLE */}
+                    <h3 className="mt-2 min-h-[3.5rem] text-xl font-semibold leading-snug tracking-[-0.025em] text-[#0b1f3a] transition-colors group-hover:text-blue-800">
+                      {competition.title}
+                    </h3>
 
-                    {isAxion ? (
-                      <h2 className="mt-3 text-[23px] font-semibold leading-tight tracking-[-0.02em] !text-[#0b1f3a]">
-                        AXION National Hackathon
-                      </h2>
-                    ) : (
-                      <h2 className="mt-3 min-h-[58px] text-xl font-semibold leading-tight !text-[#0b1f3a]">
-                        {competition.title}
-                      </h2>
-                    )}
-
-                    {/* DESCRIPTION */}
-
-                    <p className="mt-4 min-h-[72px] text-sm leading-6 !text-[#596273]">
+                    <p className="mt-3 min-h-[4.5rem] text-sm leading-6 text-slate-600">
                       {competition.description}
                     </p>
 
-                    {/* DETAILS */}
-
-                    <div className="mt-6 space-y-3 border-t border-[#e6e9ed] pt-5">
-
-                      <div className="flex items-center gap-3 text-xs font-medium !text-[#596273]">
-
+                    {/* EVENT DETAILS */}
+                    <div className="mt-5 space-y-3 border-t border-slate-100 pt-5">
+                      <div className="flex items-start gap-3 text-xs leading-5 text-slate-600">
                         <CalendarDays
                           size={15}
-                          className="shrink-0 !text-[#b27e13]"
+                          className="mt-0.5 shrink-0 text-blue-600"
                         />
-
-                        <span>
-                          {competition.date}
-                        </span>
-
+                        <span>{competition.date}</span>
                       </div>
 
-                      <div className="flex items-center gap-3 text-xs font-medium !text-[#596273]">
-
-                        <Trophy
-                          size={15}
-                          className="shrink-0 !text-[#b27e13]"
-                        />
-
-                        <span>
-                          {competition.prize}
-                        </span>
-
+                      <div className="flex items-start gap-3 text-xs leading-5 text-slate-600">
+                        {competition.status === "Completed" ? (
+                          <CheckCircle2
+                            size={15}
+                            className="mt-0.5 shrink-0 text-slate-500"
+                          />
+                        ) : (
+                          <Clock3
+                            size={15}
+                            className="mt-0.5 shrink-0 text-cyan-600"
+                          />
+                        )}
+                        <span>{competition.prize}</span>
                       </div>
-
                     </div>
 
-                    {/* POWERED BY UNSOTP */}
-
+                    {/* UNSOTP BRANDING */}
                     {isAxion && (
-                      <div className="mt-4 flex items-center gap-1.5">
-
-                        <span className="text-[7px] font-bold uppercase tracking-[0.12em] !text-[#8a929d]">
+                      <div className="mt-4 flex items-center gap-2 border-t border-slate-100 pt-4">
+                        <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-400">
                           Powered by
                         </span>
-
                         <img
                           src={UNSTOP_LOGO}
                           alt="Unstop"
-                          className="h-[14px] w-[58px] object-contain"
+                          className="h-4 w-[62px] object-contain object-left"
                         />
-
                       </div>
                     )}
 
                     {/* STATUS */}
-
-                    <div className="mt-5 flex min-h-[28px] items-center justify-between gap-3">
-
+                    <div className="mt-5">
                       <span
-                        className={`border px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.12em] ${
-                          isClosed
-                            ? "border-red-200 bg-red-50 !text-red-600"
-                            : "border-[#e2c982] bg-[#fcf7e9] !text-[#9a6d0d]"
-                        }`}
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider ${statusStyles[competition.status]}`}
                       >
+                        {competition.status === "Completed" && (
+                          <CheckCircle2 size={12} />
+                        )}
+                        {competition.status === "Coming Soon" && (
+                          <Clock3 size={12} />
+                        )}
                         {competition.status}
                       </span>
-
-                      {isAxion && (
-                        <span className="text-[9px] font-bold uppercase tracking-[0.13em] !text-[#0b1f3a]">
-                          Closes 10 Oct
-                        </span>
-                      )}
-
                     </div>
 
-                    {/* BUTTON */}
-
+                    {/* ACTION */}
                     <Link
-                      href={
+                      href={competition.href}
+                      className={`mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.06em] transition focus:outline-none focus:ring-4 focus:ring-blue-100 ${
                         isAxion
-                          ? "/competitions/axion"
-                          : isHackathon
-                            ? "/competitions/1"
-                            : `/competitions/${competition.id}`
-                      }
-                      className={`mt-6 flex items-center justify-center gap-2 border py-3.5 text-xs font-bold uppercase tracking-[0.08em] transition-all ${
-                        isAxion
-                          ? "border-[#0b1f3a] bg-[#0b1f3a] !text-white hover:bg-[#17385e]"
-                          : isClosed
-                            ? "border-[#d5dbe2] bg-[#f7f8fa] !text-[#596273] hover:border-[#0b1f3a] hover:!text-[#0b1f3a]"
-                            : "border-[#0b1f3a] bg-[#0b1f3a] !text-white hover:bg-[#17385e]"
+                          ? "border-[#0b1f3a] bg-[#0b1f3a] text-white hover:bg-blue-800"
+                          : "border-slate-200 bg-white text-[#0b1f3a] hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800"
                       }`}
                     >
+                      {isAxion
+                        ? "View AXION details"
+                        : isHackathon
+                          ? "View hackathon"
+                          : "Explore opportunity"}
 
-                      <span className="!text-inherit">
-                        {isAxion
-                          ? "Explore AXION"
-                          : isHackathon
-                            ? "View Hackathon"
-                            : "Explore"}
-                      </span>
-
-                      <ArrowRight
-                        size={15}
-                        className="transition-transform group-hover:translate-x-1"
-                      />
-
+                      {isAxion ? (
+                        <ArrowUpRight size={15} />
+                      ) : (
+                        <ArrowRight
+                          size={15}
+                          className="transition-transform group-hover:translate-x-1"
+                        />
+                      )}
                     </Link>
-
                   </div>
-
                 </motion.article>
               );
             })}
-
           </div>
-
         )}
 
-      </section>
-
-      {/* =====================================================
-          FOOTER
-      ===================================================== */}
-
-      <section className="border-t border-[#dfe3e8] bg-white">
-
-        <div className="mx-auto flex max-w-[1380px] flex-col gap-3 px-5 py-7 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-10">
-
+        <div className="mt-10 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-cyan-50 p-6 sm:flex sm:items-center sm:justify-between sm:gap-6 sm:p-8">
           <div>
-
-            <p className="text-xs font-bold uppercase tracking-[0.18em] !text-[#0b1f3a]">
-              STAMPERS
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700">
+              Stay connected
             </p>
-
-            <p className="mt-1 text-[11px] !text-[#737b87]">
-              Discover. Build. Compete. Connect.
+            <h3 className="mt-2 text-xl font-semibold tracking-tight text-[#0b1f3a]">
+              Your next opportunity could be around the corner.
+            </h3>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
+              Keep an eye on STAMPERS for future competitions and
+              announcements.
             </p>
-
           </div>
 
-          <p className="text-[10px] font-medium !text-[#8b929c]">
-            © 2026 STAMPERS™
-          </p>
-
+          <Link
+            href="/"
+            className="mt-5 inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#0b1f3a] px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 sm:mt-0"
+          >
+            Visit STAMPERS
+            <ArrowUpRight size={16} />
+          </Link>
         </div>
-
       </section>
 
+      {/* FOOTER */}
+      <footer className="border-t border-slate-200 bg-white">
+        <div className="mx-auto flex max-w-[1380px] flex-col gap-4 px-5 py-7 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-10">
+          <div className="flex items-center gap-4">
+            <img
+              src={STAMPERS_LOGO}
+              alt="STAMPERS"
+              className="h-auto w-[88px] object-contain"
+            />
+            <span className="h-7 w-px bg-slate-200" />
+            <p className="text-xs text-slate-500">
+              Discover. Build. Compete. Connect.
+            </p>
+          </div>
+
+          <p className="text-[11px] text-slate-400">
+            © 2026 STAMPERS. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }

@@ -5,199 +5,183 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const links = [
-  {
-    name: "AXION",
-    href: "#axion",
-  },
-  {
-    name: "Events",
-    href: "#events",
-  },
-  {
-    name: "Management",
-    href: "#management",
-  },
-  {
-    name: "About",
-    href: "#about",
-  },
+  { name: "AXION", href: "#axion" },
+  { name: "Events", href: "#events" },
+  { name: "Management", href: "/management" },
+  { name: "About", href: "#about" },
 ];
+
+const logoUrl =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
-  /*
-  |--------------------------------------------------------------------------
-  | Prevent background scrolling when mobile menu is open
-  |--------------------------------------------------------------------------
-  */
-
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
 
+  const closeMenu = () => setOpen(false);
+
   return (
     <>
-      <header className="stamper-nav sticky top-0 z-[100] w-full">
+      <header className="sticky top-0 z-[100] w-full border-b border-slate-200/90 bg-white/95 shadow-[0_2px_12px_rgba(16,35,63,0.035)] backdrop-blur-xl">
         <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-          <nav className="flex h-16 items-center justify-between lg:h-[72px]">
-            {/* =====================================================
-                BRAND
-            ===================================================== */}
-<Link
-  href="/"
-  onClick={() => setOpen(false)}
-  className="group relative z-[110] flex h-10 w-[150px] items-center overflow-hidden"
-  aria-label="STAMPERS home"
->
-  <img
-    src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png"
-    alt="STAMPERS"
-    className="block h-auto w-[150px] max-w-none object-contain"
-  />
+          <nav
+            aria-label="Main navigation"
+            className="flex h-[68px] items-center justify-between lg:h-[76px]"
+          >
+            {/* Corporate brand */}
+            <Link
+              href="/"
+              onClick={closeMenu}
+              aria-label="STAMPERS home"
+              className="group relative z-[110] flex h-11 w-[145px] shrink-0 items-center sm:w-[165px]"
+            >
+              <img
+                src={logoUrl}
+                alt="STAMPERS"
+                className="block max-h-11 w-full object-contain object-left transition-opacity duration-200 group-hover:opacity-80"
+              />
+            </Link>
 
-  <span className="absolute right-0 top-0 text-[7px] font-bold text-[#D39A24]">
-    
-  </span>
-</Link>
-            {/* =====================================================
-                DESKTOP NAVIGATION
-            ===================================================== */}
-
-            <div className="hidden items-center gap-8 lg:flex">
+            {/* Desktop navigation */}
+            <div className="hidden items-center gap-7 lg:flex xl:gap-9">
               {links.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="stamper-nav-link"
+                  className="group relative py-3 text-[11px] font-bold uppercase tracking-[0.11em] text-slate-600 transition-colors duration-200 hover:text-blue-600"
                 >
                   {link.name}
+                  <span className="absolute inset-x-0 bottom-1 h-[2px] origin-left scale-x-0 bg-blue-600 transition-transform duration-200 group-hover:scale-x-100" />
                 </Link>
               ))}
             </div>
 
-            {/* =====================================================
-                DESKTOP ACTIONS
-            ===================================================== */}
-
-            <div className="hidden items-center gap-2 md:flex">
+            {/* Desktop actions */}
+            <div className="hidden items-center gap-1 md:flex">
               <Link
                 href="/explore"
-                className="px-3 py-2 text-[12px] font-bold uppercase tracking-[0.08em] text-black/55 transition hover:text-black"
+                className="rounded-md px-3 py-2.5 text-[11px] font-bold uppercase tracking-[0.08em] text-slate-600 transition-colors hover:text-blue-600"
               >
                 Explore
               </Link>
 
               <Link
                 href="/account/login"
-                className="px-3 py-2 text-[12px] font-bold uppercase tracking-[0.08em] text-black/55 transition hover:text-black"
+                className="rounded-md px-3 py-2.5 text-[11px] font-bold uppercase tracking-[0.08em] text-slate-600 transition-colors hover:text-blue-600"
               >
                 Sign in
               </Link>
 
               <Link
                 href="/account/register"
-                className="stamper-button stamper-button-primary ml-1"
+                className="ml-2 inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-[#10233F] bg-[#10233F] px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.08em] text-white transition-colors duration-200 hover:border-blue-600 hover:bg-blue-600"
               >
                 Join STAMPERS
-                <ArrowUpRight size={14} strokeWidth={2} />
+                <ArrowUpRight
+                  size={14}
+                  strokeWidth={2}
+                  className="transition-transform duration-200 group-hover:translate-x-0.5"
+                />
               </Link>
             </div>
 
-            {/* =====================================================
-                MOBILE MENU BUTTON
-            ===================================================== */}
-
+            {/* Mobile menu toggle */}
             <button
               type="button"
-              aria-label={
-                open ? "Close navigation menu" : "Open navigation menu"
-              }
+              aria-label={open ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={open}
+              aria-controls="stampers-mobile-menu"
               onClick={() => setOpen((current) => !current)}
-              className="relative z-[110] flex h-10 w-10 items-center justify-center border border-black/10 bg-white transition duration-200 hover:border-black active:scale-95 lg:hidden"
+              className="relative z-[110] flex h-10 w-10 items-center justify-center rounded-md border border-slate-200 bg-white text-[#10233F] transition-colors hover:border-blue-300 hover:bg-slate-50 hover:text-blue-600 active:scale-95 md:hidden"
             >
               {open ? (
-                <X size={19} strokeWidth={1.7} />
+                <X size={20} strokeWidth={1.8} />
               ) : (
-                <Menu size={19} strokeWidth={1.7} />
+                <Menu size={20} strokeWidth={1.8} />
               )}
             </button>
           </nav>
         </div>
       </header>
 
-      {/* =========================================================
-          MOBILE FULL-SCREEN MENU
-      ========================================================== */}
-
+      {/* Mobile navigation */}
       <div
-        className={`fixed inset-0 z-[90] bg-[#080808] text-white transition-all duration-500 lg:hidden ${
+        id="stampers-mobile-menu"
+        aria-hidden={!open}
+        className={`fixed inset-0 z-[90] bg-[#F4F7FB] text-[#10233F] transition-[opacity,visibility] duration-300 md:hidden ${
           open
             ? "visible opacity-100"
-            : "pointer-events-none invisible opacity-0"
+            : "invisible pointer-events-none opacity-0"
         }`}
       >
-        <div className="flex h-full flex-col px-5 pb-8 pt-28 sm:px-8">
-          {/* Menu label */}
-
+        <div className="flex h-full flex-col overflow-y-auto px-5 pb-7 pt-28 sm:px-8">
+          {/* Mobile menu heading */}
           <div className="flex items-center gap-3">
-            <span className="h-[2px] w-8 bg-[#D39A24]" />
-
-            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-white/35">
+            <span className="h-[2px] w-8 bg-blue-600" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
               STAMPERS / Navigation
             </span>
           </div>
 
-          {/* Main navigation */}
-
-          <div className="mt-10 flex flex-col">
+          {/* Main links */}
+          <div className="mt-8 flex flex-col">
             {links.map((link, index) => (
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={() => setOpen(false)}
-                className={`group flex items-center justify-between border-b border-white/10 py-5 ${
+                tabIndex={open ? 0 : -1}
+                onClick={closeMenu}
+                className={`group flex items-center justify-between border-b border-slate-200 py-5 transition-colors duration-200 ${
                   index === 0 ? "border-t" : ""
                 }`}
               >
-                <span className="font-[Space_Grotesk] text-4xl font-bold uppercase tracking-[-0.05em] text-white/90 transition duration-200 group-hover:text-[#D39A24]">
+                <span className="font-[Space_Grotesk] text-3xl font-bold tracking-[-0.04em] text-[#10233F] transition-colors duration-200 group-hover:text-blue-600 sm:text-4xl">
                   {link.name}
                 </span>
 
                 <ArrowUpRight
                   size={20}
-                  strokeWidth={1.5}
-                  className="text-white/25 transition duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[#D39A24]"
+                  strokeWidth={1.6}
+                  className="text-slate-400 transition-all duration-200 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-blue-600"
                 />
               </Link>
             ))}
           </div>
 
-          {/* Bottom actions */}
-
-          <div className="mt-auto">
+          {/* Mobile actions */}
+          <div className="mt-auto pt-10">
             <div className="grid grid-cols-2 gap-3">
               <Link
                 href="/explore"
-                onClick={() => setOpen(false)}
-                className="flex h-12 items-center justify-center border border-white/15 text-[10px] font-black uppercase tracking-[0.14em] text-white/70 transition hover:border-white/40 hover:text-white"
+                tabIndex={open ? 0 : -1}
+                onClick={closeMenu}
+                className="flex h-12 items-center justify-center rounded-md border border-slate-300 bg-white text-[10px] font-bold uppercase tracking-[0.1em] text-[#10233F] transition-colors hover:border-blue-500 hover:text-blue-600"
               >
                 Explore
               </Link>
 
               <Link
                 href="/account/login"
-                onClick={() => setOpen(false)}
-                className="flex h-12 items-center justify-center border border-white/15 text-[10px] font-black uppercase tracking-[0.14em] text-white/70 transition hover:border-white/40 hover:text-white"
+                tabIndex={open ? 0 : -1}
+                onClick={closeMenu}
+                className="flex h-12 items-center justify-center rounded-md border border-slate-300 bg-white text-[10px] font-bold uppercase tracking-[0.1em] text-[#10233F] transition-colors hover:border-blue-500 hover:text-blue-600"
               >
                 Sign in
               </Link>
@@ -205,19 +189,20 @@ export default function Navbar() {
 
             <Link
               href="/account/register"
-              onClick={() => setOpen(false)}
-              className="mt-3 flex h-12 items-center justify-center gap-2 bg-white text-[10px] font-black uppercase tracking-[0.14em] text-black transition hover:bg-[#D39A24] hover:text-white"
+              tabIndex={open ? 0 : -1}
+              onClick={closeMenu}
+              className="mt-3 flex h-12 items-center justify-center gap-2 rounded-md bg-[#10233F] text-[10px] font-bold uppercase tracking-[0.12em] text-white transition-colors duration-200 hover:bg-blue-600"
             >
               Join STAMPERS
               <ArrowUpRight size={14} />
             </Link>
 
-            <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-5">
-              <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/25">
+            <div className="mt-7 flex items-center justify-between border-t border-slate-200 pt-5">
+              <span className="text-[9px] font-semibold uppercase tracking-[0.13em] text-slate-500">
                 Think. Build. Compete.
               </span>
 
-              <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#D39A24]/70">
+              <span className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-500">
                 © 2026 STAMPERS
               </span>
             </div>
