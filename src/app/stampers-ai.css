@@ -1,0 +1,377 @@
+
+.stampers-ai-launcher {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 17px 12px 12px;
+  border: 1px solid rgba(103, 232, 249, 0.35);
+  border-radius: 999px;
+  background: #07152e;
+  color: #ffffff;
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.stampers-ai-launcher:hover {
+  transform: translateY(-2px);
+  border-color: #67e8f9;
+}
+
+.stampers-ai-launcher-icon {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  background: #0e7490;
+  color: #a5f3fc;
+  font-size: 21px;
+}
+
+.stampers-ai-launcher-copy {
+  text-align: left;
+}
+
+.stampers-ai-launcher-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.stampers-ai-launcher-subtitle {
+  display: block;
+  margin-top: 2px;
+  color: #a5f3fc;
+  font-size: 11px;
+}
+
+.stampers-ai-window {
+  position: fixed;
+  right: 24px;
+  bottom: 94px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  width: min(390px, calc(100vw - 32px));
+  height: min(570px, calc(100dvh - 125px));
+  min-height: 350px;
+  overflow: hidden;
+  border: 1px solid rgba(103, 232, 249, 0.22);
+  border-radius: 20px;
+  background: #071326;
+  color: #f8fafc;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.4);
+  animation: stampers-ai-enter 180ms ease-out;
+}
+
+.stampers-ai-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px;
+  border-bottom: 1px solid #22334a;
+  background: #0b1b31;
+}
+
+.stampers-ai-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.stampers-ai-brand-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid #155e75;
+  border-radius: 13px;
+  background: #083344;
+  color: #67e8f9;
+  font-size: 22px;
+}
+
+.stampers-ai-brand-title {
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: -0.2px;
+}
+
+.stampers-ai-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.stampers-ai-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.stampers-ai-header-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.stampers-ai-close {
+  display: flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #263951;
+  border-radius: 10px;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.stampers-ai-messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  padding: 18px 15px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
+}
+
+.stampers-ai-tagline {
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+.stampers-ai-message {
+  max-width: 88%;
+  padding: 12px 14px;
+  border-radius: 15px;
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.stampers-ai-message.assistant {
+  align-self: flex-start;
+  border: 1px solid #23354d;
+  border-bottom-left-radius: 5px;
+  background: #101f35;
+  color: #e2e8f0;
+}
+
+.stampers-ai-message.user {
+  align-self: flex-end;
+  border-bottom-right-radius: 5px;
+  background: #0891b2;
+  color: #ffffff;
+}
+
+.stampers-ai-thinking {
+  color: #67e8f9;
+}
+
+.stampers-ai-quick-section {
+  margin-top: 4px;
+}
+
+.stampers-ai-quick-heading {
+  margin: 0 0 10px;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.stampers-ai-quick-list {
+  display: grid;
+  gap: 8px;
+}
+
+.stampers-ai-quick {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid #263951;
+  border-radius: 10px;
+  background: #0b1b31;
+  color: #cbd5e1;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.stampers-ai-quick:hover:not(:disabled) {
+  border-color: #22d3ee;
+  color: #67e8f9;
+}
+
+.stampers-ai-quick:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.stampers-ai-quick-arrow {
+  flex-shrink: 0;
+  color: #67e8f9;
+}
+
+.stampers-ai-error {
+  padding: 11px;
+  border: 1px solid #7f1d1d;
+  border-radius: 10px;
+  background: #2a1119;
+  color: #fecaca;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.stampers-ai-error p {
+  margin: 0;
+}
+
+.stampers-ai-retry {
+  margin-top: 7px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #67e8f9;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.stampers-ai-retry:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.stampers-ai-footer {
+  padding: 12px 13px 10px;
+  border-top: 1px solid #22334a;
+  background: #09182b;
+}
+
+.stampers-ai-form {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 6px 6px 13px;
+  border: 1px solid #2a405a;
+  border-radius: 14px;
+  background: #0c1b30;
+}
+
+.stampers-ai-input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #f8fafc;
+  font-size: 13px;
+}
+
+.stampers-ai-input::placeholder {
+  color: #718198;
+}
+
+.stampers-ai-send {
+  display: flex;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 11px;
+  background: #06b6d4;
+  color: #062033;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.stampers-ai-send:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.stampers-ai-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 0 2px;
+  color: #64748b;
+  font-size: 10px;
+}
+
+.stampers-ai-footer-bottom a {
+  color: #67e8f9;
+  text-decoration: none;
+}
+
+.stampers-ai-footer-bottom a:hover {
+  text-decoration: underline;
+}
+
+@keyframes stampers-ai-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .stampers-ai-launcher {
+    right: 14px;
+    bottom: 15px;
+    padding: 10px 14px 10px 10px;
+  }
+
+  .stampers-ai-window {
+    right: 8px;
+    bottom: 78px;
+    width: calc(100vw - 16px);
+    height: min(600px, calc(100dvh - 100px));
+    border-radius: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stampers-ai-window {
+    animation: none;
+  }
+
+  .stampers-ai-launcher {
+    transition: none;
+  }
+}

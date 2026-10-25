@@ -1,7 +1,9 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
+import "./stampers-ai.css";
 import { Analytics } from "@vercel/analytics/next";
+import StampersAI from "./components/StampersAI";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.stampers.in"),
@@ -36,6 +38,7 @@ export default function RootLayout({
       <body>
         {children}
         <Analytics />
+        <StampersAI />
       </body>
     </html>
   );
