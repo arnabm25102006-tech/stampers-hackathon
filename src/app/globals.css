@@ -128,3 +128,116 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =========================================
+   STAMPERS — PREMIUM DARK DESIGN SYSTEM
+   ========================================= */
+
+html {
+  scroll-behavior: smooth;
+  background: #070b18;
+}
+
+body {
+  background: #070b18;
+  color: #f8fafc;
+}
+
+.stampers-home {
+  --stampers-bg: #070b18;
+  --stampers-surface: #0c1427;
+  --stampers-blue: #3b82f6;
+  --stampers-cyan: #67e8f9;
+  background-color: var(--stampers-bg);
+  color: #f8fafc;
+  font-family: inherit;
+}
+
+.stampers-home ::selection {
+  background: rgba(59, 130, 246, 0.45);
+  color: #ffffff;
+}
+
+.stampers-home a,
+.stampers-home button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.stampers-home button:focus-visible,
+.stampers-home a:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: 4px;
+}
+
+.stampers-home img {
+  max-width: 100%;
+}
+
+.stampers-home article {
+  transform: translateZ(0);
+}
+
+/* Keep existing About, Sponsors and FAQ sections
+   consistent with the new dark homepage. */
+
+.stampers-legacy-sections {
+  position: relative;
+  isolation: isolate;
+  background: #070b18;
+  color: #f8fafc;
+}
+
+.stampers-legacy-sections > section,
+.stampers-legacy-sections > div {
+  background-color: #070b18;
+  color: #f8fafc;
+}
+
+/* Smooth section transitions */
+
+.stampers-home section {
+  scroll-margin-top: 90px;
+}
+
+.stampers-home h1,
+.stampers-home h2,
+.stampers-home h3 {
+  text-wrap: balance;
+}
+
+.stampers-home p {
+  text-wrap: pretty;
+}
+
+/* Mobile polish */
+
+@media (max-width: 640px) {
+  .stampers-home {
+    overflow-x: clip;
+  }
+
+  .stampers-home h1 {
+    letter-spacing: -0.045em;
+  }
+
+  .stampers-home article {
+    border-radius: 18px;
+  }
+
+  .stampers-home a {
+    touch-action: manipulation;
+  }
+}
+
+/* Respect accessibility settings */
+
+@media (prefers-reduced-motion: reduce) {
+  .stampers-home *,
+  .stampers-home *::before,
+  .stampers-home *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
