@@ -23,6 +23,8 @@ import {
   Clock3,
   FilterX,
   Zap,
+  Users,
+  ChevronRight,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -34,6 +36,9 @@ const AXION_LOGO =
 
 const UNSTOP_LOGO =
   "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/Unstop-Logo-Blue-Large.jpg";
+
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2200&q=90";
 
 const categories = [
   "All",
@@ -49,7 +54,10 @@ const categories = [
 
 type Category = (typeof categories)[number];
 
-type EventStatus = "Completed" | "Registration Closed" | "Coming Soon";
+type EventStatus =
+  | "Completed"
+  | "Registration Closed"
+  | "Coming Soon";
 
 type Opportunity = {
   id: string | number;
@@ -63,6 +71,7 @@ type Opportunity = {
   axion?: boolean;
   href: string;
   icon: typeof Trophy;
+  image: string;
 };
 
 const competitions: Opportunity[] = [
@@ -71,7 +80,7 @@ const competitions: Opportunity[] = [
     title: "AXION National Hackathon",
     category: "Hackathon",
     description:
-      "A national innovation challenge by STAMPERS, powered by Unstop. Celebrating the teams that made it to the final round.",
+      "A national innovation challenge by STAMPERS, powered by Unstop. Celebrating the teams competing in the final round.",
     date: "25–26 October 2026",
     status: "Completed",
     prize: "24-hour online hackathon",
@@ -79,6 +88,8 @@ const competitions: Opportunity[] = [
     axion: true,
     href: "/competitions/axion",
     icon: Trophy,
+    image:
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: 1,
@@ -92,6 +103,8 @@ const competitions: Opportunity[] = [
     featured: true,
     href: "/competitions/1",
     icon: Trophy,
+    image:
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: 2,
@@ -105,6 +118,8 @@ const competitions: Opportunity[] = [
     featured: true,
     href: "/competitions/2",
     icon: Gamepad2,
+    image:
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: 3,
@@ -118,6 +133,8 @@ const competitions: Opportunity[] = [
     featured: true,
     href: "/competitions/3",
     icon: Camera,
+    image:
+      "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: 4,
@@ -131,6 +148,8 @@ const competitions: Opportunity[] = [
     featured: false,
     href: "/competitions/4",
     icon: Code2,
+    image:
+      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: 5,
@@ -144,6 +163,8 @@ const competitions: Opportunity[] = [
     featured: false,
     href: "/competitions/5",
     icon: Lightbulb,
+    image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: 6,
@@ -157,6 +178,8 @@ const competitions: Opportunity[] = [
     featured: false,
     href: "/competitions/6",
     icon: Palette,
+    image:
+      "https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: 7,
@@ -170,6 +193,8 @@ const competitions: Opportunity[] = [
     featured: false,
     href: "/competitions/7",
     icon: BriefcaseBusiness,
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=85",
   },
   {
     id: 8,
@@ -183,15 +208,18 @@ const competitions: Opportunity[] = [
     featured: false,
     href: "/competitions/8",
     icon: Brain,
+    image:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85",
   },
 ];
 
 const statusStyles: Record<EventStatus, string> = {
-  Completed: "border-slate-200 bg-slate-100 text-slate-600",
+  Completed:
+    "border-slate-500/30 bg-slate-500/10 text-slate-300",
   "Registration Closed":
-    "border-blue-200 bg-blue-50 text-blue-800",
+    "border-blue-400/30 bg-blue-400/10 text-blue-300",
   "Coming Soon":
-    "border-cyan-200 bg-cyan-50 text-cyan-800",
+    "border-cyan-400/30 bg-cyan-400/10 text-cyan-300",
 };
 
 export default function ExplorePage() {
@@ -231,73 +259,102 @@ export default function ExplorePage() {
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#f5f8fc] text-slate-900">
+    <main className="min-h-screen overflow-hidden bg-[#060916] text-white">
       {/* NAVIGATION */}
-      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-xl">
-        <div className="mx-auto flex h-[72px] max-w-[1380px] items-center justify-between px-5 sm:px-8 lg:px-10">
-          <Link href="/" aria-label="STAMPERS home">
+      <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#060916]/90 backdrop-blur-xl">
+        <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-14">
+          <Link href="/" aria-label="STAMPERS homepage">
             <img
               src={STAMPERS_LOGO}
               alt="STAMPERS"
-              className="h-auto w-[110px] object-contain sm:w-[125px]"
+              className="h-10 w-auto max-w-[190px] object-contain object-left"
             />
           </Link>
 
+          <nav className="hidden items-center gap-7 md:flex">
+            <Link
+              href="/"
+              className="text-xs font-semibold text-slate-400 transition hover:text-white"
+            >
+              Home
+            </Link>
+            <a
+              href="#opportunities"
+              className="text-xs font-semibold text-slate-400 transition hover:text-white"
+            >
+              Opportunities
+            </a>
+            <a
+              href="#categories"
+              className="text-xs font-semibold text-slate-400 transition hover:text-white"
+            >
+              Categories
+            </a>
+          </nav>
+
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#0b1f3a] transition hover:border-[#0b1f3a] hover:bg-[#0b1f3a] hover:text-white"
+            className="group inline-flex items-center gap-2 border border-white/15 px-3 py-2.5 text-[10px] font-bold uppercase tracking-wider transition hover:border-sky-400 hover:text-sky-300 sm:px-4"
           >
             <ArrowRight
-              size={15}
+              size={14}
               className="rotate-180 transition-transform group-hover:-translate-x-1"
             />
-            Back to Home
+            Back home
           </Link>
         </div>
       </header>
 
       {/* HERO */}
-      <section className="relative isolate overflow-hidden border-b border-blue-100 bg-white">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_85%_15%,rgba(34,211,238,0.13),transparent_35%),radial-gradient(ellipse_at_10%_100%,rgba(37,99,235,0.08),transparent_40%)]" />
+      <section className="relative isolate overflow-hidden border-b border-white/10">
+        <img
+          src={HERO_IMAGE}
+          alt="Students collaborating on technology and creative projects"
+          className="absolute inset-0 -z-30 h-full w-full object-cover object-center"
+        />
 
-        <div className="pointer-events-none absolute -right-24 top-8 -z-10 h-72 w-72 rounded-full border border-blue-200/60 sm:right-10 sm:h-96 sm:w-96">
-          <div className="absolute inset-8 rounded-full border border-cyan-200/70" />
-          <div className="absolute inset-16 rounded-full border border-blue-100" />
+        <div className="absolute inset-0 -z-20 bg-[#050812]/80" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#050812] via-[#050812]/85 to-[#050812]/35" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#060916] via-transparent to-[#060916]/40" />
+
+        <div className="pointer-events-none absolute -right-24 top-12 -z-10 h-72 w-72 rounded-full border border-sky-400/20 sm:right-12 sm:h-96 sm:w-96">
+          <div className="absolute inset-8 rounded-full border border-blue-400/20" />
+          <div className="absolute inset-16 rounded-full border border-cyan-300/20" />
         </div>
 
-        <div className="mx-auto max-w-[1380px] px-5 pb-12 pt-12 sm:px-8 sm:pb-16 sm:pt-16 lg:px-10 lg:pb-20 lg:pt-20">
+        <div className="mx-auto grid max-w-[1440px] gap-12 px-5 pb-14 pt-16 sm:px-8 sm:pb-20 sm:pt-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:px-14 lg:py-28">
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}
           >
-            <div className="inline-flex items-center gap-2.5 rounded-full border border-blue-100 bg-blue-50/80 px-4 py-2">
+            <div className="inline-flex items-center gap-3 border border-sky-300/25 bg-black/25 px-4 py-3 backdrop-blur-md">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-600" />
+                <span className="absolute inline-flex h-full w-full animate-ping bg-sky-400 opacity-60" />
+                <span className="relative h-2 w-2 bg-sky-400" />
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#173c70]">
+              <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-sky-200 sm:text-[10px]">
                 The STAMPERS opportunity hub
               </span>
             </div>
 
-            <h1 className="mt-7 max-w-4xl text-[clamp(2.8rem,7.5vw,6rem)] font-semibold leading-[0.96] tracking-[-0.065em] text-[#0b1f3a]">
+            <h1 className="mt-8 max-w-4xl text-5xl font-black leading-[0.95] tracking-[-0.065em] sm:text-7xl lg:text-[88px]">
               Your next big thing
-              <span className="mt-2 block bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+              <span className="mt-2 block text-sky-400">
                 starts here.
               </span>
             </h1>
 
-            <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base sm:leading-8">
-              Discover competitions, meet new challenges and showcase
-              what you can do. Find opportunities to learn, create,
-              compete and grow with STAMPERS.
+            <p className="mt-7 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base sm:leading-8">
+              Discover competitions, take on new challenges and showcase
+              what you can do. Find opportunities to learn, create, compete
+              and grow with STAMPERS.
             </p>
 
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-9 flex flex-wrap gap-3">
               <a
                 href="#opportunities"
-                className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#0b1f3a] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-950/10 transition hover:bg-blue-800"
+                className="group inline-flex min-h-12 items-center justify-center gap-3 bg-sky-400 px-6 py-4 text-[10px] font-black uppercase tracking-[0.13em] text-[#06101F] transition hover:bg-sky-300"
               >
                 Explore opportunities
                 <ArrowRight
@@ -308,69 +365,146 @@ export default function ExplorePage() {
 
               <Link
                 href="/"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-[#0b1f3a] transition hover:border-blue-300 hover:bg-blue-50"
+                className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/20 bg-black/20 px-5 py-4 text-[10px] font-bold uppercase tracking-[0.13em] text-white backdrop-blur-sm transition hover:border-sky-400 hover:text-sky-300"
               >
                 Discover STAMPERS
-                <ArrowUpRight size={16} />
+                <ArrowUpRight size={15} />
               </Link>
             </div>
-          </motion.div>
 
-          {/* SEARCH */}
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.1 }}
-            className="mt-10 max-w-4xl rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_14px_50px_rgba(11,31,58,0.07)] sm:mt-12"
-          >
-            <div className="flex flex-col gap-2 sm:flex-row">
-              <label className="relative min-w-0 flex-1">
-                <Search
-                  size={19}
-                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                />
-                <input
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Escape") setSearch("");
-                  }}
-                  placeholder="Search hackathons, gaming, coding..."
-                  aria-label="Search opportunities"
-                  className="h-[50px] w-full rounded-xl bg-slate-50 pl-12 pr-11 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:bg-blue-50/60 focus:ring-2 focus:ring-blue-100"
-                />
-
-                {search && (
-                  <button
-                    type="button"
-                    aria-label="Clear search"
-                    onClick={() => setSearch("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-slate-400 hover:bg-white hover:text-slate-800"
-                  >
-                    <X size={16} />
-                  </button>
-                )}
-              </label>
-
-              <button
-                type="button"
-                aria-expanded={showFilters}
-                aria-controls="mobile-filters"
-                onClick={() => setShowFilters((value) => !value)}
-                className={`inline-flex h-[50px] items-center justify-center gap-2 rounded-xl border px-5 text-sm font-semibold transition ${
-                  showFilters
-                    ? "border-blue-700 bg-blue-50 text-blue-800"
-                    : "border-slate-200 bg-white text-[#0b1f3a] hover:border-blue-300 hover:bg-blue-50"
-                }`}
-              >
-                <SlidersHorizontal size={17} />
-                Categories
-                <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] text-blue-800">
-                  {category === "All" ? "All" : "1"}
-                </span>
-              </button>
+            <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-white/15 pt-6 text-xs text-slate-300">
+              <span className="inline-flex items-center gap-2">
+                <Trophy size={15} className="text-sky-400" />
+                Competitions
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Zap size={15} className="text-cyan-300" />
+                New challenges
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Users size={15} className="text-sky-400" />
+                Student community
+              </span>
             </div>
           </motion.div>
+
+          {/* FEATURED AXION PANEL */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.12 }}
+            className="relative overflow-hidden border border-white/15 bg-[#080D1B]/80 p-5 backdrop-blur-xl sm:p-7"
+          >
+            <div className="flex items-center justify-between border-b border-white/10 pb-5">
+              <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-300">
+                Featured event
+              </span>
+              <span className="inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-wider text-sky-300">
+                <span className="h-1.5 w-1.5 bg-sky-400" />
+                AXION 2026
+              </span>
+            </div>
+
+            <div className="relative mt-6 flex min-h-[170px] items-center justify-center overflow-hidden bg-[#0B1429]">
+              <img
+                src={AXION_LOGO}
+                alt="AXION National Hackathon"
+                className="relative z-10 max-h-32 w-[90%] object-contain"
+              />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.18),transparent_70%)]" />
+            </div>
+
+            <p className="mt-6 text-[9px] font-bold uppercase tracking-[0.2em] text-sky-300">
+              National hackathon
+            </p>
+
+            <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+              Build bold.
+              <br />
+              Think beyond.
+            </h2>
+
+            <p className="mt-4 text-sm leading-7 text-slate-400">
+              A 24-hour online innovation challenge by STAMPERS, powered
+              by Unstop.
+            </p>
+
+            <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
+              <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">
+                Powered by
+              </span>
+              <img
+                src={UNSTOP_LOGO}
+                alt="Unstop"
+                className="h-5 w-auto max-w-[90px] object-contain"
+              />
+            </div>
+
+            <Link
+              href="/competitions/axion"
+              className="group mt-6 flex min-h-12 items-center justify-between gap-3 bg-sky-400 px-5 py-4 text-[10px] font-black uppercase tracking-[0.12em] text-[#06101F] transition hover:bg-sky-300"
+            >
+              Explore AXION
+              <ArrowUpRight
+                size={16}
+                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SEARCH */}
+      <section className="relative z-20 mx-auto -mt-1 max-w-[1440px] px-5 pt-7 sm:px-8 lg:px-14">
+        <div className="border border-white/10 bg-[#0A1020] p-3 shadow-2xl shadow-black/10 sm:p-4">
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <label className="relative min-w-0 flex-1">
+              <Search
+                size={18}
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+              />
+
+              <input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") setSearch("");
+                }}
+                placeholder="Search hackathons, gaming, coding..."
+                aria-label="Search opportunities"
+                className="h-12 w-full border border-white/[0.08] bg-[#060916] pl-11 pr-11 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/10"
+              />
+
+              {search && (
+                <button
+                  type="button"
+                  aria-label="Clear search"
+                  onClick={() => setSearch("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-slate-500 transition hover:text-white"
+                >
+                  <X size={15} />
+                </button>
+              )}
+            </label>
+
+            <button
+              type="button"
+              aria-expanded={showFilters}
+              aria-controls="mobile-filters"
+              onClick={() => setShowFilters((value) => !value)}
+              className={`inline-flex h-12 items-center justify-center gap-2 border px-5 text-xs font-bold uppercase tracking-wider transition ${
+                showFilters
+                  ? "border-sky-400 bg-sky-400/10 text-sky-300"
+                  : "border-white/10 bg-[#0D1425] text-white hover:border-sky-400/50"
+              }`}
+            >
+              <SlidersHorizontal size={16} />
+              Categories
+              <span className="border border-white/10 px-2 py-1 text-[9px] text-sky-300">
+                {category === "All" ? "ALL" : "1"}
+              </span>
+            </button>
+          </div>
 
           {/* MOBILE FILTERS */}
           <div
@@ -389,10 +523,10 @@ export default function ExplorePage() {
                     type="button"
                     aria-pressed={category === item}
                     onClick={() => setCategory(item)}
-                    className={`rounded-full border px-3.5 py-2 text-xs font-semibold transition ${
+                    className={`border px-3 py-2 text-[10px] font-bold transition ${
                       category === item
-                        ? "border-blue-700 bg-blue-700 text-white"
-                        : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-800"
+                        ? "border-sky-400 bg-sky-400 text-[#06101F]"
+                        : "border-white/10 bg-[#060916] text-slate-400 hover:border-sky-400/50 hover:text-white"
                     }`}
                   >
                     {item}
@@ -401,37 +535,25 @@ export default function ExplorePage() {
               </div>
             </div>
           </div>
-
-          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-slate-500">
-            <span className="inline-flex items-center gap-2">
-              <Trophy size={15} className="text-blue-600" />
-              Competitions
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <Zap size={15} className="text-cyan-600" />
-              New challenges
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <CheckCircle2 size={15} className="text-blue-600" />
-              Student opportunities
-            </span>
-          </div>
         </div>
       </section>
 
-      {/* DESKTOP CATEGORIES */}
-      <section className="sticky top-[72px] z-30 hidden border-b border-slate-200 bg-white/95 backdrop-blur-lg md:block">
-        <div className="mx-auto flex max-w-[1380px] items-center gap-2 overflow-x-auto px-5 py-3 sm:px-8 lg:px-10">
+      {/* DESKTOP CATEGORY NAVIGATION */}
+      <section
+        id="categories"
+        className="sticky top-[72px] z-30 mt-5 hidden border-y border-white/[0.08] bg-[#060916]/95 backdrop-blur-xl md:block"
+      >
+        <div className="mx-auto flex max-w-[1440px] items-center gap-2 overflow-x-auto px-5 py-3 sm:px-8 lg:px-14">
           {categories.map((item) => (
             <button
               key={item}
               type="button"
               aria-pressed={category === item}
               onClick={() => setCategory(item)}
-              className={`shrink-0 rounded-full border px-4 py-2.5 text-xs font-semibold transition focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+              className={`shrink-0 border px-4 py-2.5 text-[10px] font-bold uppercase tracking-wider transition focus:outline-none focus:ring-2 focus:ring-sky-400/30 ${
                 category === item
-                  ? "border-[#0b1f3a] bg-[#0b1f3a] text-white shadow-sm"
-                  : "border-transparent bg-transparent text-slate-600 hover:border-blue-100 hover:bg-blue-50 hover:text-blue-800"
+                  ? "border-sky-400 bg-sky-400 text-[#06101F]"
+                  : "border-transparent text-slate-400 hover:border-white/10 hover:bg-white/[0.04] hover:text-white"
               }`}
             >
               {item}
@@ -443,22 +565,26 @@ export default function ExplorePage() {
       {/* OPPORTUNITIES */}
       <section
         id="opportunities"
-        className="mx-auto max-w-[1380px] scroll-mt-36 px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
+        className="mx-auto max-w-[1440px] scroll-mt-36 px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-24"
       >
-        <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <div className="mb-9 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.23em] text-blue-700">
+            <p className="text-[9px] font-bold uppercase tracking-[0.23em] text-sky-300">
               Find your opportunity
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#0b1f3a] sm:text-4xl">
-              Explore what’s next.
+
+            <h2 className="mt-4 text-3xl font-bold tracking-[-0.045em] text-white sm:text-5xl">
+              Explore what&apos;s next.
             </h2>
-            <p className="mt-3 text-sm text-slate-500" aria-live="polite">
-              {filteredCompetitions.length}{" "}
+
+            <p className="mt-4 text-sm text-slate-400" aria-live="polite">
+              Showing{" "}
+              <span className="font-bold text-sky-300">
+                {filteredCompetitions.length}
+              </span>{" "}
               {filteredCompetitions.length === 1
                 ? "opportunity"
-                : "opportunities"}{" "}
-              found
+                : "opportunities"}
               {category !== "All" ? ` in ${category}` : ""}
             </p>
           </div>
@@ -467,7 +593,7 @@ export default function ExplorePage() {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex w-fit items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-slate-600 transition hover:bg-white hover:text-blue-800"
+              className="inline-flex w-fit items-center gap-2 border border-white/10 px-4 py-3 text-xs font-semibold text-slate-400 transition hover:border-sky-400/50 hover:text-white"
             >
               <FilterX size={15} />
               Clear filters
@@ -476,20 +602,23 @@ export default function ExplorePage() {
         </div>
 
         {filteredCompetitions.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-blue-200 bg-white px-6 py-20 text-center">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
-              <Search size={27} />
+          <div className="border border-dashed border-white/15 bg-[#0A1020] px-6 py-20 text-center">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center border border-white/10 bg-sky-400/10 text-sky-300">
+              <Search size={26} />
             </div>
-            <h3 className="mt-5 text-xl font-semibold text-[#0b1f3a]">
-              Nothing found this time
+
+            <h3 className="mt-6 text-xl font-bold text-white">
+              No opportunities found
             </h3>
-            <p className="mt-2 text-sm text-slate-500">
-              Try a different keyword or explore all categories.
+
+            <p className="mt-3 text-sm text-slate-400">
+              Try another keyword or explore all categories.
             </p>
+
             <button
               type="button"
               onClick={clearFilters}
-              className="mt-6 rounded-xl bg-[#0b1f3a] px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-800"
+              className="mt-7 bg-sky-400 px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#06101F] transition hover:bg-sky-300"
             >
               Show all opportunities
             </button>
@@ -514,129 +643,127 @@ export default function ExplorePage() {
                     duration: 0.4,
                     delay: Math.min(index * 0.04, 0.16),
                   }}
-                  className={`group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border bg-white transition duration-300 hover:-translate-y-1 ${
+                  className={`group relative flex min-w-0 flex-col overflow-hidden border bg-[#0A1020] transition duration-300 hover:-translate-y-1 ${
                     isAxion
-                      ? "border-blue-200 shadow-[0_12px_45px_rgba(37,99,235,0.10)] hover:border-blue-400 hover:shadow-[0_20px_55px_rgba(37,99,235,0.15)]"
-                      : "border-slate-200 shadow-[0_5px_25px_rgba(11,31,58,0.025)] hover:border-blue-200 hover:shadow-[0_16px_45px_rgba(11,31,58,0.08)]"
+                      ? "border-sky-400/40 shadow-[0_12px_45px_rgba(37,99,235,0.08)] hover:border-sky-300"
+                      : "border-white/[0.09] hover:border-sky-400/40"
                   }`}
                 >
                   {isAxion && (
-                    <div className="flex items-center justify-between bg-[#0b1f3a] px-5 py-2.5">
-                      <span className="inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white">
-                        <Sparkles
-                          size={12}
-                          className="text-cyan-300"
-                        />
+                    <div className="flex items-center justify-between bg-sky-400 px-5 py-3">
+                      <span className="inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.15em] text-[#06101F]">
+                        <Sparkles size={13} />
                         Featured event
                       </span>
-                      <span className="text-[9px] font-bold uppercase tracking-widest text-cyan-300">
+                      <span className="text-[9px] font-black uppercase tracking-wider text-[#06101F]">
                         AXION 2026
                       </span>
                     </div>
                   )}
 
+                  {/* IMAGE HEADER */}
+                  <div className="relative h-48 overflow-hidden bg-[#10182A]">
+                    <img
+                      src={competition.image}
+                      alt=""
+                      loading="lazy"
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A1020] via-[#0A1020]/20 to-transparent" />
+
+                    <span className="absolute left-4 top-4 border border-white/15 bg-[#060916]/75 px-3 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
+                      {competition.category}
+                    </span>
+
+                    {competition.featured && !isAxion && (
+                      <span className="absolute right-4 top-4 border border-sky-300/25 bg-[#060916]/75 px-3 py-2 text-[9px] font-bold uppercase tracking-wider text-sky-300 backdrop-blur-sm">
+                        Featured
+                      </span>
+                    )}
+
+                    <div className="absolute bottom-4 left-5 flex h-11 w-11 items-center justify-center border border-white/15 bg-[#060916]/80 text-sky-300 backdrop-blur-md">
+                      <Icon size={21} strokeWidth={1.8} />
+                    </div>
+                  </div>
+
                   <div className="flex flex-1 flex-col p-5 sm:p-6">
-                    {/* CARD TOP */}
-                    <div className="flex min-h-[64px] items-start justify-between gap-3">
-                      {isAxion ? (
+                    {isAxion && (
+                      <div className="mb-4 flex min-h-10 items-center">
                         <img
                           src={AXION_LOGO}
                           alt="AXION National Hackathon"
-                          className="max-h-[58px] max-w-[210px] object-contain object-left"
+                          className="max-h-10 max-w-[190px] object-contain object-left"
                         />
-                      ) : (
-                        <div
-                          className={`flex h-12 w-12 items-center justify-center rounded-xl border ${
-                            isHackathon
-                              ? "border-blue-100 bg-blue-50 text-blue-700"
-                              : "border-slate-200 bg-slate-50 text-[#0b1f3a]"
-                          }`}
-                        >
-                          <Icon size={22} strokeWidth={1.8} />
-                        </div>
-                      )}
+                      </div>
+                    )}
 
-                      {competition.featured && !isAxion && (
-                        <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider text-blue-800">
-                          Featured
-                        </span>
-                      )}
-                    </div>
-
-                    <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700">
-                      {competition.category}
-                    </p>
-
-                    <h3 className="mt-2 min-h-[3.5rem] text-xl font-semibold leading-snug tracking-[-0.025em] text-[#0b1f3a] transition-colors group-hover:text-blue-800">
+                    <h3 className="min-h-[3.5rem] text-xl font-bold leading-snug tracking-tight text-white transition-colors group-hover:text-sky-300">
                       {competition.title}
                     </h3>
 
-                    <p className="mt-3 min-h-[4.5rem] text-sm leading-6 text-slate-600">
+                    <p className="mt-3 min-h-[4.5rem] text-sm leading-6 text-slate-400">
                       {competition.description}
                     </p>
 
-                    {/* EVENT DETAILS */}
-                    <div className="mt-5 space-y-3 border-t border-slate-100 pt-5">
-                      <div className="flex items-start gap-3 text-xs leading-5 text-slate-600">
+                    <div className="mt-5 space-y-3 border-t border-white/[0.08] pt-5">
+                      <div className="flex items-start gap-3 text-xs leading-5 text-slate-400">
                         <CalendarDays
                           size={15}
-                          className="mt-0.5 shrink-0 text-blue-600"
+                          className="mt-0.5 shrink-0 text-sky-300"
                         />
                         <span>{competition.date}</span>
                       </div>
 
-                      <div className="flex items-start gap-3 text-xs leading-5 text-slate-600">
+                      <div className="flex items-start gap-3 text-xs leading-5 text-slate-400">
                         {competition.status === "Completed" ? (
                           <CheckCircle2
                             size={15}
-                            className="mt-0.5 shrink-0 text-slate-500"
+                            className="mt-0.5 shrink-0 text-slate-400"
                           />
                         ) : (
                           <Clock3
                             size={15}
-                            className="mt-0.5 shrink-0 text-cyan-600"
+                            className="mt-0.5 shrink-0 text-cyan-300"
                           />
                         )}
                         <span>{competition.prize}</span>
                       </div>
                     </div>
 
-                    {/* UNSOTP BRANDING */}
                     {isAxion && (
-                      <div className="mt-4 flex items-center gap-2 border-t border-slate-100 pt-4">
-                        <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-400">
+                      <div className="mt-4 flex items-center gap-2 border-t border-white/[0.08] pt-4">
+                        <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">
                           Powered by
                         </span>
                         <img
                           src={UNSTOP_LOGO}
                           alt="Unstop"
-                          className="h-4 w-[62px] object-contain object-left"
+                          className="h-5 w-auto max-w-[75px] object-contain"
                         />
                       </div>
                     )}
 
-                    {/* STATUS */}
                     <div className="mt-5">
                       <span
-                        className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider ${statusStyles[competition.status]}`}
+                        className={`inline-flex items-center gap-2 border px-3 py-2 text-[9px] font-bold uppercase tracking-wider ${statusStyles[competition.status]}`}
                       >
                         {competition.status === "Completed" && (
                           <CheckCircle2 size={12} />
                         )}
-                        {competition.status === "Coming Soon" && (
+                        {competition.status !== "Completed" && (
                           <Clock3 size={12} />
                         )}
                         {competition.status}
                       </span>
                     </div>
 
-                    {/* ACTION */}
                     <Link
                       href={competition.href}
-                      className={`mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.06em] transition focus:outline-none focus:ring-4 focus:ring-blue-100 ${
+                      className={`mt-5 inline-flex min-h-12 items-center justify-between gap-3 border px-4 py-3 text-[10px] font-bold uppercase tracking-[0.07em] transition focus:outline-none focus:ring-2 focus:ring-sky-400/30 ${
                         isAxion
-                          ? "border-[#0b1f3a] bg-[#0b1f3a] text-white hover:bg-blue-800"
-                          : "border-slate-200 bg-white text-[#0b1f3a] hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800"
+                          ? "border-sky-400 bg-sky-400 text-[#06101F] hover:bg-sky-300"
+                          : "border-white/10 bg-white/[0.02] text-white hover:border-sky-400/50 hover:bg-sky-400/[0.06] hover:text-sky-300"
                       }`}
                     >
                       {isAxion
@@ -661,48 +788,71 @@ export default function ExplorePage() {
           </div>
         )}
 
-        <div className="mt-10 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-cyan-50 p-6 sm:flex sm:items-center sm:justify-between sm:gap-6 sm:p-8">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700">
-              Stay connected
-            </p>
-            <h3 className="mt-2 text-xl font-semibold tracking-tight text-[#0b1f3a]">
-              Your next opportunity could be around the corner.
-            </h3>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
-              Keep an eye on STAMPERS for future competitions and
-              announcements.
-            </p>
-          </div>
+        {/* STAY CONNECTED */}
+        <div className="relative mt-12 overflow-hidden border border-sky-400/20 bg-[#0A1225] p-7 sm:p-10">
+          <div className="pointer-events-none absolute -right-10 -top-24 h-64 w-64 rounded-full border border-sky-400/10" />
+          <div className="pointer-events-none absolute -right-2 -top-16 h-48 w-48 rounded-full border border-sky-400/10" />
 
-          <Link
-            href="/"
-            className="mt-5 inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#0b1f3a] px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 sm:mt-0"
-          >
-            Visit STAMPERS
-            <ArrowUpRight size={16} />
-          </Link>
+          <div className="relative flex flex-col gap-7 sm:flex-row sm:items-center sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-sky-300">
+                Stay connected
+              </p>
+
+              <h3 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                Your next opportunity starts with an idea.
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-slate-400">
+                Keep an eye on STAMPERS for future competitions,
+                challenges and announcements.
+              </p>
+            </div>
+
+            <Link
+              href="/"
+              className="group inline-flex shrink-0 items-center justify-center gap-3 bg-sky-400 px-5 py-4 text-[10px] font-black uppercase tracking-wider text-[#06101F] transition hover:bg-sky-300"
+            >
+              Visit STAMPERS
+              <ChevronRight
+                size={16}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-[1380px] flex-col gap-4 px-5 py-7 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-10">
+      <footer className="border-t border-white/[0.08] bg-[#050812]">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-5 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-14">
           <div className="flex items-center gap-4">
-            <img
-              src={STAMPERS_LOGO}
-              alt="STAMPERS"
-              className="h-auto w-[88px] object-contain"
-            />
-            <span className="h-7 w-px bg-slate-200" />
-            <p className="text-xs text-slate-500">
+            <Link href="/" aria-label="STAMPERS homepage">
+              <img
+                src={STAMPERS_LOGO}
+                alt="STAMPERS"
+                className="h-8 w-auto max-w-[150px] object-contain"
+              />
+            </Link>
+
+            <span className="h-7 w-px bg-white/10" />
+
+            <p className="text-[10px] text-slate-500">
               Discover. Build. Compete. Connect.
             </p>
           </div>
 
-          <p className="text-[11px] text-slate-400">
-            © 2026 STAMPERS. All rights reserved.
+          <p className="text-[10px] text-slate-500">
+            © {new Date().getFullYear()} STAMPERS. All rights reserved.
           </p>
+
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 transition hover:text-sky-300"
+          >
+            Back to home
+            <ArrowUpRight size={14} />
+          </Link>
         </div>
       </footer>
     </main>
