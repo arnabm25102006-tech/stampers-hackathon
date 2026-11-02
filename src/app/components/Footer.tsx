@@ -31,6 +31,22 @@ const quickLinks = [
     title: "FAQ",
     href: "#faq",
   },
+  {
+    title: "Privacy Policy",
+    href: "/privacy-policy",
+  },
+  {
+    title: "Cookie Policy",
+    href: "/cookie-policy",
+  },
+  {
+    title: "Terms and Conditions",
+    href: "/terms-and-conditions",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+  },
 ];
 
 export default function Footer() {
