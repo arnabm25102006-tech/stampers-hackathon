@@ -1,6 +1,7 @@
-
+﻿
 import type { Metadata } from "next";
 import "./globals.css";
+import "./styles/stampers-v2.css";
 import "./stampers-ai.css";
 import { Analytics } from "@vercel/analytics/next";
 import StampersAI from "./components/StampersAI";
@@ -43,3 +44,4 @@ export default function RootLayout({
     </html>
   );
 }
+

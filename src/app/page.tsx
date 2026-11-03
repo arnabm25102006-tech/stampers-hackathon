@@ -1,453 +1,606 @@
 
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Space_Grotesk, Sora, DM_Sans } from "next/font/google";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  CalendarDays,
+  ChevronLeft,
+  ChevronRight,
+  Code2,
+  Camera,
+  Trophy,
+  Users,
+  Globe2,
+  Sparkles,
+  Target,
+  Zap,
+  MoveUpRight,
+  Layers3,
+  Menu,
+  X,
+} from "lucide-react";
+
+import Navbar from "./components/Navbar";
+import About from "./components/About/About";
+import FAQ from "./components/FAQ/FAQ";
+import Footer from "./components/Footer";
+import Sponsors from "./components/Sponsors/Sponsors";
+
+const displayFont = Sora({
+  subsets: ["latin"],
+  variable: "--font-stampers-display",
+  display: "swap",
+});
+
+const headingFont = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-stampers-heading",
+  display: "swap",
+});
+
+const bodyFont = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-stampers-body",
+  display: "swap",
+});
+
+const AXION_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/AXION_HACKATHON_logo_transparent.png";
+
+const UNSTOP_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/Unstop-Logo-Blue-Large.jpg";
+
+const slides = [
+  {
+    tag: "THE NEXT GENERATION STARTS HERE",
+    kicker: "A PLATFORM FOR AMBITION",
+    title: "Make your",
+    highlight: "ideas matter.",
+    copy: "A home for student innovation, bold ideas and meaningful opportunities. Discover what you can build when ambition meets action.",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2200&q=90",
+    button: "Explore opportunities",
+    href: "/explore",
+    number: "01",
+  },
+  {
+    tag: "THINK BIGGER. BUILD BETTER.",
+    kicker: "THE HACKATHON EXPERIENCE",
+    title: "Built for the",
+    highlight: "bold thinkers.",
+    copy: "Bring your ideas to life, collaborate with ambitious students and make every competition count.",
+    image:
+      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=90",
+    button: "Discover events",
+    href: "/explore",
+    number: "02",
+  },
+  {
+    tag: "YOUR JOURNEY. YOUR MOMENT.",
+    kicker: "TURN POTENTIAL INTO PROGRESS",
+    title: "Create your",
+    highlight: "next chapter.",
+    copy: "Find your next challenge, showcase your talent and build a portfolio that tells your story.",
+    image:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=2200&q=90",
+    button: "Join the community",
+    href: "/account/register",
+    number: "03",
+  },
+];
+
+const events = [
+  {
+    index: "01",
+    category: "TECHNOLOGY",
+    title: "AXION",
+    subtitle: "Ideas into impact.",
+    description:
+      "A national student hackathon focused on innovation, collaboration and real-world problem-solving.",
+    image:
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=90",
+    icon: Code2,
+    href: "/explore",
+    color: "blue",
+    meta: "HACKATHON",
+  },
+  {
+    index: "02",
+    category: "CREATIVE ARTS",
+    title: "Photo Challenges",
+    subtitle: "See things differently.",
+    description:
+      "A space for creative minds to tell stories, capture perspectives and showcase their vision.",
+    image:
+      "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1200&q=90",
+    icon: Camera,
+    href: "/explore",
+    color: "violet",
+    meta: "PHOTOGRAPHY",
+  },
+  {
+    index: "03",
+    category: "STUDENT COMMUNITY",
+    title: "Open Opportunities",
+    subtitle: "Your next move starts now.",
+    description:
+      "Discover experiences that help you develop skills, meet challenges and grow beyond the classroom.",
+    image:
+      "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1200&q=90",
+    icon: Layers3,
+    href: "/explore",
+    color: "cyan",
+    meta: "DISCOVER",
+  },
+];
 
 const stats = [
-  { number: "863", label: "Registration Records" },
-  { number: "640", label: "Completed Registrations" },
-  { number: "481", label: "Unique Team IDs" },
-  { number: "414", label: "Institutions" },
-  { number: "14+", label: "States Represented" },
+  { value: "369+", label: "Teams registered", icon: Users },
+  { value: "713+", label: "Student participants", icon: Globe2 },
+  { value: "54+", label: "Universities represented", icon: Target },
+  { value: "14+", label: "States reached", icon: Zap },
 ];
 
-const winners = [
+const principles = [
   {
-    place: "02",
-    team: "Team Tinker",
-    leader: "Pallavi Khandagale",
-    score: 93,
-    medal: "silver",
+    number: "01",
+    title: "Think without limits.",
+    description:
+      "Discover opportunities that push you to explore ideas beyond the ordinary.",
   },
   {
-    place: "01",
-    team: "VitaGuard",
-    leader: "Sandesh Mahajan",
-    score: 96,
-    medal: "gold",
+    number: "02",
+    title: "Build something real.",
+    description:
+      "Turn knowledge into projects, experiences and work you can be proud of.",
   },
   {
-    place: "03",
-    team: "VISIONERS",
-    leader: "Vaibhavi Pandnekar",
-    score: 92,
-    medal: "bronze",
+    number: "03",
+    title: "Grow together.",
+    description:
+      "Connect with a community of students who want to learn, create and compete.",
   },
 ];
 
-const teams = [
-  [1, "VitaGuard", "Sandesh Mahajan", 96],
-  [2, "Team Tinker", "Pallavi Khandagale", 93],
-  [3, "VISIONERS", "Vaibhavi Pandnekar", 92],
-  [4, "CODE CIRCUIT", "Yashasvi M Sancheti", 87],
-  [5, "Plasma", "Dhinesh B", 86],
-  [6, "Bharat Builders", "Indresh Suresh", 83],
-  [7, "Team Innovverse", "Gauri Kajgaonkar", 82],
-  [7, "RouteMind", "Gayatri Gakwad", 82],
-  [8, "Pluto's Charm", "Shreyam Mandal", 80],
-  [8, "S4Tech", "Soham Chowdhury", 80],
-  [8, "Anvaya", "Himaja J", 80],
-  [9, "Casual Circuit", "Shreyas Ratnaparkhi", 76],
-  [9, "INNOVATIVE MINDS", "Haribhaskaran A", 76],
-  [10, "Binary Minds", "Shrawani Khadake", 74],
-  [10, "InnovHer", "Priya", 74],
-] as const;
+export default function HomePage() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-const states = [
-  ["Tamil Nadu", 240],
-  ["Maharashtra", 207],
-  ["Telangana", 63],
-  ["Uttar Pradesh", 62],
-  ["Karnataka", 54],
-  ["West Bengal", 49],
-  ["Andhra Pradesh", 40],
-  ["Madhya Pradesh", 19],
-  ["Delhi", 19],
-  ["Punjab", 16],
-] as const;
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % slides.length);
+    }, 7000);
 
-const criteria = [
-  ["Innovation & Originality", 20],
-  ["Technical Implementation", 20],
-  ["Functionality & Working Prototype", 20],
-  ["Problem-Solving & Real-World Impact", 10],
-  ["User Experience & Design", 10],
-  ["Presentation & Demonstration", 10],
-  ["Question & Answer", 10],
-] as const;
+    return () => window.clearInterval(timer);
+  }, []);
 
-export default function AxionRecapPage() {
+  const slide = slides[activeSlide];
+
+  const changeSlide = (direction: number) => {
+    setActiveSlide(
+      (current) => (current + direction + slides.length) % slides.length
+    );
+  };
+
   return (
-    <main className="axion">
+    <main
+      className={`${displayFont.variable} ${headingFont.variable} ${bodyFont.variable} stampers-premium min-h-screen overflow-hidden bg-[#060916] text-white`}
+    >
+      <Navbar />
 
-      {/* NAVIGATION */}
-      <nav className="ax-nav">
-        <Link href="/" className="ax-brand">
-          AX<span>ION</span>
-          <small>BY STAMPERS</small>
-        </Link>
-
-        <div className="ax-navLinks">
-          <a href="#reach">Reach</a>
-          <a href="#winners">Winners</a>
-          <a href="#leaderboard">Leaderboard</a>
-          <a href="#gallery">Gallery</a>
-        </div>
-
-        <Link href="/" className="ax-navCta">
-          STAMPERS ↗
-        </Link>
-      </nav>
-
-      {/* HERO */}
-      <header className="ax-hero">
-        <div className="ax-heroImage" />
-        <div className="ax-heroOverlay" />
-
-        <div className="ax-heroContent">
-          <div className="ax-eyebrow">
-            INDIA'S STUDENT INNOVATION STAGE · 2026
-          </div>
-
-          <h1>
-            AXION <i>2026</i>
-          </h1>
-
-          <h2>A NATIONAL MOVEMENT OF INNOVATION.</h2>
-
-          <p>
-            Ideas. Builders. Technology. And a community that never stops
-            creating.
-          </p>
-
-          <div className="ax-actions">
-            <a href="#reach" className="ax-button ax-gold">
-              EXPLORE THE RECAP ↘
-            </a>
-
-            <a href="#winners" className="ax-button ax-ghost">
-              MEET THE WINNERS
-            </a>
-          </div>
-        </div>
-
-        <div className="ax-handNote">
-          IDEAS
-          <br />
-          PEOPLE
-          <br />
-          IMPACT ↗
-        </div>
-
-        <div className="ax-stats">
-          {stats.map((item) => (
-            <div className="ax-stat" key={item.label}>
-              <b>{item.number}</b>
-              <span>{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </header>
-
-      {/* NATIONAL REACH */}
-      <section id="reach" className="ax-section ax-reach">
-        <div className="ax-intro">
-          <div className="ax-eyebrow">01 / THE REACH</div>
-
-          <h2>
-            ONE COUNTRY.
-            <br />
-            <i>HUNDREDS OF IDEAS.</i>
-          </h2>
-
-          <p>
-            AXION brought student innovators and institutions together from
-            across India. These figures reflect the event registration
-            summary, not verified attendance.
-          </p>
-
-          <div className="ax-scribble">
-            IDEAS KNOW NO BOUNDARIES ↗
-          </div>
-        </div>
-
-        <div className="ax-india">
-          <svg
-            viewBox="0 0 300 350"
-            role="img"
-            aria-label="Stylised India illustration"
-          >
-            <path
-              className="ax-indiaShape"
-              d="M117 8 151 17 165 42 192 52 185 79 211 99 199 124 215 150 190 172 197 201 177 225 167 258 149 287 135 333 117 307 107 276 86 255 78 222 61 203 75 172 66 145 91 120 87 94 108 78 105 48 128 39Z"
+      {/* CINEMATIC HERO */}
+      <section className="sp-hero relative isolate">
+        <div className="sp-hero-images">
+          {slides.map((item, index) => (
+            <div
+              key={item.number}
+              className={`sp-hero-image ${
+                activeSlide === index ? "is-active" : ""
+              }`}
+              style={{ backgroundImage: `url("${item.image}")` }}
             />
-
-            <path
-              className="ax-route"
-              d="M91 120 173 65 190 150 116 218 149 286M91 120 190 150 116 218 173 65"
-            />
-
-            {[
-              [91, 120],
-              [173, 65],
-              [190, 150],
-              [116, 218],
-              [149, 286],
-              [135, 333],
-              [75, 172],
-            ].map(([x, y], i) => (
-              <circle key={i} cx={x} cy={y} r="5" />
-            ))}
-          </svg>
-
-          <span>
-            14+ STATES
-            <br />
-            CONNECTED
-          </span>
+          ))}
         </div>
 
-        <div className="ax-statePanel">
-          <h3>
-            REGISTRATION RECORDS BY STATE
-            <b>TOP 10</b>
-          </h3>
+        <div className="sp-hero-shade" />
+        <div className="sp-hero-grain" />
+        <div className="sp-orb sp-orb-one" />
+        <div className="sp-orb sp-orb-two" />
 
-          {states.map(([name, count]) => (
-            <div className="ax-barRow" key={name}>
-              <span>{name}</span>
-
-              <div className="ax-track">
-                <i style={{ width: `${(count / 240) * 100}%` }} />
-              </div>
-
-              <b>{count}</b>
+        <div className="sp-hero-grid">
+          <div className="sp-hero-copy" key={slide.number}>
+            <div className="sp-eyebrow">
+              <span className="sp-eyebrow-line" />
+              {slide.tag}
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* EVENT EXPERIENCE */}
-      <section className="ax-photoBand">
-        <div className="ax-bandHead">
-          <b>THE AXION EXPERIENCE</b>
-          <span>BUILD · PRESENT · IMPACT ✳</span>
-        </div>
+            <p className="sp-hero-kicker">{slide.kicker}</p>
 
-        <div className="ax-photoRow">
-          <div className="ax-eventPhoto ax-p1">
-            <label>01 / COLLABORATION</label>
-          </div>
-
-          <div className="ax-eventPhoto ax-p2">
-            <label>02 / BIG IDEAS</label>
-          </div>
-
-          <div className="ax-eventPhoto ax-p3">
-            <label>03 / THE STAGE</label>
-          </div>
-        </div>
-
-        <p>
-          Every idea starts somewhere. Every breakthrough starts with people.
-        </p>
-      </section>
-
-      {/* WINNERS */}
-      <section id="winners" className="ax-section ax-winners">
-        <div className="ax-sectionHead">
-          <div>
-            <div className="ax-eyebrow">02 / FINAL EVALUATION</div>
-            <h2>
-              CHAMPIONS <i>OF AXION.</i>
-            </h2>
-          </div>
-
-          <span className="ax-scribble">
-            BRILLIANT MINDS.
-            <br />
-            REAL IMPACT. ✳
-          </span>
-        </div>
-
-        <div className="ax-podium">
-          {winners.map((winner) => (
-            <article
-              key={winner.place}
-              className={`ax-winner ax-${winner.medal}`}
-            >
-              <div className="ax-trophy">
-                {winner.place === "01"
-                  ? "♛"
-                  : winner.place === "02"
-                    ? "✦"
-                    : "✧"}
-              </div>
-
-              <small>
-                {winner.place === "01"
-                  ? "FIRST PLACE"
-                  : winner.place === "02"
-                    ? "SECOND PLACE"
-                    : "THIRD PLACE"}
-              </small>
-
-              <h3>{winner.team}</h3>
-              <p>{winner.leader}</p>
-
-              <strong>
-                {winner.score}
-                <em> / 100</em>
-              </strong>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* LEADERBOARD */}
-      <section id="leaderboard" className="ax-section ax-leaderboard">
-        <div className="ax-sectionHead">
-          <div>
-            <div className="ax-eyebrow">03 / OFFICIAL SCOREBOARD</div>
-            <h2>
-              TOP 10 <i>LEADERBOARD.</i>
-            </h2>
-          </div>
-
-          <span className="ax-pill">
-            15 ENTRIES · TIES PRESERVED
-          </span>
-        </div>
-
-        <div className="ax-tableWrap">
-          <table>
-            <thead>
-              <tr>
-                <th>RANK</th>
-                <th>TEAM</th>
-                <th>TEAM LEADER</th>
-                <th>SCORE</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {teams.map(([rank, team, leader, score]) => (
-                <tr key={`${rank}-${team}`}>
-                  <td>
-                    <b className={`ax-rank ax-r${rank}`}>{rank}</b>
-                  </td>
-
-                  <td>{team}</td>
-                  <td>{leader}</td>
-
-                  <td className="ax-score">
-                    {score}
-                    <small>/100</small>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <p className="ax-note">
-          Tied positions are preserved as printed in the supplied evaluation
-          sheet. CodeCrew scored 81, but no rank was printed beside its score,
-          so it is not assigned a rank here.
-        </p>
-      </section>
-
-      {/* GALLERY */}
-      <section id="gallery" className="ax-section ax-gallery">
-        <div className="ax-sectionHead">
-          <div>
-            <div className="ax-eyebrow">04 / MOMENTS THAT MATTER</div>
-            <h2>
-              THE PEOPLE.
+            <h1 className="sp-display sp-hero-title">
+              {slide.title}
               <br />
-              <i>THE ENERGY.</i>
+              <span>{slide.highlight}</span>
+            </h1>
+
+            <p className="sp-hero-description">{slide.copy}</p>
+
+            <div className="sp-hero-actions">
+              <Link href={slide.href} className="sp-button-primary">
+                {slide.button}
+                <ArrowUpRight size={19} />
+              </Link>
+
+              <Link href="/explore" className="sp-button-ghost">
+                Discover STAMPERS
+                <ArrowRight size={17} />
+              </Link>
+            </div>
+
+            <div className="sp-hero-footnote">
+              <span className="sp-status-dot" />
+              <span>MADE FOR THE NEXT GENERATION</span>
+              <span className="sp-footnote-divider" />
+              <span>EST. 2026</span>
+            </div>
+          </div>
+
+          <div className="sp-hero-visual">
+            <div className="sp-visual-topline">
+              <span>THE STAMPERS UNIVERSE</span>
+              <span className="sp-live-indicator">
+                <span /> OPEN TO POSSIBILITIES
+              </span>
+            </div>
+
+            <div className="sp-feature-card">
+              <div className="sp-feature-image">
+                <div className="sp-feature-image-bg" />
+                <div className="sp-feature-image-shade" />
+
+                <div className="sp-feature-top">
+                  <span className="sp-feature-label">FEATURED EXPERIENCE</span>
+                  <span className="sp-feature-number">S / 026</span>
+                </div>
+
+                <img
+                  src={AXION_LOGO}
+                  alt="AXION by STAMPERS"
+                  className="sp-axion-logo"
+                />
+
+                <div className="sp-feature-bottom">
+                  <span>INNOVATION</span>
+                  <span>COLLABORATION</span>
+                  <span>EXECUTION</span>
+                </div>
+              </div>
+
+              <div className="sp-feature-info">
+                <div>
+                  <p className="sp-micro-label">NATIONAL HACKATHON</p>
+                  <h2 className="sp-feature-title">AXION</h2>
+                  <p className="sp-feature-description">
+                    Think it. Build it. Bring it to life.
+                  </p>
+                </div>
+
+                <Link
+                  href="/explore"
+                  className="sp-feature-arrow"
+                  aria-label="Explore AXION"
+                >
+                  <ArrowUpRight size={22} />
+                </Link>
+              </div>
+
+              <div className="sp-feature-partner">
+                <span>POWERED BY</span>
+                <img src={UNSTOP_LOGO} alt="Unstop" />
+                <span className="sp-partner-separator" />
+                <span>BY STAMPERS</span>
+              </div>
+            </div>
+
+            <div className="sp-hero-slider-controls">
+              <div className="sp-slide-count">
+                <span>{slide.number}</span>
+                <span className="sp-slide-count-line" />
+                <span>03</span>
+              </div>
+
+              <div className="sp-slider-buttons">
+                <button
+                  type="button"
+                  onClick={() => changeSlide(-1)}
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft size={19} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => changeSlide(1)}
+                  aria-label="Next slide"
+                >
+                  <ChevronRight size={19} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="sp-hero-bottom">
+          <span>SCROLL TO EXPLORE</span>
+          <ArrowDown size={15} />
+          <span className="sp-hero-bottom-rule" />
+          <span>01 — 03</span>
+        </div>
+      </section>
+
+      {/* IMPACT STRIP */}
+      <section className="sp-stats-section">
+        <div className="sp-stats-heading">
+          <span className="sp-section-index">01 / OUR REACH</span>
+          <p>Growing a community of doers.</p>
+        </div>
+
+        <div className="sp-stats-grid">
+          {stats.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div className="sp-stat" key={item.label}>
+                <div className="sp-stat-icon">
+                  <Icon size={19} strokeWidth={1.6} />
+                </div>
+                <div>
+                  <p className="sp-stat-value">{item.value}</p>
+                  <p className="sp-stat-label">{item.label}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* OPPORTUNITIES */}
+      <section className="sp-events-section">
+        <div className="sp-section-shell">
+          <div className="sp-section-header">
+            <div>
+              <span className="sp-section-index">02 / FIND YOUR THING</span>
+              <h2 className="sp-display sp-section-title">
+                More than
+                <br />
+                <span>just an opportunity.</span>
+              </h2>
+            </div>
+
+            <div className="sp-section-header-side">
+              <p>
+                The next project. The next competition. The next version of
+                you. It starts with finding the right opportunity.
+              </p>
+              <Link href="/explore" className="sp-text-link">
+                Explore everything <ArrowUpRight size={17} />
+              </Link>
+            </div>
+          </div>
+
+          <div className="sp-events-grid">
+            {events.map((event) => {
+              const Icon = event.icon;
+
+              return (
+                <article
+                  className={`sp-event-card sp-event-${event.color}`}
+                  key={event.index}
+                >
+                  <Link
+                    href={event.href}
+                    className="sp-event-image"
+                    aria-label={`Explore ${event.title}`}
+                  >
+                    <img
+                      src={event.image}
+                      alt=""
+                      loading="lazy"
+                    />
+                    <div className="sp-event-image-shade" />
+                    <div className="sp-event-image-top">
+                      <span>{event.category}</span>
+                      <span className="sp-event-index">{event.index}</span>
+                    </div>
+                    <div className="sp-event-image-bottom">
+                      <span className="sp-event-icon">
+                        <Icon size={21} />
+                      </span>
+                      <span className="sp-event-meta">{event.meta}</span>
+                    </div>
+                  </Link>
+
+                  <div className="sp-event-content">
+                    <p className="sp-event-subtitle">{event.subtitle}</p>
+                    <h3 className="sp-heading sp-event-title">{event.title}</h3>
+                    <p className="sp-event-description">{event.description}</p>
+
+                    <Link href={event.href} className="sp-event-link">
+                      <span>Explore opportunity</span>
+                      <span className="sp-event-link-icon">
+                        <ArrowUpRight size={18} />
+                      </span>
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* EDITORIAL MANIFESTO */}
+      <section className="sp-manifesto">
+        <div className="sp-manifesto-image">
+          <img
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1800&q=90"
+            alt="Students collaborating on ideas"
+            loading="lazy"
+          />
+          <div className="sp-manifesto-image-overlay" />
+          <div className="sp-manifesto-image-caption">
+            <span>BUILT BY AMBITION</span>
+            <span>POWERED BY COMMUNITY</span>
+          </div>
+        </div>
+
+        <div className="sp-manifesto-copy">
+          <span className="sp-section-index">03 / THE STAMPERS MINDSET</span>
+          <h2 className="sp-display sp-manifesto-title">
+            The future
+            <br />
+            belongs to
+            <br />
+            <span>the curious.</span>
+          </h2>
+          <p>
+            We believe student life should be more than lectures and
+            deadlines. It should be about testing ideas, creating meaningful
+            work and discovering what you are capable of.
+          </p>
+          <Link href="/explore" className="sp-button-primary">
+            Find your next challenge
+            <ArrowUpRight size={18} />
+          </Link>
+        </div>
+      </section>
+
+      {/* THREE PRINCIPLES */}
+      <section className="sp-principles-section">
+        <div className="sp-section-shell">
+          <div className="sp-principles-heading">
+            <span className="sp-section-index">04 / WHAT MOVES US</span>
+            <h2 className="sp-display sp-section-title">
+              Make it
+              <span className="sp-title-muted"> count.</span>
             </h2>
           </div>
 
-          <span className="ax-scribble">
-            MEMORIES IN THE MAKING ↗
-          </span>
+          <div className="sp-principles-grid">
+            {principles.map((item) => (
+              <article className="sp-principle" key={item.number}>
+                <div className="sp-principle-top">
+                  <span>{item.number}</span>
+                  <MoveUpRight size={21} />
+                </div>
+                <h3 className="sp-heading">{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </div>
         </div>
-
-        <div className="ax-galleryGrid">
-          <div className="ax-galleryImage ax-g1" />
-          <div className="ax-galleryImage ax-g2" />
-          <div className="ax-galleryImage ax-g3" />
-          <div className="ax-galleryImage ax-g4" />
-        </div>
-
-        <p className="ax-note">
-          Replace illustrative stock photos with verified AXION event
-          photographs before publishing.
-        </p>
       </section>
 
-      {/* JUDGING CRITERIA */}
-      <section className="ax-section ax-scoring">
-        <div>
-          <div className="ax-eyebrow">05 / THE EVALUATION</div>
+      {/* FEATURED AXION BANNER */}
+      <section className="sp-axion-section">
+        <div className="sp-axion-banner">
+          <div className="sp-axion-backdrop" />
+          <div className="sp-axion-grid-lines" />
 
-          <h2>
-            SEVEN CRITERIA.
-            <br />
-            <i>ONE HUNDRED MARKS.</i>
-          </h2>
-        </div>
+          <div className="sp-axion-banner-copy">
+            <span className="sp-section-index">A STAMPERS ORIGINAL</span>
+            <h2 className="sp-display">
+              Think beyond
+              <br />
+              <span>the expected.</span>
+            </h2>
+            <p>
+              AXION is where bold student ideas meet the energy to make them
+              real. Discover event updates, results and upcoming opportunities
+              through STAMPERS.
+            </p>
+            <Link href="/explore" className="sp-button-primary">
+              Explore AXION
+              <ArrowRight size={18} />
+            </Link>
+          </div>
 
-        <div className="ax-criteria">
-          {criteria.map(([name, mark], index) => (
-            <div className="ax-criterion" key={name}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <b>{name}</b>
-
-              <div>
-                <i style={{ width: `${(mark / 20) * 100}%` }} />
-              </div>
-
-              <strong>{mark}</strong>
+          <div className="sp-axion-banner-art">
+            <div className="sp-axion-ring sp-ring-one" />
+            <div className="sp-axion-ring sp-ring-two" />
+            <div className="sp-axion-ring sp-ring-three" />
+            <div className="sp-axion-logo-frame">
+              <img src={AXION_LOGO} alt="AXION" loading="lazy" />
             </div>
-          ))}
+            <span className="sp-art-label sp-art-label-one">INNOVATION / 01</span>
+            <span className="sp-art-label sp-art-label-two">EXECUTION / 02</span>
+          </div>
         </div>
       </section>
 
-      {/* CLOSING */}
-      <section className="ax-closing">
-        <div className="ax-eyebrow">
-          THE NEXT CHAPTER STARTS HERE
-        </div>
+      {/* EXISTING SITE CONTENT */}
+      <div className="sp-existing-sections">
+        <About />
+        <Sponsors />
+        <FAQ />
+      </div>
 
-        <h2>
-          SAME ENERGY.
-          <br />
-          <i>BIGGER IDEAS AHEAD.</i>
-        </h2>
-
-        <p>
-          To every participant, mentor, evaluator and institution — thank you
-          for being part of AXION 2026.
-        </p>
-
-        <Link href="/" className="ax-button ax-gold">
-          DISCOVER STAMPERS ↗
-        </Link>
-
-        <div className="ax-closingDoodle">
-          KEEP
-          <br />
-          BUILDING ✳
+      {/* FINAL CTA */}
+      <section className="sp-join-section">
+        <div className="sp-join-glow" />
+        <div className="sp-join-content">
+          <span className="sp-section-index">YOUR STORY STARTS HERE</span>
+          <h2 className="sp-display">
+            Don't just
+            <br />
+            <span>watch the future.</span>
+            <br />
+            Build it.
+          </h2>
+          <p>
+            Find opportunities, challenge yourself and become part of the next
+            generation of creators.
+          </p>
+          <div className="sp-join-actions">
+            <Link href="/account/register" className="sp-button-primary">
+              Join STAMPERS <ArrowUpRight size={18} />
+            </Link>
+            <Link href="/explore" className="sp-button-ghost">
+              Explore events <ArrowRight size={17} />
+            </Link>
+          </div>
+          <div className="sp-join-footnote">
+            <Sparkles size={15} />
+            <span>MAKE SOMETHING THAT MATTERS.</span>
+          </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="ax-footer">
-        <Link href="/">STAMPERS</Link>
-        <span>AXION 2026 · OFFICIAL EVENT RECAP</span>
-        <a href="#top">BACK TO TOP ↑</a>
-      </footer>
+      <Footer />
 
+      {mobileMenuOpen && (
+        <div className="sp-mobile-menu" role="dialog" aria-modal="true">
+          <button
+            type="button"
+            className="sp-mobile-close"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <X size={24} />
+          </button>
+          <Link href="/explore" onClick={() => setMobileMenuOpen(false)}>
+            Explore events <ArrowUpRight size={19} />
+          </Link>
+          <Link
+            href="/account/register"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Join STAMPERS <ArrowUpRight size={19} />
+          </Link>
+        </div>
+      )}
     </main>
   );
 }
