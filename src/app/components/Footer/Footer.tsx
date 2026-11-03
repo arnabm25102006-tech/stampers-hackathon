@@ -182,6 +182,12 @@ export default function Footer() {
                   >
                     +91 98000 31906
                   </a>
+<a
+                    href="tel:+919749876106"
+                    className="block text-gray-400 transition-colors duration-300 hover:text-yellow-400"
+                  >
+                    +91 94323 14667
+                  </a>
 
                 </div>
 

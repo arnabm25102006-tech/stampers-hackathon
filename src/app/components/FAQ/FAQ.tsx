@@ -1,313 +1,268 @@
 
 "use client";
 
-import { useId, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
 import {
   ChevronDown,
-  CircleHelp,
-  Mail,
   ArrowUpRight,
   MessageCircle,
   Sparkles,
+  HelpCircle,
 } from "lucide-react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 const faqs = [
   {
-    question: "What is STAMPERS?",
+    question: "Who can participate?",
     answer:
-      "STAMPERS is a student-focused platform built around opportunities, competitions, innovation and community. It aims to connect students with experiences where they can discover, create, compete and grow.",
-    category: "ABOUT",
+      "The STAMPERS National Hackathon 2K26 is open to school students, college students, and recent graduates with a passion for innovation.",
   },
   {
-    question: "What can I do on STAMPERS?",
-    answer:
-      "You can discover competitions, hackathons, challenges and other opportunities, participate in events, showcase your work and become part of the growing STAMPERS community.",
-    category: "PLATFORM",
+    question: "What is the team size?",
+    answer: "Each team can have 2–4 members.",
   },
   {
-    question: "Who can join STAMPERS?",
+    question: "When does registration close?",
     answer:
-      "STAMPERS is built primarily for students and young creators. Eligibility can vary from one event to another, so always check the specific event information before registering.",
-    category: "ELIGIBILITY",
+      "Registration for the STAMPERS National Hackathon 2K26 closes on 12 August 2026.",
   },
   {
-    question: "How do I participate in an event?",
+    question: "When is the hackathon?",
     answer:
-      "Open the event you are interested in, review its eligibility, timeline and rules, and follow the registration process provided on the event page.",
-    category: "PARTICIPATION",
+      "The STAMPERS National Hackathon 2K26 will take place from 14–15 August 2026.",
   },
   {
-    question: "Are all STAMPERS events free?",
+    question: "What is the theme?",
     answer:
-      "Not necessarily. Registration requirements and fees can vary depending on the event. The applicable fee, if any, will be clearly mentioned on the individual event page.",
-    category: "REGISTRATION",
+      "The theme is Open Innovation. Teams can build innovative solutions that address real-world problems.",
   },
   {
-    question: "Can I participate as an individual?",
-    answer:
-      "It depends on the event. Some opportunities may allow individual participation, while others may require a team. The specific event rules will explain the participation format.",
-    category: "TEAMS",
+    question: "Is there a registration fee?",
+    answer: "Yes. The registration fee is ₹20 per participant.",
   },
   {
-    question: "Will I receive a certificate?",
+    question: "Will participants receive certificates?",
     answer:
-      "Certificate eligibility depends on the individual event and its participation rules. Check the event details for the exact recognition and benefits offered.",
-    category: "RECOGNITION",
+      "Yes. Eligible participants will receive certificates. Winners will also receive special recognition and event goodies.",
   },
   {
-    question: "How can I stay updated about new events?",
+    question: "When will the results be announced?",
     answer:
-      "Follow STAMPERS through its official communication channels and check the platform regularly for newly announced competitions, hackathons and opportunities.",
-    category: "UPDATES",
+      "The results of the STAMPERS National Hackathon 2K26 will be announced on 29 August 2026.",
   },
   {
-    question: "Can organisations collaborate with STAMPERS?",
+    question: "What do winners receive?",
     answer:
-      "Yes. STAMPERS can work with organisations, communities, educational institutions and brands on competitions, partnerships, sponsorships and other student-focused initiatives.",
-    category: "PARTNERSHIPS",
-  },
-  {
-    question: "How can I contact the STAMPERS team?",
-    answer:
-      "For general support and platform-related questions, contact the STAMPERS team at support@stampers.in.",
-    category: "SUPPORT",
+      "Winners receive the Champion Trophy, official STAMPERS merchandise, hard copy certificates, exclusive goodies, and national recognition.",
   },
 ];
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
-  const baseId = useId();
   const reduceMotion = useReducedMotion();
+
+  const reveal = (delay = 0) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 25 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, amount: 0.15 },
+          transition: { duration: 0.6, delay },
+        };
 
   return (
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="relative isolate overflow-hidden bg-[#07111f] py-20 text-white sm:py-24 lg:py-28"
+      className="relative isolate overflow-hidden bg-[#060916] py-24 text-white sm:py-32"
     >
       {/* Background atmosphere */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[400px] w-[760px] -translate-x-1/2 rounded-full bg-blue-500/[0.09] blur-[140px]" />
-        <div className="absolute -left-40 top-[45%] h-80 w-80 rounded-full bg-cyan-500/[0.06] blur-[120px]" />
-        <div className="absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-indigo-500/[0.07] blur-[140px]" />
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -left-48 top-0 h-[430px] w-[430px] rounded-full bg-[#7657E8]/15 blur-[150px]" />
+        <div className="absolute -right-48 top-[35%] h-[450px] w-[450px] rounded-full bg-[#267DFF]/15 blur-[150px]" />
+        <div className="absolute bottom-0 left-[35%] h-72 w-72 rounded-full bg-[#D7F36B]/[0.06] blur-[130px]" />
 
         <div
           className="absolute inset-0 opacity-[0.025]"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
+            backgroundSize: "60px 60px",
           }}
         />
-
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-300/30 to-transparent" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        {/* Header */}
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
+
+        {/* Heading */}
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-3xl text-center"
+          {...reveal()}
+          className="mb-14 grid items-end gap-8 lg:grid-cols-[1fr_.65fr]"
         >
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-blue-300/20 bg-blue-400/[0.06] px-4 py-2">
-            <CircleHelp size={15} className="text-blue-300" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-blue-200 sm:text-xs">
-              Help Centre
-            </span>
+          <div>
+            <div className="inline-flex items-center gap-3 rounded-full border border-[#A88BFF]/30 bg-[#7657E8]/15 px-4 py-2 text-[10px] font-black uppercase tracking-[0.25em] text-[#C7B6FF] sm:text-xs">
+              <HelpCircle size={15} />
+              Got questions?
+            </div>
+
+            <h2
+              id="faq-heading"
+              className="mt-8 text-5xl font-black leading-[0.98] tracking-[-0.06em] sm:text-6xl lg:text-7xl"
+            >
+              QUESTIONS?
+              <br />
+              <span className="bg-gradient-to-r from-[#A88BFF] via-[#72C8FF] to-[#D7F36B] bg-clip-text text-transparent">
+                WE HAVE ANSWERS.
+              </span>
+            </h2>
           </div>
 
-          <h2
-            id="faq-heading"
-            className="mt-7 text-4xl font-semibold leading-tight tracking-[-0.045em] sm:text-5xl lg:text-6xl"
-          >
-            Questions?
-            <span className="block bg-gradient-to-r from-blue-300 via-cyan-200 to-white bg-clip-text text-transparent">
-              We have answers.
-            </span>
-          </h2>
+          <div className="max-w-lg lg:pb-2">
+            <p className="text-base leading-8 text-slate-400 sm:text-lg">
+              Everything you need to know about STAMPERS, our
+              competitions, participation, and opportunities.
+              Can't find your answer? Our team is ready to help.
+            </p>
 
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-slate-400 sm:text-base sm:leading-8">
-            Everything you need to know about STAMPERS, our events, and how to
-            get involved. Start here.
-          </p>
+            <div className="mt-6 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#7657E8]/20 text-[#A88BFF]">
+                <Sparkles size={21} />
+              </div>
+              <div>
+                <p className="text-sm font-black">9 Helpful Answers</p>
+                <p className="text-xs text-slate-500">
+                  Quick information, all in one place.
+                </p>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* FAQ layout */}
-        <div className="mx-auto mt-12 grid max-w-6xl items-start gap-8 lg:mt-16 lg:grid-cols-[0.72fr_1.5fr] lg:gap-14">
+        <div className="grid items-start gap-8 lg:grid-cols-[.7fr_1.3fr]">
+
           {/* Left information panel */}
-          <motion.aside
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            className="relative overflow-hidden rounded-3xl border border-white/[0.09] bg-white/[0.035] p-6 sm:p-8 lg:sticky lg:top-24"
+          <motion.div
+            {...reveal(0.1)}
+            className="relative overflow-hidden rounded-[30px] bg-gradient-to-br from-[#7657E8] via-[#5141A9] to-[#172C67] p-8 sm:p-10"
           >
-            <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-400/[0.09] blur-[65px]" />
+            <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full border-[40px] border-white/[0.08]" />
 
             <div className="relative">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-blue-300/20 bg-blue-400/[0.08] text-blue-300">
-                <Sparkles size={22} strokeWidth={1.6} />
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
+                <MessageCircle size={28} />
               </div>
 
-              <p className="mt-7 text-xs font-semibold uppercase tracking-[0.22em] text-blue-300">
-                Need clarity?
+              <p className="mt-12 text-xs font-black uppercase tracking-[0.25em] text-[#D7F36B]">
+                Need some clarity?
               </p>
 
-              <h3 className="mt-3 text-2xl font-semibold leading-snug tracking-tight">
-                Everything starts with a question.
+              <h3 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
+                WE'RE HERE
+                <br />
+                TO HELP.
               </h3>
 
-              <p className="mt-4 text-sm leading-7 text-slate-400">
-                Whether you are a student looking for opportunities or an
-                organisation interested in collaboration, we are here to help
-                you find the right direction.
+              <p className="mt-5 text-sm leading-8 text-white/75">
+                Every question matters. If you need more information
+                or have any difficulty, reach out to the STAMPERS
+                support team.
               </p>
-
-              <div className="my-7 h-px bg-white/[0.09]" />
-
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-slate-300">
-                  <MessageCircle size={18} />
-                </div>
-
-                <div className="min-w-0">
-                  <p className="text-sm font-medium text-white">
-                    Direct support
-                  </p>
-                  <p className="mt-1 break-all text-xs text-slate-400">
-                    support@stampers.in
-                  </p>
-                </div>
-              </div>
 
               <a
                 href="mailto:support@stampers.in"
-                className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-blue-300/20 bg-blue-400/[0.08] px-4 py-3 text-sm font-semibold text-blue-100 transition hover:border-blue-300/40 hover:bg-blue-400/[0.14] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+                className="mt-9 inline-flex min-h-12 items-center gap-3 rounded-xl bg-[#D7F36B] px-5 py-3 text-sm font-black text-[#101522] transition hover:-translate-y-1 hover:bg-white"
               >
-                Contact our team
-                <ArrowUpRight size={16} />
+                Contact Support
+                <ArrowUpRight size={18} />
               </a>
+
+              <div className="mt-12 border-t border-white/15 pt-6">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+                  Official Support
+                </p>
+                <p className="mt-2 break-all text-sm font-bold">
+                  support@stampers.in
+                </p>
+              </div>
             </div>
-          </motion.aside>
+          </motion.div>
 
           {/* Accordion */}
           <div className="space-y-3">
             {faqs.map((faq, index) => {
-              const isOpen = open === index;
-              const questionId = `${baseId}-question-${index}`;
-              const answerId = `${baseId}-answer-${index}`;
+              const active = open === index;
 
               return (
                 <motion.article
                   key={faq.question}
-                  initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: reduceMotion ? 0 : Math.min(index * 0.035, 0.2),
-                  }}
-                  className={`group relative overflow-hidden rounded-2xl border transition-colors duration-300 ${
-                    isOpen
-                      ? "border-blue-300/25 bg-blue-400/[0.045]"
-                      : "border-white/[0.08] bg-white/[0.025] hover:border-white/[0.16] hover:bg-white/[0.04]"
+                  {...reveal(index * 0.045)}
+                  className={`group relative overflow-hidden rounded-[20px] border transition-all duration-300 ${
+                    active
+                      ? "border-[#A88BFF]/40 bg-gradient-to-r from-[#7657E8]/20 via-[#11182B] to-[#11182B]"
+                      : "border-white/10 bg-[#10172A] hover:border-[#72C8FF]/30 hover:bg-[#141D34]"
                   }`}
                 >
+                  {/* Active accent */}
                   <div
-                    className={`absolute bottom-0 left-0 top-0 w-[2px] transition-colors ${
-                      isOpen ? "bg-blue-300" : "bg-transparent"
+                    className={`absolute bottom-0 left-0 top-0 w-1 transition-colors ${
+                      active ? "bg-[#D7F36B]" : "bg-transparent"
                     }`}
                   />
 
                   <button
-                    id={questionId}
                     type="button"
-                    aria-expanded={isOpen}
-                    aria-controls={answerId}
-                    onClick={() => setOpen(isOpen ? null : index)}
-                    className="flex min-h-[76px] w-full items-center gap-4 px-4 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-300 sm:px-5"
+                    onClick={() => setOpen(active ? null : index)}
+                    aria-expanded={active}
+                    className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left sm:px-7 sm:py-6"
                   >
-                    <span
-                      className={`hidden w-7 shrink-0 font-mono text-[11px] tracking-wider sm:block ${
-                        isOpen ? "text-blue-300" : "text-slate-600"
-                      }`}
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-
-                    <span className="min-w-0 flex-1">
+                    <div className="flex min-w-0 items-center gap-4">
                       <span
-                        className={`block text-[10px] font-semibold uppercase tracking-[0.16em] ${
-                          isOpen ? "text-blue-300" : "text-slate-500"
+                        className={`font-mono text-xs font-black ${
+                          active ? "text-[#D7F36B]" : "text-slate-600"
                         }`}
                       >
-                        {faq.category}
+                        {String(index + 1).padStart(2, "0")}
                       </span>
 
                       <span
-                        id={questionId + "-text"}
-                        className={`mt-1.5 block text-sm font-medium leading-6 sm:text-[15px] ${
-                          isOpen ? "text-white" : "text-slate-200"
+                        className={`text-sm font-black leading-6 transition-colors sm:text-base ${
+                          active
+                            ? "text-white"
+                            : "text-slate-300 group-hover:text-white"
                         }`}
                       >
                         {faq.question}
                       </span>
-                    </span>
+                    </div>
 
-                    <span
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition-colors ${
-                        isOpen
-                          ? "border-blue-300/25 bg-blue-300 text-[#07111f]"
-                          : "border-white/10 bg-white/[0.035] text-slate-400 group-hover:text-white"
+                    <motion.div
+                      animate={{ rotate: active ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-colors ${
+                        active
+                          ? "border-[#D7F36B]/30 bg-[#D7F36B]/10 text-[#D7F36B]"
+                          : "border-white/10 bg-white/[0.04] text-slate-400 group-hover:text-[#72C8FF]"
                       }`}
                     >
-                      <motion.span
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ duration: reduceMotion ? 0 : 0.22 }}
-                        className="flex"
-                      >
-                        <ChevronDown size={17} />
-                      </motion.span>
-                    </span>
+                      <ChevronDown size={19} />
+                    </motion.div>
                   </button>
 
                   <AnimatePresence initial={false}>
-                    {isOpen && (
+                    {active && (
                       <motion.div
-                        id={answerId}
-                        role="region"
-                        aria-labelledby={questionId}
-                        initial={
-                          reduceMotion
-                            ? false
-                            : { height: 0, opacity: 0 }
-                        }
+                        initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{
-                          duration: reduceMotion ? 0 : 0.25,
-                          ease: "easeInOut",
-                        }}
+                        transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <div className="ml-4 border-t border-white/[0.08] px-4 pb-5 pt-4 sm:ml-12 sm:px-5">
-                          <p className="max-w-2xl text-sm leading-7 text-slate-400">
+                        <div className="border-t border-white/10 px-5 pb-6 pt-5 sm:px-7 sm:pl-[66px]">
+                          <p className="max-w-2xl text-sm leading-8 text-slate-400">
                             {faq.answer}
                           </p>
-
-                          {index === 9 && (
-                            <a
-                              href="mailto:support@stampers.in"
-                              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-300 transition hover:text-white"
-                            >
-                              Email support
-                              <ArrowUpRight size={15} />
-                            </a>
-                          )}
                         </div>
                       </motion.div>
                     )}
@@ -318,25 +273,44 @@ export default function FAQ() {
           </div>
         </div>
 
-        {/* Footer note */}
+        {/* Bottom banner */}
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto mt-12 flex max-w-6xl flex-col gap-3 border-t border-white/[0.08] pt-6 text-xs leading-6 text-slate-500 sm:flex-row sm:items-center sm:justify-between"
+          {...reveal()}
+          className="relative mt-12 overflow-hidden rounded-[28px] border border-white/10 bg-[#10172A] p-7 sm:p-9"
         >
-          <p>Have a question that is not listed above?</p>
+          <div className="pointer-events-none absolute -right-10 -top-20 h-56 w-56 rounded-full bg-[#267DFF]/15 blur-[80px]" />
 
-          <a
-            href="mailto:support@stampers.in"
-            className="inline-flex w-fit items-center gap-2 font-medium text-slate-300 transition hover:text-blue-300"
-          >
-            <Mail size={14} />
-            support@stampers.in
-            <ArrowUpRight size={13} />
-          </a>
+          <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.23em] text-[#72C8FF]">
+                Still have questions?
+              </p>
+              <h3 className="mt-3 text-2xl font-black sm:text-3xl">
+                Let's find your answer.
+              </h3>
+              <p className="mt-2 text-sm text-slate-400">
+                Reach out to our official support team.
+              </p>
+            </div>
+
+            <a
+              href="mailto:support@stampers.in"
+              className="inline-flex min-h-12 items-center justify-center gap-3 self-start rounded-xl bg-[#D7F36B] px-6 py-3 text-sm font-black text-[#101522] transition hover:-translate-y-1 hover:bg-white"
+            >
+              Email Us
+              <ArrowUpRight size={18} />
+            </a>
+          </div>
         </motion.div>
+
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6">
+          <p className="text-xs text-slate-500">
+            STAMPERS — Your questions deserve answers.
+          </p>
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">
+            SHOW. GET RECOGNIZED.
+          </span>
+        </div>
       </div>
     </section>
   );

@@ -1,8 +1,15 @@
+
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  ChevronDown,
+  ArrowUpRight,
+  MessageCircle,
+  Sparkles,
+  HelpCircle,
+} from "lucide-react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 const faqs = [
   {
@@ -31,8 +38,7 @@ const faqs = [
   },
   {
     question: "Is there a registration fee?",
-    answer:
-      "Yes. The registration fee is ₹20 per participant.",
+    answer: "Yes. The registration fee is ₹20 per participant.",
   },
   {
     question: "Will participants receive certificates?",
@@ -53,257 +59,258 @@ const faqs = [
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
+  const reduceMotion = useReducedMotion();
+
+  const reveal = (delay = 0) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 25 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, amount: 0.15 },
+          transition: { duration: 0.6, delay },
+        };
 
   return (
     <section
       id="faq"
-      className="relative overflow-hidden bg-[#030303] py-28 text-white sm:py-32 lg:py-40"
+      aria-labelledby="faq-heading"
+      className="relative isolate overflow-hidden bg-[#060916] py-24 text-white sm:py-32"
     >
-      {/* ========================================
-          PREMIUM BACKGROUND
-      ======================================== */}
+      {/* Background atmosphere */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -left-48 top-0 h-[430px] w-[430px] rounded-full bg-[#7657E8]/15 blur-[150px]" />
+        <div className="absolute -right-48 top-[35%] h-[450px] w-[450px] rounded-full bg-[#267DFF]/15 blur-[150px]" />
+        <div className="absolute bottom-0 left-[35%] h-72 w-72 rounded-full bg-[#D7F36B]/[0.06] blur-[130px]" />
 
-      <div className="stampers-grid pointer-events-none absolute inset-0 opacity-[0.055]" />
+        <div
+          className="absolute inset-0 opacity-[0.025]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
+      </div>
 
-      {/* Main champagne glow */}
-      <div className="pointer-events-none absolute left-1/2 top-[-180px] h-[600px] w-[850px] -translate-x-1/2 rounded-full bg-[#D4AF37]/[0.045] blur-[180px]" />
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
 
-      {/* Secondary warm glow */}
-      <div className="pointer-events-none absolute -right-40 top-1/2 h-[400px] w-[400px] rounded-full bg-[#B8860B]/[0.025] blur-[150px]" />
-
-      {/* Bottom glow */}
-      <div className="pointer-events-none absolute bottom-[-200px] left-1/2 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-[#D4AF37]/[0.025] blur-[160px]" />
-
-      <div className="relative mx-auto max-w-4xl px-5 sm:px-8">
-
-        {/* ========================================
-            HEADING
-        ======================================== */}
-
+        {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mb-14 text-center"
+          {...reveal()}
+          className="mb-14 grid items-end gap-8 lg:grid-cols-[1fr_.65fr]"
         >
-          {/* Section label */}
+          <div>
+            <div className="inline-flex items-center gap-3 rounded-full border border-[#A88BFF]/30 bg-[#7657E8]/15 px-4 py-2 text-[10px] font-black uppercase tracking-[0.25em] text-[#C7B6FF] sm:text-xs">
+              <HelpCircle size={15} />
+              Got questions?
+            </div>
 
-          <div className="mb-6 flex items-center justify-center gap-4">
-            <span className="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]" />
-
-            <span className="text-[10px] font-bold uppercase tracking-[0.45em] text-[#D4AF37]">
-              Support
-            </span>
-
-            <span className="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]" />
+            <h2
+              id="faq-heading"
+              className="mt-8 text-5xl font-black leading-[0.98] tracking-[-0.06em] sm:text-6xl lg:text-7xl"
+            >
+              QUESTIONS?
+              <br />
+              <span className="bg-gradient-to-r from-[#A88BFF] via-[#72C8FF] to-[#D7F36B] bg-clip-text text-transparent">
+                WE HAVE ANSWERS.
+              </span>
+            </h2>
           </div>
 
-          {/* Heading */}
+          <div className="max-w-lg lg:pb-2">
+            <p className="text-base leading-8 text-slate-400 sm:text-lg">
+              Everything you need to know about STAMPERS, our
+              competitions, participation, and opportunities.
+              Can't find your answer? Our team is ready to help.
+            </p>
 
-          <h2 className="text-4xl font-black tracking-[-0.05em] sm:text-5xl md:text-6xl">
-            Frequently Asked
-            <span className="block bg-gradient-to-r from-[#F5D76E] via-[#D4AF37] to-[#B8860B] bg-clip-text text-transparent">
-              Questions.
-            </span>
-          </h2>
-
-          <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-zinc-500 sm:text-base sm:leading-8">
-            Everything you need to know about participating in the
-            STAMPERS National Hackathon 2K26.
-          </p>
+            <div className="mt-6 flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#7657E8]/20 text-[#A88BFF]">
+                <Sparkles size={21} />
+              </div>
+              <div>
+                <p className="text-sm font-black">9 Helpful Answers</p>
+                <p className="text-xs text-slate-500">
+                  Quick information, all in one place.
+                </p>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
-        {/* ========================================
-            FAQ LIST
-        ======================================== */}
+        {/* FAQ layout */}
+        <div className="grid items-start gap-8 lg:grid-cols-[.7fr_1.3fr]">
 
-        <div className="space-y-3">
-          {faqs.map((faq, index) => {
-            const active = open === index;
+          {/* Left information panel */}
+          <motion.div
+            {...reveal(0.1)}
+            className="relative overflow-hidden rounded-[30px] bg-gradient-to-br from-[#7657E8] via-[#5141A9] to-[#172C67] p-8 sm:p-10"
+          >
+            <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full border-[40px] border-white/[0.08]" />
 
-            return (
-              <motion.div
-                key={`${faq.question}-${index}`}
-                initial={{
-                  opacity: 0,
-                  y: 20,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.04,
-                }}
-                className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${
-                  active
-                    ? "border-[#D4AF37]/40 bg-gradient-to-r from-[#D4AF37]/[0.055] via-[#D4AF37]/[0.025] to-transparent shadow-[0_10px_40px_rgba(212,175,55,0.035)]"
-                    : "border-white/[0.07] bg-white/[0.012] hover:border-[#D4AF37]/20 hover:bg-[#D4AF37]/[0.018]"
-                }`}
+            <div className="relative">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
+                <MessageCircle size={28} />
+              </div>
+
+              <p className="mt-12 text-xs font-black uppercase tracking-[0.25em] text-[#D7F36B]">
+                Need some clarity?
+              </p>
+
+              <h3 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
+                WE'RE HERE
+                <br />
+                TO HELP.
+              </h3>
+
+              <p className="mt-5 text-sm leading-8 text-white/75">
+                Every question matters. If you need more information
+                or have any difficulty, reach out to the STAMPERS
+                support team.
+              </p>
+
+              <a
+                href="mailto:support@stampers.in"
+                className="mt-9 inline-flex min-h-12 items-center gap-3 rounded-xl bg-[#D7F36B] px-5 py-3 text-sm font-black text-[#101522] transition hover:-translate-y-1 hover:bg-white"
               >
+                Contact Support
+                <ArrowUpRight size={18} />
+              </a>
 
-                {/* Active left accent */}
+              <div className="mt-12 border-t border-white/15 pt-6">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+                  Official Support
+                </p>
+                <p className="mt-2 break-all text-sm font-bold">
+                  support@stampers.in
+                </p>
+              </div>
+            </div>
+          </motion.div>
 
-                <motion.div
-                  initial={false}
-                  animate={{
-                    opacity: active ? 1 : 0,
-                  }}
-                  className="absolute bottom-0 left-0 top-0 w-[2px] bg-gradient-to-b from-[#F5D76E] via-[#D4AF37] to-transparent"
-                />
+          {/* Accordion */}
+          <div className="space-y-3">
+            {faqs.map((faq, index) => {
+              const active = open === index;
 
-                {/* Question */}
-
-                <button
-                  type="button"
-                  onClick={() => setOpen(active ? null : index)}
-                  className="flex w-full items-center justify-between gap-6 px-5 py-5 text-left sm:px-6 sm:py-6"
-                  aria-expanded={active}
+              return (
+                <motion.article
+                  key={faq.question}
+                  {...reveal(index * 0.045)}
+                  className={`group relative overflow-hidden rounded-[20px] border transition-all duration-300 ${
+                    active
+                      ? "border-[#A88BFF]/40 bg-gradient-to-r from-[#7657E8]/20 via-[#11182B] to-[#11182B]"
+                      : "border-white/10 bg-[#10172A] hover:border-[#72C8FF]/30 hover:bg-[#141D34]"
+                  }`}
                 >
-                  <div className="flex min-w-0 items-center gap-4">
-
-                    {/* Number */}
-
-                    <span
-                      className={`shrink-0 font-mono text-[9px] font-bold tracking-[0.2em] transition-colors ${
-                        active
-                          ? "text-[#D4AF37]"
-                          : "text-zinc-700"
-                      }`}
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-
-                    {/* Question */}
-
-                    <span
-                      className={`text-sm font-bold transition-colors sm:text-base ${
-                        active
-                          ? "text-white"
-                          : "text-zinc-300 group-hover:text-white"
-                      }`}
-                    >
-                      {faq.question}
-                    </span>
-
-                  </div>
-
-                  {/* Arrow */}
-
-                  <motion.div
-                    animate={{
-                      rotate: active ? 180 : 0,
-                    }}
-                    transition={{
-                      duration: 0.25,
-                    }}
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-all ${
-                      active
-                        ? "border-[#D4AF37]/30 bg-[#D4AF37]/[0.08]"
-                        : "border-white/[0.07] bg-white/[0.02] group-hover:border-[#D4AF37]/20"
+                  {/* Active accent */}
+                  <div
+                    className={`absolute bottom-0 left-0 top-0 w-1 transition-colors ${
+                      active ? "bg-[#D7F36B]" : "bg-transparent"
                     }`}
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setOpen(active ? null : index)}
+                    aria-expanded={active}
+                    className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left sm:px-7 sm:py-6"
                   >
-                    <ChevronDown
-                      size={16}
-                      className={`transition-colors ${
-                        active
-                          ? "text-[#D4AF37]"
-                          : "text-zinc-600 group-hover:text-[#D4AF37]"
-                      }`}
-                    />
-                  </motion.div>
+                    <div className="flex min-w-0 items-center gap-4">
+                      <span
+                        className={`font-mono text-xs font-black ${
+                          active ? "text-[#D7F36B]" : "text-slate-600"
+                        }`}
+                      >
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
 
-                </button>
+                      <span
+                        className={`text-sm font-black leading-6 transition-colors sm:text-base ${
+                          active
+                            ? "text-white"
+                            : "text-slate-300 group-hover:text-white"
+                        }`}
+                      >
+                        {faq.question}
+                      </span>
+                    </div>
 
-                {/* Answer */}
-
-                <AnimatePresence initial={false}>
-                  {active && (
                     <motion.div
-                      initial={{
-                        height: 0,
-                        opacity: 0,
-                      }}
-                      animate={{
-                        height: "auto",
-                        opacity: 1,
-                      }}
-                      exit={{
-                        height: 0,
-                        opacity: 0,
-                      }}
-                      transition={{
-                        duration: 0.3,
-                      }}
-                      className="overflow-hidden"
+                      animate={{ rotate: active ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-colors ${
+                        active
+                          ? "border-[#D7F36B]/30 bg-[#D7F36B]/10 text-[#D7F36B]"
+                          : "border-white/10 bg-white/[0.04] text-slate-400 group-hover:text-[#72C8FF]"
+                      }`}
                     >
-                      <div className="border-t border-[#D4AF37]/10 px-5 pb-6 pt-5 pl-[52px] sm:px-6 sm:pl-[58px]">
-
-                        <p className="max-w-2xl text-sm leading-7 text-zinc-500">
-                          {faq.answer}
-                        </p>
-
-                      </div>
+                      <ChevronDown size={19} />
                     </motion.div>
-                  )}
-                </AnimatePresence>
+                  </button>
 
-              </motion.div>
-            );
-          })}
+                  <AnimatePresence initial={false}>
+                    {active && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="border-t border-white/10 px-5 pb-6 pt-5 sm:px-7 sm:pl-[66px]">
+                          <p className="max-w-2xl text-sm leading-8 text-slate-400">
+                            {faq.answer}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.article>
+              );
+            })}
+          </div>
         </div>
 
-        {/* ========================================
-            SUPPORT CARD
-        ======================================== */}
-
+        {/* Bottom banner */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.6,
-          }}
-          className="relative mt-10 overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.045] via-white/[0.01] to-transparent px-6 py-8 text-center"
+          {...reveal()}
+          className="relative mt-12 overflow-hidden rounded-[28px] border border-white/10 bg-[#10172A] p-7 sm:p-9"
         >
+          <div className="pointer-events-none absolute -right-10 -top-20 h-56 w-56 rounded-full bg-[#267DFF]/15 blur-[80px]" />
 
-          {/* Card glow */}
-
-          <div className="pointer-events-none absolute left-1/2 top-0 h-32 w-64 -translate-x-1/2 rounded-full bg-[#D4AF37]/[0.08] blur-[70px]" />
-
-          <div className="relative">
-
-            <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-[#D4AF37]">
-              Need assistance?
-            </p>
-
-            <p className="mt-3 text-sm text-zinc-500">
-              Our support team is here to help you.
-            </p>
+          <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.23em] text-[#72C8FF]">
+                Still have questions?
+              </p>
+              <h3 className="mt-3 text-2xl font-black sm:text-3xl">
+                Let's find your answer.
+              </h3>
+              <p className="mt-2 text-sm text-slate-400">
+                Reach out to our official support team.
+              </p>
+            </div>
 
             <a
               href="mailto:support@stampers.in"
-              className="mt-4 inline-flex text-sm font-bold text-[#E6C85C] transition hover:text-[#F5D76E]"
+              className="inline-flex min-h-12 items-center justify-center gap-3 self-start rounded-xl bg-[#D7F36B] px-6 py-3 text-sm font-black text-[#101522] transition hover:-translate-y-1 hover:bg-white"
             >
-              support@stampers.in
+              Email Us
+              <ArrowUpRight size={18} />
             </a>
-
           </div>
         </motion.div>
 
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6">
+          <p className="text-xs text-slate-500">
+            STAMPERS — Your questions deserve answers.
+          </p>
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">
+            SHOW. GET RECOGNIZED.
+          </span>
+        </div>
       </div>
     </section>
   );

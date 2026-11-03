@@ -15,18 +15,9 @@ const quickLinks = [
     title: "About",
     href: "#about",
   },
-  {
-    title: "Tracks",
-    href: "#tracks",
-  },
-  {
-    title: "Timeline",
-    href: "#timeline",
-  },
-  {
-    title: "Rewards",
-    href: "#rewards",
-  },
+ 
+  
+ 
   {
     title: "FAQ",
     href: "#faq",
@@ -203,6 +194,12 @@ export default function Footer() {
                     className="block text-xs text-white/60 transition-colors duration-300 hover:text-[#D39A24]"
                   >
                     +91 98000 31906
+                  </a>
+                   <a
+                    href="tel:+919800031906"
+                    className="block text-xs text-white/60 transition-colors duration-300 hover:text-[#D39A24]"
+                  >
+                    +91 94323 14667
                   </a>
 
                 </div>
