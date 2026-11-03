@@ -1,27 +1,39 @@
 
 import Link from "next/link";
 
+const STAMPERS_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png";
+
+const AXION_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/AXION_HACKATHON_logo_transparent.png";
+
+const UNSTOP_LOGO =
+  "https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/Unstop-Logo-Blue-Large.jpg";
+
 const winners = [
   {
     rank: "01",
     title: "VitaGuard",
     name: "Sandesh Mahajan",
     score: 96,
-    award: "WINNER",
+    award: "CHAMPION",
+    accent: "gold",
   },
   {
     rank: "02",
     title: "Team Tinker",
     name: "Pallavi Khandagale",
     score: 93,
-    award: "1ST RUNNER UP",
+    award: "FIRST RUNNER-UP",
+    accent: "silver",
   },
   {
     rank: "03",
     title: "VISIONERS",
     name: "Vaibhavi Pandnekar",
     score: 92,
-    award: "2ND RUNNER UP",
+    award: "SECOND RUNNER-UP",
+    accent: "bronze",
   },
 ];
 
@@ -45,12 +57,12 @@ const leaderboard = [
 ];
 
 const stats = [
-  { value: "863", label: "Candidate registration records" },
-  { value: "640", label: "Completed registrations" },
-  { value: "481", label: "Unique team IDs" },
-  { value: "414", label: "Institutions represented" },
-  { value: "14+", label: "States represented" },
-  { value: "2", label: "Countries represented" },
+  { value: "863", label: "Candidate registration records", index: "01" },
+  { value: "640", label: "Completed registrations", index: "02" },
+  { value: "481", label: "Unique team IDs", index: "03" },
+  { value: "414", label: "Institutions represented", index: "04" },
+  { value: "14+", label: "States represented", index: "05" },
+  { value: "2", label: "Countries represented", index: "06" },
 ];
 
 const states = [
@@ -76,394 +88,370 @@ const criteria = [
   ["Question & Answer", 10],
 ] as const;
 
-const photos = [
-  {
-    title: "The beginning",
-    subtitle: "Ideas turned into action",
-    image:
-      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=85",
-  },
-  {
-    title: "Building together",
-    subtitle: "Collaboration without limits",
-    image:
-      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=85",
-  },
-  {
-    title: "The final showcase",
-    subtitle: "Innovation on display",
-    image:
-      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=85",
-  },
+const chapters = [
+  { number: "01", title: "The scale", detail: "A national community of student builders." },
+  { number: "02", title: "The reach", detail: "Institutions and ideas from across borders." },
+  { number: "03", title: "The champions", detail: "Recognising outstanding execution." },
+  { number: "04", title: "The results", detail: "A record of evaluated submissions." },
 ];
 
 export default function AxionRecapPage() {
   return (
-    <main className="ax-page">
-      <nav className="ax-nav">
-        <Link href="/" className="ax-brand">
-          <img
-            src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/51990-removebg-preview.png"
-            alt="STAMPERS"
-          />
+    <main className="ax26">
+      <div className="ax26-grain" aria-hidden="true" />
+
+      <header className="ax26-header">
+        <Link href="/" className="ax26-brand" aria-label="STAMPERS home">
+          <img src={STAMPERS_LOGO} alt="STAMPERS" />
           <span>STAMPERS</span>
         </Link>
 
-        <div className="ax-nav-links">
-          <a href="#highlights">Highlights</a>
+        <nav className="ax26-nav" aria-label="AXION recap navigation">
+          <a href="#impact">Impact</a>
+          <a href="#reach">National reach</a>
           <a href="#winners">Winners</a>
           <a href="#leaderboard">Leaderboard</a>
-          <a href="#gallery">Gallery</a>
-        </div>
+        </nav>
 
-        <a className="ax-nav-cta" href="#results">
-          Explore results ↗
-        </a>
-      </nav>
+        <Link href="/axion/results" className="ax26-header-cta">
+          Official results <span>↗</span>
+        </Link>
+      </header>
 
-      <section className="ax-hero">
-        <div className="ax-hero-glow" />
+      <section className="ax26-hero">
+        <div className="ax26-hero-grid" aria-hidden="true" />
+        <div className="ax26-hero-orbit ax26-orbit-one" aria-hidden="true" />
+        <div className="ax26-hero-orbit ax26-orbit-two" aria-hidden="true" />
 
-        <div className="ax-hero-content">
-          <div className="ax-eyebrow">
-            <span className="ax-live-dot" />
-            THE OFFICIAL EVENT RECAP
+        <div className="ax26-hero-inner">
+          <div className="ax26-hero-copy">
+            <div className="ax26-overline">
+              <span className="ax26-overline-line" />
+              STAMPERS PRESENTS · 2026
+            </div>
+
+            <div className="ax26-logo-panel">
+              <img src={AXION_LOGO} alt="AXION National Hackathon" />
+            </div>
+
+            <h1>
+              IDEAS INTO
+              <br />
+              <span>IMPACT.</span>
+            </h1>
+
+            <p className="ax26-hero-description">
+              A national gathering of problem-solvers, developers and
+              creators. A celebration of the ideas, effort and ambition
+              that shaped AXION.
+            </p>
+
+            <div className="ax26-hero-actions">
+              <a href="#winners" className="ax26-button-primary">
+                Meet the champions <span>↗</span>
+              </a>
+              <a href="#impact" className="ax26-button-secondary">
+                Explore the recap
+              </a>
+            </div>
+
+            <div className="ax26-partner">
+              <span>POWERED BY</span>
+              <img src={UNSTOP_LOGO} alt="Unstop" />
+            </div>
           </div>
 
-          <img
-            className="ax-hero-logo"
-            src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/AXION_HACKATHON_logo_transparent.png"
-            alt="AXION Hackathon"
-          />
-
-          <h1>
-            BUILT BY
-            <br />
-            <span>INNOVATORS.</span>
-          </h1>
-
-          <p className="ax-hero-description">
-            One challenge. Countless ideas. A community of builders.
-            Relive the journey of AXION, a national-level hackathon
-            presented by STAMPERS and powered by Unstop.
-          </p>
-
-          <div className="ax-hero-actions">
-            <a href="#winners" className="ax-primary-btn">
-              Discover the winners <span>↗</span>
-            </a>
-            <a href="#highlights" className="ax-secondary-btn">
-              Explore the journey
-            </a>
-          </div>
-
-          <div className="ax-powered">
-            <span>POWERED BY</span>
-            <img
-              src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/Unstop-Logo-Blue-Large.jpg"
-              alt="Unstop"
-            />
+          <div className="ax26-hero-art" aria-label="AXION 2026 event identity">
+            <div className="ax26-art-cross ax26-cross-a" />
+            <div className="ax26-art-cross ax26-cross-b" />
+            <div className="ax26-art-ring ax26-ring-a" />
+            <div className="ax26-art-ring ax26-ring-b" />
+            <div className="ax26-art-ring ax26-ring-c" />
+            <div className="ax26-art-core">
+              <span className="ax26-core-top">NATIONAL HACKATHON</span>
+              <img src={AXION_LOGO} alt="" />
+              <span className="ax26-core-bottom">BUILD · CREATE · INNOVATE</span>
+            </div>
+            <span className="ax26-art-coordinate ax26-coordinate-a">AX / 26</span>
+            <span className="ax26-art-coordinate ax26-coordinate-b">INNOVATION IN MOTION</span>
+            <span className="ax26-art-index">001—026</span>
           </div>
         </div>
 
-        <div className="ax-hero-side">
-          <span>AXION / 2026</span>
-          <span>INNOVATION NEVER STOPS</span>
-        </div>
-
-        <div className="ax-scroll">
-          <span>SCROLL TO EXPLORE</span>
-          <span className="ax-scroll-line" />
+        <div className="ax26-hero-bottom">
+          <span>THE OFFICIAL EVENT RECAP</span>
+          <span>SCROLL TO DISCOVER ↓</span>
+          <span>STAMPERS.IN</span>
         </div>
       </section>
 
-      <section className="ax-section ax-intro" id="highlights">
-        <div className="ax-section-label">
-          <span>01</span> / THE IMPACT
+      <section className="ax26-manifesto" id="impact">
+        <div className="ax26-section-topline">
+          <span>01 / THE IMPACT</span>
+          <span>AXION · 2026</span>
         </div>
 
-        <div className="ax-intro-grid">
+        <div className="ax26-manifesto-grid">
           <div>
-            <p className="ax-kicker">MORE THAN A HACKATHON</p>
+            <p className="ax26-eyebrow">A NATIONAL PLATFORM</p>
             <h2>
-              A platform for
+              BUILT ON
               <br />
-              <span>the next generation.</span>
+              <span>AMBITION.</span>
             </h2>
           </div>
-
-          <p className="ax-intro-text">
-            AXION brought together aspiring developers, problem-solvers
-            and creators from institutions across India. Every submission
-            represented an idea, an experiment and the courage to build
-            something meaningful.
-          </p>
+          <div className="ax26-manifesto-copy">
+            <p>
+              AXION brought together aspiring developers, problem-solvers
+              and creators from institutions across India. Every registration
+              represented an opportunity to explore an idea, challenge
+              assumptions and build something meaningful.
+            </p>
+            <div className="ax26-manifesto-sign">
+              <span className="ax26-sign-line" />
+              <span>THE STAMPERS TEAM</span>
+            </div>
+          </div>
         </div>
 
-        <div className="ax-stats-grid">
+        <div className="ax26-stats">
           {stats.map((item) => (
-            <div className="ax-stat-card" key={item.label}>
+            <article className="ax26-stat" key={item.index}>
+              <div className="ax26-stat-top">
+                <span>{item.index}</span>
+                <span className="ax26-stat-mark">↗</span>
+              </div>
               <strong>{item.value}</strong>
-              <span>{item.label}</span>
-            </div>
+              <p>{item.label}</p>
+            </article>
           ))}
         </div>
 
-        <p className="ax-data-note">
-          Figures represent registration records and team IDs, not verified
-          event attendance or unique individual participants.
+        <p className="ax26-footnote">
+          Registration figures reflect the supplied registration records
+          and team IDs. They should not be interpreted as verified event
+          attendance or unique individual participants.
         </p>
       </section>
 
-      <section className="ax-section ax-reach">
-        <div className="ax-section-label">
-          <span>02</span> / NATIONAL REACH
+      <section className="ax26-reach" id="reach">
+        <div className="ax26-section-topline">
+          <span>02 / NATIONAL REACH</span>
+          <span>PARTICIPATION OVERVIEW</span>
         </div>
 
-        <div className="ax-reach-heading">
-          <p className="ax-kicker">FROM CAMPUS TO COUNTRY</p>
-          <h2>
-            Ideas have
-            <br />
-            <span>no boundaries.</span>
-          </h2>
+        <div className="ax26-reach-heading">
+          <div>
+            <p className="ax26-eyebrow">ONE COMMUNITY. MANY LOCATIONS.</p>
+            <h2>
+              THE MAP OF
+              <br />
+              <span>IDEAS.</span>
+            </h2>
+          </div>
           <p>
-            Participants registered from across India, with one registration
-            recorded from Sri Lanka.
+            AXION registrations represented institutions across multiple
+            Indian states. The supplied records also include one registration
+            from Sri Lanka.
           </p>
         </div>
 
-        <div className="ax-reach-grid">
-          <div className="ax-map-panel">
-            <div className="ax-map-top">
-              <span>PARTICIPATION MAP</span>
-              <span>INDIA / 2026</span>
+        <div className="ax26-reach-layout">
+          <div className="ax26-reach-feature">
+            <div className="ax26-feature-label">
+              <span>GEOGRAPHIC FOOTPRINT</span>
+              <span>2026 / INDIA</span>
             </div>
-
-            <div className="ax-india-visual">
-              <svg viewBox="0 0 400 440" role="img" aria-label="Illustrative map of India">
-                <defs>
-                  <linearGradient id="axIndiaGradient" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#4b8dff" />
-                    <stop offset="100%" stopColor="#102a65" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M112 20 L170 35 L194 64 L232 78 L260 112 L302 127 L287 160 L316 184 L296 218 L277 244 L266 281 L244 307 L228 349 L204 390 L179 421 L157 382 L143 340 L119 304 L104 270 L77 241 L58 205 L73 168 L51 140 L77 110 L69 76 L91 54 Z"
-                  fill="url(#axIndiaGradient)"
-                  stroke="#75aaff"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M108 20 L170 35 L194 64 L232 78 L260 112 L302 127 L287 160 L316 184 L296 218 L277 244 L266 281 L244 307 L228 349 L204 390 L179 421 L157 382 L143 340 L119 304 L104 270 L77 241 L58 205 L73 168 L51 140 L77 110 L69 76 L91 54 Z"
-                  fill="none"
-                  stroke="#9cc4ff"
-                  strokeDasharray="4 7"
-                  strokeWidth="1"
-                />
-                <g fill="#ffffff">
-                  <circle cx="165" cy="92" r="5" />
-                  <circle cx="208" cy="151" r="5" />
-                  <circle cx="153" cy="190" r="5" />
-                  <circle cx="228" cy="225" r="5" />
-                  <circle cx="183" cy="274" r="5" />
-                  <circle cx="204" cy="335" r="5" />
-                  <circle cx="128" cy="142" r="5" />
-                </g>
-                <g fill="#a9caff" fontSize="10" fontWeight="600">
-                  <text x="180" y="88">NORTH</text>
-                  <text x="235" y="148">EAST</text>
-                  <text x="95" y="185">WEST</text>
-                  <text x="236" y="231">CENTRAL</text>
-                  <text x="207" y="355">SOUTH</text>
-                </g>
-              </svg>
-            </div>
-
-            <div className="ax-map-legend">
-              <span><i /> Participant registrations across India</span>
+            <div className="ax26-feature-number">14<span>+</span></div>
+            <p>States represented in the registration records.</p>
+            <div className="ax26-feature-bottom">
+              <span>INDIA</span>
+              <span>01 INTERNATIONAL COUNTRY RECORDED</span>
             </div>
           </div>
 
-          <div className="ax-state-panel">
-            <div className="ax-map-top">
+          <div className="ax26-state-panel">
+            <div className="ax26-panel-heading">
               <span>TOP CONTRIBUTING STATES</span>
-              <span>REGISTRATION RECORDS</span>
+              <span>RECORDS</span>
             </div>
-
-            <div className="ax-state-list">
-              {states.map(([name, value]) => (
-                <div className="ax-state-row" key={name}>
-                  <div className="ax-state-info">
-                    <span>{name}</span>
-                    <strong>{value}</strong>
-                  </div>
-                  <div className="ax-bar-track">
-                    <div
-                      className="ax-bar-fill"
-                      style={{ width: `${(value / 240) * 100}%` }}
-                    />
-                  </div>
+            {states.map(([name, value], index) => (
+              <div className="ax26-state-row" key={name}>
+                <span className="ax26-state-index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="ax26-state-name">{name}</span>
+                <div className="ax26-state-track">
+                  <span style={{ width: `${(value / 240) * 100}%` }} />
                 </div>
-              ))}
-            </div>
+                <strong>{value}</strong>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="ax-country-note">
-          <span>861</span> India
-          <span className="ax-country-divider">/</span>
-          <span>1</span> Sri Lanka
-          <span className="ax-country-divider">/</span>
-          <span>1</span> Unspecified country
+        <div className="ax26-country-strip">
+          <div><strong>861</strong><span>India</span></div>
+          <i />
+          <div><strong>1</strong><span>Sri Lanka</span></div>
+          <i />
+          <div><strong>1</strong><span>Unspecified country</span></div>
         </div>
       </section>
 
-      <section className="ax-section ax-winners" id="winners">
-        <div className="ax-section-label">
-          <span>03</span> / THE CHAMPIONS
+      <section className="ax26-winners" id="winners">
+        <div className="ax26-section-topline">
+          <span>03 / THE CHAMPIONS</span>
+          <span>EXCELLENCE RECOGNISED</span>
         </div>
 
-        <div className="ax-winner-heading">
-          <p className="ax-kicker">EXCELLENCE RECOGNIZED</p>
+        <div className="ax26-winner-heading">
+          <p className="ax26-eyebrow">THE PEOPLE BEHIND THE PROJECTS</p>
           <h2>
-            Meet the
+            THE ONES WHO
             <br />
-            <span>AXION champions.</span>
+            <span>ROSE ABOVE.</span>
           </h2>
           <p>
             Celebrating the top three teams for their innovation,
-            execution and problem-solving.
+            implementation and problem-solving.
           </p>
         </div>
 
-        <div className="ax-podium">
+        <div className="ax26-winner-grid">
           {winners.map((winner) => (
-            <article className={`ax-winner-card ax-winner-${winner.rank}`} key={winner.rank}>
-              <div className="ax-winner-rank">{winner.rank}</div>
-              <div className="ax-winner-award">{winner.award}</div>
+            <article
+              className={`ax26-winner-card ax26-winner-${winner.accent}`}
+              key={winner.rank}
+            >
+              <div className="ax26-winner-card-top">
+                <span>AXION / 2026</span>
+                <span>NO. {winner.rank}</span>
+              </div>
+              <div className="ax26-winner-medal">
+                <span>{winner.rank}</span>
+              </div>
+              <p className="ax26-winner-award">{winner.award}</p>
               <h3>{winner.title}</h3>
-              <p>{winner.name}</p>
-              <div className="ax-winner-score">
+              <p className="ax26-winner-person">{winner.name}</p>
+              <div className="ax26-winner-score">
                 <strong>{winner.score}</strong>
                 <span>/ 100</span>
               </div>
-              <div className="ax-winner-bottom">AXION 2026</div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="ax-section ax-leaderboard" id="leaderboard">
-        <div className="ax-section-label">
-          <span>04</span> / THE LEADERBOARD
-        </div>
-
-        <div className="ax-leaderboard-heading">
-          <div>
-            <p className="ax-kicker">THE RESULTS</p>
-            <h2>
-              The top
-              <br />
-              <span>performers.</span>
-            </h2>
-          </div>
-          <p>
-            Official scores from the AXION evaluation results.
-          </p>
-        </div>
-
-        <div className="ax-table-wrap" id="results">
-          <table className="ax-table">
-            <thead>
-              <tr>
-                <th>RANK</th>
-                <th>TEAM</th>
-                <th>TEAM REPRESENTATIVE</th>
-                <th>SCORE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {leaderboard.map((item, index) => (
-                <tr key={`${item.team}-${index}`}>
-                  <td className="ax-rank-cell">{item.rank}</td>
-                  <td className="ax-team-cell">{item.team}</td>
-                  <td>{item.name}</td>
-                  <td className="ax-score-cell">{item.score}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <p className="ax-data-note">
-          CodeCrew is included with its reported score of 81; no rank was
-          specified for this entry in the supplied results.
-        </p>
-      </section>
-
-      <section className="ax-section ax-gallery" id="gallery">
-        <div className="ax-section-label">
-          <span>05</span> / THE EXPERIENCE
-        </div>
-
-        <div className="ax-gallery-heading">
-          <p className="ax-kicker">MOMENTS THAT MATTER</p>
-          <h2>
-            Beyond the
-            <br />
-            <span>code.</span>
-          </h2>
-          <p>
-            A celebration of creativity, collaboration and the spirit
-            of building together.
-          </p>
-        </div>
-
-        <div className="ax-gallery-grid">
-          {photos.map((photo, index) => (
-            <article className="ax-photo-card" key={photo.title}>
-              <img src={photo.image} alt={photo.title} />
-              <div className="ax-photo-overlay">
-                <span>0{index + 1} / AXION</span>
-                <h3>{photo.title}</h3>
-                <p>{photo.subtitle}</p>
+              <div className="ax26-winner-card-bottom">
+                <span>OFFICIAL SCORE</span>
+                <span>STAMPERS</span>
               </div>
             </article>
           ))}
         </div>
-
-        <p className="ax-data-note">
-          Replace these illustrative images with actual AXION event photographs.
-        </p>
       </section>
 
-      <section className="ax-section ax-criteria">
-        <div className="ax-section-label">
-          <span>06</span> / THE EVALUATION
+      <section className="ax26-leaderboard" id="leaderboard">
+        <div className="ax26-section-topline">
+          <span>04 / THE LEADERBOARD</span>
+          <span>RESULTS ARCHIVE</span>
         </div>
 
-        <div className="ax-criteria-grid">
+        <div className="ax26-leaderboard-heading">
           <div>
-            <p className="ax-kicker">FAIR. STRUCTURED. TRANSPARENT.</p>
+            <p className="ax26-eyebrow">THE EVALUATION RECORD</p>
             <h2>
-              How ideas
+              EVERY POINT.
               <br />
-              <span>were evaluated.</span>
+              <span>EVERY EFFORT.</span>
             </h2>
-            <p className="ax-criteria-description">
-              Submissions were assessed across seven dimensions, with a
-              total possible score of 100 points.
+          </div>
+          <p>
+            A view of the teams and scores included in the supplied AXION
+            results data.
+          </p>
+        </div>
+
+        <div className="ax26-table-shell">
+          <div className="ax26-table-top">
+            <span>AXION 2026 / SCORE REGISTER</span>
+            <span>{leaderboard.length} ENTRIES</span>
+          </div>
+          <div className="ax26-table-scroll">
+            <table className="ax26-table">
+              <thead>
+                <tr>
+                  <th>RANK</th>
+                  <th>TEAM</th>
+                  <th>TEAM REPRESENTATIVE</th>
+                  <th>SCORE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {leaderboard.map((item, index) => (
+                  <tr key={`${item.team}-${index}`}>
+                    <td className="ax26-table-rank">{item.rank}</td>
+                    <td className="ax26-table-team">{item.team}</td>
+                    <td>{item.name}</td>
+                    <td className="ax26-table-score">
+                      <strong>{item.score}</strong>
+                      <span>/ 100</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="ax26-table-bottom">
+            <span>END OF DISPLAYED RESULTS</span>
+            <span>AXION · STAMPERS · 2026</span>
+          </div>
+        </div>
+
+        <p className="ax26-footnote">
+          CodeCrew is shown with its supplied score of 81. A rank was not
+          specified for that entry in the supplied data. Duplicate rank
+          numbers are retained as provided.
+        </p>
+
+        <div className="ax26-results-link">
+          <div>
+            <span className="ax26-eyebrow">LOOKING FOR THE RESULT PORTAL?</span>
+            <p>Visit the dedicated AXION results page.</p>
+          </div>
+          <Link href="/axion/results">OPEN RESULTS <span>↗</span></Link>
+        </div>
+      </section>
+
+      <section className="ax26-evaluation">
+        <div className="ax26-section-topline">
+          <span>05 / THE EVALUATION</span>
+          <span>100 POINT FRAMEWORK</span>
+        </div>
+
+        <div className="ax26-evaluation-layout">
+          <div className="ax26-evaluation-intro">
+            <p className="ax26-eyebrow">A STRUCTURED REVIEW</p>
+            <h2>
+              IDEAS
+              <br />
+              <span>MEASURED.</span>
+            </h2>
+            <p>
+              The supplied evaluation framework covers seven dimensions,
+              adding up to a total possible score of 100 points.
             </p>
+            <div className="ax26-total-score">
+              <strong>100</strong>
+              <span>TOTAL POSSIBLE POINTS</span>
+            </div>
           </div>
 
-          <div className="ax-criteria-list">
-            {criteria.map(([name, score]) => (
-              <div className="ax-criteria-row" key={name}>
-                <span>{name}</span>
-                <strong>{score}<small> / 100</small></strong>
-                <div className="ax-criteria-track">
-                  <div style={{ width: `${score}%` }} />
+          <div className="ax26-criteria-list">
+            {criteria.map(([name, score], index) => (
+              <div className="ax26-criteria-item" key={name}>
+                <div className="ax26-criteria-info">
+                  <span>{String(index + 1).padStart(2, "0")} / {name}</span>
+                  <strong>{score}<small> PTS</small></strong>
+                </div>
+                <div className="ax26-criteria-track">
+                  <span style={{ width: `${score * 5}%` }} />
                 </div>
               </div>
             ))}
@@ -471,26 +459,33 @@ export default function AxionRecapPage() {
         </div>
       </section>
 
-      <footer className="ax-footer">
-        <div className="ax-footer-top">
-          <img
-            src="https://nhtereiqxgjecpnitlgo.supabase.co/storage/v1/object/public/assets/AXION_HACKATHON_logo_transparent.png"
-            alt="AXION"
-          />
-          <p>THE NEXT IDEA COULD CHANGE EVERYTHING.</p>
+      <section className="ax26-closing">
+        <div className="ax26-closing-orbit" aria-hidden="true" />
+        <div className="ax26-closing-content">
+          <p className="ax26-eyebrow">THE NEXT CHAPTER STARTS HERE</p>
+          <img src={AXION_LOGO} alt="AXION" />
+          <h2>
+            KEEP
+            <br />
+            <span>BUILDING.</span>
+          </h2>
+          <p>
+            To every participant, mentor, evaluator and supporter —
+            thank you for being part of AXION.
+          </p>
+          <Link href="/explore" className="ax26-button-primary">
+            Discover STAMPERS <span>↗</span>
+          </Link>
         </div>
+      </section>
 
-        <h2>
-          KEEP
-          <br />
-          <span>BUILDING.</span>
-        </h2>
-
-        <div className="ax-footer-bottom">
-          <span>© 2026 STAMPERS. ALL RIGHTS RESERVED.</span>
-          <Link href="/">BACK TO STAMPERS ↗</Link>
-          <span>POWERED BY UNSTOP</span>
-        </div>
+      <footer className="ax26-footer">
+        <Link href="/" className="ax26-footer-brand">
+          <img src={STAMPERS_LOGO} alt="STAMPERS" />
+          <span>STAMPERS</span>
+        </Link>
+        <span>© 2026 STAMPERS. ALL RIGHTS RESERVED.</span>
+        <Link href="/">BACK TO STAMPERS.IN ↗</Link>
       </footer>
     </main>
   );
