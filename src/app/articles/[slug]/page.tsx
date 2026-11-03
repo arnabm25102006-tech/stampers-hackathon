@@ -5,7 +5,6 @@ import {
   ArrowLeft,
   ArrowUpRight,
   Clock3,
-  BookOpen,
   Lightbulb,
 } from "lucide-react";
 
@@ -15,7 +14,6 @@ type Article = {
   description: string;
   category: string;
   readTime: string;
-  published: string;
   introduction: string;
   sections: {
     heading: string;
@@ -27,506 +25,506 @@ type Article = {
 
 const articles: Article[] = [
   {
-    slug: "how-to-prepare-for-your-first-hackathon",
-    title: "How to Prepare for Your First Hackathon",
+    slug: "complete-hackathon-guide",
+    title: "The Complete Guide to Hackathons for Students",
     description:
-      "A practical beginner's guide to choosing a problem, building a team and presenting your first hackathon project.",
+      "Understand hackathons, registration, team formation, project development, judging and submissions.",
     category: "Hackathons",
-    readTime: "7 min read",
-    published: "November 2026",
-    introduction:
-      "Your first hackathon can feel intimidating. You may be unsure what to build, which technologies to use or how judging works. The best way to approach it is to focus on learning, teamwork and building a working solution rather than trying to create something perfect.",
-    sections: [
-      {
-        heading: "1. Understand the problem statement",
-        paragraphs: [
-          "Read the problem statements carefully before choosing one. Identify the actual problem, who experiences it and why solving it matters.",
-          "A good project starts with a clearly understood problem, not an unnecessarily complicated technology stack.",
-        ],
-      },
-      {
-        heading: "2. Build a balanced team",
-        paragraphs: [
-          "Choose teammates who bring different strengths. A team can include developers, designers, researchers and presenters.",
-          "Discuss responsibilities before the event begins so that everyone understands what they are expected to deliver.",
-        ],
-        points: [
-          "Frontend development and user experience",
-          "Backend development and database management",
-          "Research, documentation and presentation",
-        ],
-      },
-      {
-        heading: "3. Plan before coding",
-        paragraphs: [
-          "Write down the core features your project must have. Separate essential features from optional improvements.",
-          "Create a simple timeline. Reserve time for testing, preparing the presentation and checking the final submission requirements.",
-        ],
-      },
-      {
-        heading: "4. Build a working prototype",
-        paragraphs: [
-          "Judges need to understand what your solution does. A small working prototype is generally more useful than a long list of unfinished features.",
-          "Test the main user journey and make sure the demonstration works reliably.",
-        ],
-      },
-      {
-        heading: "5. Prepare your final presentation",
-        paragraphs: [
-          "Explain the problem, your proposed solution, how it works, who benefits and what makes it different.",
-          "Keep your demonstration focused. Every team member should understand the project well enough to answer questions.",
-        ],
-      },
-    ],
-    takeaway:
-      "Your first hackathon is a learning opportunity. Focus on solving a real problem, collaborating effectively and presenting your work clearly.",
-  },
-  {
-    slug: "how-to-build-a-winning-hackathon-project",
-    title: "How to Build a Strong Hackathon Project",
-    description:
-      "Learn how to turn a problem statement into a practical prototype with a clear value proposition.",
-    category: "Project Building",
     readTime: "8 min read",
-    published: "November 2026",
     introduction:
-      "A strong hackathon project combines a relevant problem, a practical solution and a convincing demonstration. Technical complexity alone does not make a project valuable.",
-    sections: [
-      {
-        heading: "Start with the user",
-        paragraphs: [
-          "Identify who faces the problem and understand their needs. Describe the difficulty in one or two clear sentences.",
-          "Avoid building features simply because they are technically interesting. Each feature should support the user or solve part of the problem.",
-        ],
-      },
-      {
-        heading: "Define your minimum viable product",
-        paragraphs: [
-          "A minimum viable product is the smallest version of your solution that demonstrates its main value.",
-          "List the essential features and postpone optional functionality until the core experience works.",
-        ],
-      },
-      {
-        heading: "Choose an appropriate technology stack",
-        paragraphs: [
-          "Select tools your team can use confidently within the available time. Familiar technologies often help teams move faster.",
-          "Consider the frontend, backend, database, APIs, hosting and any external services your project requires.",
-        ],
-      },
-      {
-        heading: "Test the complete workflow",
-        paragraphs: [
-          "Test your prototype as if you were a first-time user. Check forms, navigation, data handling and error states.",
-          "Prepare a backup demonstration or screenshots in case the internet or a third-party service becomes unavailable.",
-        ],
-      },
-      {
-        heading: "Explain the impact",
-        paragraphs: [
-          "Show how the solution improves an existing process. Explain its intended users, limitations and possible next steps.",
-          "Be honest about what is implemented and what remains planned.",
-        ],
-      },
-    ],
-    takeaway:
-      "A focused, tested and clearly explained prototype is a stronger submission than an ambitious project that cannot be demonstrated.",
-  },
-  {
-    slug: "complete-guide-to-student-hackathons",
-    title: "The Student's Guide to Hackathons",
-    description:
-      "Understand hackathon formats, registrations, teams, submissions and judging.",
-    category: "Hackathons",
-    readTime: "6 min read",
-    published: "November 2026",
-    introduction:
-      "Hackathons bring students and builders together to solve problems within a fixed period. They provide an opportunity to experiment, collaborate and demonstrate practical skills.",
+      "Hackathons bring students, developers, designers and innovators together to solve real-world problems within a limited time. They provide an environment where participants can turn ideas into working prototypes, learn new technologies and collaborate with others.",
     sections: [
       {
         heading: "What is a hackathon?",
         paragraphs: [
-          "A hackathon is an event where participants work individually or in teams to create a project or prototype within a defined timeframe.",
-          "Events may focus on software, hardware, artificial intelligence, sustainability, education or other themes.",
+          "A hackathon is a time-bound event where individuals or teams develop solutions to a problem or challenge. These events can focus on software, hardware, artificial intelligence, sustainability, education and many other fields.",
+          "The goal is generally to develop a prototype or demonstrate a practical solution rather than create a completely finished commercial product.",
         ],
       },
       {
-        heading: "Common hackathon formats",
+        heading: "Types of hackathons",
         paragraphs: [
-          "Some hackathons take place in person, while others are conducted completely online. Hybrid events combine both formats.",
-          "Duration can range from a few hours to several days, depending on the organizer and competition format.",
+          "Hackathons may be conducted online, offline or in a hybrid format. Some are organised by universities, while others are hosted by companies, communities and independent organisations.",
+        ],
+        points: [
+          "Online hackathons: Participants collaborate remotely.",
+          "Offline hackathons: Participants work together at a physical venue.",
+          "Hybrid hackathons: Participants can join through online or offline formats.",
+          "Thematic hackathons: Projects focus on a particular industry or problem area.",
         ],
       },
       {
-        heading: "Registration and team formation",
+        heading: "How to register",
         paragraphs: [
-          "Read the eligibility criteria, team-size rules, deadlines and submission requirements before registering.",
-          "Confirm that every teammate understands the event schedule and participation rules.",
+          "Read the official event announcement and understand the eligibility requirements, registration deadlines, team-size rules and submission process.",
+          "Keep your registration information accurate and use the official registration platform provided by the organiser.",
         ],
       },
       {
-        heading: "How judging works",
+        heading: "How to prepare",
         paragraphs: [
-          "Judging criteria vary by event. Common criteria include innovation, technical implementation, usefulness, design and presentation.",
-          "Always read the official judging rubric rather than assuming every event evaluates projects in the same way.",
+          "Choose a problem you understand, form a balanced team and identify the technologies you will use. Prepare a basic development plan before the event begins.",
+          "Make sure your team understands the judging criteria and the final deliverables.",
         ],
       },
       {
-        heading: "What students gain",
+        heading: "What happens during judging?",
         paragraphs: [
-          "Hackathons can help students practise teamwork, problem-solving, communication and technical implementation.",
-          "Participants can also use completed projects as evidence of practical learning in their portfolios.",
+          "Judges may evaluate innovation, technical implementation, practical usefulness, design, scalability and presentation. The actual criteria differ between events.",
+          "Read the official judging rubric instead of assuming every hackathon uses the same scoring system.",
         ],
       },
     ],
     takeaway:
-      "Choose events that match your interests, read the rules carefully and treat every hackathon as a chance to build something meaningful.",
+      "A hackathon is an opportunity to learn through building. Focus on solving a clear problem, collaborating effectively and demonstrating a working solution.",
   },
   {
-    slug: "how-to-create-your-first-portfolio-project",
-    title: "How to Create Your First Portfolio Project",
+    slug: "build-first-hackathon-project",
+    title: "How to Build Your First Hackathon Project",
     description:
-      "A beginner-friendly approach to building and documenting a project that demonstrates your skills.",
-    category: "Career Growth",
+      "A step-by-step guide to turning an idea into a working hackathon prototype.",
+    category: "Project Building",
     readTime: "7 min read",
-    published: "November 2026",
     introduction:
-      "A portfolio project gives you a practical way to demonstrate what you have learned. You do not need an extraordinary idea. You need a project that works, solves a clear problem and is documented properly.",
+      "Building your first hackathon project can be challenging, especially when you have limited time. A clear plan and manageable scope can help you turn an idea into a working prototype.",
     sections: [
       {
-        heading: "Choose a manageable idea",
+        heading: "Choose a problem worth solving",
         paragraphs: [
-          "Start with a problem you understand. Examples include a task manager, expense tracker, student resource directory or simple learning application.",
-          "Choose a scope that you can complete and explain independently.",
+          "Start by identifying a real problem experienced by a particular group of people. Understand the problem before deciding which technology to use.",
+          "A focused problem statement makes it easier to define the project's purpose and features.",
         ],
       },
       {
-        heading: "Plan the features",
+        heading: "Define your core features",
         paragraphs: [
-          "Write down the main user actions and the information your application needs to store.",
-          "Create a basic interface sketch before starting development.",
+          "Write down the minimum features required to demonstrate your solution. Separate essential functionality from optional improvements.",
+          "Avoid adding too many features before the main user journey works.",
         ],
       },
       {
-        heading: "Build in small stages",
+        heading: "Select your technology stack",
         paragraphs: [
-          "Implement the basic interface first, then add functionality and data storage.",
-          "Test each major feature before moving to the next one. This makes problems easier to identify.",
+          "Choose technologies that your team understands or can learn quickly. Consider the frontend, backend, database, APIs and deployment requirements.",
+          "The best technology choice is the one that helps your team deliver a reliable solution within the available time.",
         ],
       },
       {
-        heading: "Use Git and GitHub",
+        heading: "Divide team responsibilities",
         paragraphs: [
-          "Use version control to track changes and maintain a record of your work.",
-          "Write a README that explains the project's purpose, features, technologies and setup instructions.",
+          "Assign clear responsibilities for development, research, design, testing and presentation.",
+          "Keep communication regular so that different parts of the project work together.",
         ],
       },
       {
-        heading: "Publish and improve",
+        heading: "Test and demonstrate",
         paragraphs: [
-          "Deploy your project so that others can try it. Check the live application on both desktop and mobile devices.",
-          "Ask for feedback and improve the project based on actual usability issues.",
+          "Test the main features before submission. Check forms, navigation, data handling and common error conditions.",
+          "Prepare a short demonstration that explains the problem, solution and actual working features.",
         ],
       },
     ],
     takeaway:
-      "One complete, well-documented project can demonstrate more than several unfinished projects.",
+      "Build a small, working and meaningful prototype before spending time on additional features.",
   },
   {
-    slug: "how-to-write-a-good-project-presentation",
-    title: "How to Present Your Project Effectively",
+    slug: "github-guide-for-students",
+    title: "GitHub Guide for Students and Beginners",
     description:
-      "Structure a project presentation that explains the problem, solution, implementation and impact.",
+      "Learn repositories, commits, branches, pull requests and collaboration basics.",
+    category: "Technology",
+    readTime: "8 min read",
+    introduction:
+      "GitHub is a platform that helps developers store code, track changes and collaborate on software projects. Learning Git and GitHub is useful for students who want to work on personal projects or contribute to open-source software.",
+    sections: [
+      {
+        heading: "What is Git?",
+        paragraphs: [
+          "Git is a version control system. It records changes in files and allows developers to review previous versions of their work.",
+          "It is especially useful when several people are working on the same project.",
+        ],
+      },
+      {
+        heading: "What is a GitHub repository?",
+        paragraphs: [
+          "A repository is a project space that contains source code, documentation and version history.",
+          "Repositories can be public or private, depending on the owner's requirements.",
+        ],
+      },
+      {
+        heading: "Essential Git commands",
+        paragraphs: [
+          "These commands are commonly used when working with a local repository.",
+        ],
+        points: [
+          "git clone — copy a remote repository locally.",
+          "git status — inspect changed files.",
+          "git add — stage changes.",
+          "git commit — record staged changes.",
+          "git push — upload local commits.",
+          "git pull — retrieve remote changes.",
+        ],
+      },
+      {
+        heading: "Understand branches",
+        paragraphs: [
+          "Branches allow developers to work on features independently without immediately changing the main development branch.",
+          "Once a feature is ready, it can be reviewed and merged into another branch.",
+        ],
+      },
+      {
+        heading: "Make your GitHub profile useful",
+        paragraphs: [
+          "Add clear project descriptions, meaningful README files and links to deployed applications.",
+          "Show projects that you understand and can explain rather than uploading code without documentation.",
+        ],
+      },
+    ],
+    takeaway:
+      "Practise Git regularly on a small project. Understanding version control makes collaboration and project management much easier.",
+  },
+  {
+    slug: "choose-hackathon-problem-statement",
+    title: "How to Choose the Right Hackathon Problem Statement",
+    description:
+      "Learn how to evaluate problem statements based on impact, feasibility and available resources.",
+    category: "Hackathons",
+    readTime: "6 min read",
+    introduction:
+      "Choosing a problem statement is one of the most important decisions in a hackathon. A suitable problem should be meaningful, understandable and achievable within the available time.",
+    sections: [
+      {
+        heading: "Understand the actual problem",
+        paragraphs: [
+          "Identify who experiences the problem, what causes it and how people currently deal with it.",
+          "Do not select a problem only because its title sounds interesting.",
+        ],
+      },
+      {
+        heading: "Evaluate feasibility",
+        paragraphs: [
+          "Consider the available development time, team experience, data access and technical requirements.",
+          "A project that depends on unavailable datasets or expensive infrastructure may be difficult to complete.",
+        ],
+      },
+      {
+        heading: "Research existing solutions",
+        paragraphs: [
+          "Explore existing applications, research papers and products that address similar challenges.",
+          "Identify gaps and opportunities to improve the existing approach.",
+        ],
+      },
+      {
+        heading: "Consider real-world impact",
+        paragraphs: [
+          "Ask whether your proposed solution could genuinely help its intended users.",
+          "Explain what changes if your solution is successfully implemented.",
+        ],
+      },
+      {
+        heading: "Validate your final choice",
+        paragraphs: [
+          "Discuss the idea with teammates and prepare a short explanation of the problem, solution and implementation plan.",
+          "Choose a direction only after everyone understands the scope.",
+        ],
+      },
+    ],
+    takeaway:
+      "Choose a problem your team can understand deeply and solve convincingly within the hackathon timeframe.",
+  },
+  {
+    slug: "beginner-ai-ml-projects",
+    title: "Beginner AI and Machine Learning Project Ideas",
+    description:
+      "Explore manageable AI and ML projects that help students practise practical concepts.",
+    category: "Technology",
+    readTime: "8 min read",
+    introduction:
+      "Artificial intelligence and machine learning become easier to understand when students apply theoretical concepts to practical projects. Beginners should start with manageable datasets and clearly defined objectives.",
+    sections: [
+      {
+        heading: "Student performance prediction",
+        paragraphs: [
+          "Use a dataset containing student-related features to explore how academic performance can be predicted.",
+          "Practise data cleaning, exploratory analysis, feature selection and regression or classification.",
+        ],
+      },
+      {
+        heading: "Spam message classification",
+        paragraphs: [
+          "Build a model that classifies messages as spam or non-spam using labelled text data.",
+          "This project introduces text preprocessing, feature extraction and classification algorithms.",
+        ],
+      },
+      {
+        heading: "House price prediction",
+        paragraphs: [
+          "Explore housing data and build a regression model to estimate property prices.",
+          "Study missing values, numerical features, categorical variables and model evaluation.",
+        ],
+      },
+      {
+        heading: "Movie recommendation system",
+        paragraphs: [
+          "Create a simple recommendation system using movie ratings or metadata.",
+          "Learn about similarity measures and basic recommendation techniques.",
+        ],
+      },
+      {
+        heading: "How to present an ML project",
+        paragraphs: [
+          "Document the dataset, preprocessing, model selection, evaluation metrics and limitations.",
+          "Do not report accuracy alone. Explain how the model performs and where it may fail.",
+        ],
+      },
+    ],
+    takeaway:
+      "Start with a small dataset, understand every stage of the workflow and document your results honestly.",
+  },
+  {
+    slug: "student-portfolio-guide",
+    title: "How to Build a Strong Student Portfolio",
+    description:
+      "Create a portfolio that communicates your skills, projects and learning journey.",
+    category: "Career Growth",
+    readTime: "7 min read",
+    introduction:
+      "A student portfolio is a practical way to present your skills and projects to recruiters, mentors and collaborators. It should make it easy for someone to understand what you can build.",
+    sections: [
+      {
+        heading: "Choose projects carefully",
+        paragraphs: [
+          "Include projects that demonstrate relevant skills and that you can explain confidently.",
+          "A few complete projects are often more useful than a long list of unfinished ideas.",
+        ],
+      },
+      {
+        heading: "Write clear project descriptions",
+        paragraphs: [
+          "Explain the problem, your solution, the technologies used and your personal contribution.",
+          "Include screenshots or demonstrations when they help visitors understand the project.",
+        ],
+      },
+      {
+        heading: "Include your technical skills",
+        paragraphs: [
+          "List programming languages, frameworks, tools and concepts that you can genuinely use.",
+          "Avoid claiming expertise in technologies you have only briefly explored.",
+        ],
+      },
+      {
+        heading: "Link your work",
+        paragraphs: [
+          "Provide links to GitHub repositories and live deployments where available.",
+          "Check that these links work and that repositories contain useful documentation.",
+        ],
+      },
+      {
+        heading: "Keep it updated",
+        paragraphs: [
+          "Review your portfolio regularly as you complete projects and learn new skills.",
+          "Remove outdated information and make sure your contact details are current.",
+        ],
+      },
+    ],
+    takeaway:
+      "Your portfolio should demonstrate what you have actually built, what you learned and how someone can explore your work.",
+  },
+  {
+    slug: "prepare-hackathon-presentation",
+    title: "How to Prepare a Hackathon Project Presentation",
+    description:
+      "Structure a clear presentation covering your problem, solution, technology and demonstration.",
     category: "Project Building",
     readTime: "6 min read",
-    published: "November 2026",
     introduction:
-      "A good project presentation helps people understand your work without requiring them to inspect every line of code. Clear communication is an important part of presenting technical projects.",
+      "A project presentation helps judges understand the value of your work. A clear structure can make even a technically complex project easier to evaluate.",
     sections: [
       {
-        heading: "Open with the problem",
+        heading: "Introduce the problem",
         paragraphs: [
-          "Explain the problem your project addresses and why it matters. Use a specific example instead of broad statements.",
+          "Explain the specific problem your team wants to solve and who is affected by it.",
+          "Use a clear example to make the problem understandable.",
         ],
       },
       {
-        heading: "Introduce your solution",
+        heading: "Explain your solution",
         paragraphs: [
-          "Describe what your project does and who it is designed for. Explain the main user journey in simple language.",
+          "Describe what your application or prototype does and how users interact with it.",
+          "Focus on the core functionality rather than listing every planned feature.",
         ],
       },
       {
-        heading: "Explain the technology",
+        heading: "Describe the architecture",
         paragraphs: [
-          "Mention the tools, frameworks, APIs and databases used in your implementation.",
-          "Explain why you selected them and how they contribute to the solution.",
+          "Present the major components of your solution, such as frontend, backend, database and external services.",
+          "Explain why your team selected the technologies.",
         ],
       },
       {
-        heading: "Demonstrate the product",
+        heading: "Demonstrate the project",
         paragraphs: [
-          "Show the most important features through a short, prepared demonstration.",
-          "Avoid spending too much time navigating menus or explaining implementation details that do not support the main story.",
+          "Prepare a short and reliable demonstration of the most important user journey.",
+          "Test the demo before presenting and keep screenshots or a recording available as a backup.",
         ],
       },
       {
-        heading: "Discuss limitations and future work",
+        heading: "Prepare for questions",
         paragraphs: [
-          "Be transparent about incomplete features and technical limitations.",
-          "Explain what you would improve if you had more time and resources.",
+          "Be ready to explain technical decisions, limitations, security considerations and possible improvements.",
+          "If you do not know an answer, explain what you would investigate rather than guessing.",
         ],
       },
     ],
     takeaway:
-      "A strong presentation is structured, honest and focused on the value of the project.",
+      "A good presentation is concise, honest and centred on demonstrating the value of your working solution.",
   },
   {
-    slug: "how-to-find-student-tech-opportunities",
-    title: "How to Find Student Technology Opportunities",
+    slug: "find-internships-cse-students",
+    title: "How CSE Students Can Find Technical Internships",
     description:
-      "Explore practical ways to discover hackathons, internships, communities and learning opportunities.",
-    category: "Career Growth",
-    readTime: "7 min read",
-    published: "November 2026",
-    introduction:
-      "Students can discover opportunities through event platforms, university communities, developer groups and company career pages. A consistent search routine makes it easier to find relevant opportunities.",
-    sections: [
-      {
-        heading: "Explore competition platforms",
-        paragraphs: [
-          "Use established event and competition platforms to discover hackathons, coding contests and innovation challenges.",
-          "Check the organizer, eligibility, deadlines and official rules before registering.",
-        ],
-      },
-      {
-        heading: "Follow official company channels",
-        paragraphs: [
-          "Company career pages and official social channels are useful sources for internships, student programmes and early-career roles.",
-          "Verify application links and deadlines on the official website.",
-        ],
-      },
-      {
-        heading: "Build a professional profile",
-        paragraphs: [
-          "Maintain an updated resume, GitHub profile and portfolio. Include projects you can explain and demonstrate.",
-        ],
-      },
-      {
-        heading: "Connect with communities",
-        paragraphs: [
-          "Participate in developer communities, student clubs and technical events.",
-          "Ask specific questions and contribute to discussions instead of only requesting referrals.",
-        ],
-      },
-      {
-        heading: "Track your applications",
-        paragraphs: [
-          "Maintain a simple record of opportunities, deadlines, eligibility, application status and follow-up dates.",
-          "Apply early and keep time for preparing any required assessments or project submissions.",
-        ],
-      },
-    ],
-    takeaway:
-      "A combination of verified sources, a strong portfolio and consistent effort can help students discover better opportunities.",
-  },
-  {
-    slug: "beginner-guide-to-open-source",
-    title: "A Beginner's Guide to Open Source",
-    description:
-      "Understand open-source software, GitHub contributions and how students can get started.",
-    category: "Technology",
-    readTime: "8 min read",
-    published: "November 2026",
-    introduction:
-      "Open-source software allows people to inspect, use and contribute to software under its licence terms. For students, it can be a practical way to learn how real projects are developed collaboratively.",
-    sections: [
-      {
-        heading: "Understand the basics",
-        paragraphs: [
-          "An open-source project makes its source code available under a licence that defines how the code may be used, modified and distributed.",
-          "Each project has its own contribution rules and community expectations.",
-        ],
-      },
-      {
-        heading: "Learn Git and GitHub",
-        paragraphs: [
-          "Learn how to clone repositories, create branches, commit changes and open pull requests.",
-          "Practise these workflows on a small personal project before contributing to a large codebase.",
-        ],
-      },
-      {
-        heading: "Find a suitable project",
-        paragraphs: [
-          "Choose a project that uses a language or technology you are learning.",
-          "Read its README, contribution guide, issue tracker and code of conduct.",
-        ],
-      },
-      {
-        heading: "Make your first contribution",
-        paragraphs: [
-          "Start with a clearly scoped issue. Documentation corrections, small bug fixes and tests can be useful first contributions.",
-          "Follow the project's formatting, testing and review requirements.",
-        ],
-      },
-      {
-        heading: "Learn from code reviews",
-        paragraphs: [
-          "Maintainers may request changes before accepting your contribution. Treat feedback as part of the learning process.",
-          "Communicate respectfully and keep your changes focused.",
-        ],
-      },
-    ],
-    takeaway:
-      "Start small, follow project guidelines and focus on learning how collaborative software development works.",
-  },
-  {
-    slug: "how-to-learn-programming-consistently",
-    title: "How to Learn Programming Consistently",
-    description:
-      "Build a sustainable programming routine through fundamentals, practice and projects.",
-    category: "Technology",
-    readTime: "6 min read",
-    published: "November 2026",
-    introduction:
-      "Learning programming requires more than watching tutorials. Understanding concepts, solving problems and building projects are all important parts of developing practical skills.",
-    sections: [
-      {
-        heading: "Learn one language first",
-        paragraphs: [
-          "Choose a language that matches your current learning goals. Avoid switching languages every few days.",
-          "Understand variables, data types, conditions, loops, functions and basic data structures.",
-        ],
-      },
-      {
-        heading: "Practise regularly",
-        paragraphs: [
-          "Solve small problems and explain your approach before writing code.",
-          "When a solution fails, inspect the error and test smaller parts of the program.",
-        ],
-      },
-      {
-        heading: "Study data structures and algorithms",
-        paragraphs: [
-          "Learn arrays, strings, linked lists, stacks, queues, trees, searching and sorting.",
-          "Focus on understanding why an algorithm works and how its time and space complexity behave.",
-        ],
-      },
-      {
-        heading: "Build projects",
-        paragraphs: [
-          "Use your knowledge to create small applications. Projects reveal gaps that exercises may not expose.",
-          "Start with a simple working version and improve it gradually.",
-        ],
-      },
-      {
-        heading: "Review your progress",
-        paragraphs: [
-          "Keep notes about concepts you understand and topics that need more practice.",
-          "Revisit difficult problems after a few days instead of only reading their solutions.",
-        ],
-      },
-    ],
-    takeaway:
-      "Consistency, active problem-solving and practical projects create a stronger foundation than passive tutorial consumption.",
-  },
-  {
-    slug: "how-to-prepare-for-a-technical-internship",
-    title: "How to Prepare for a Technical Internship",
-    description:
-      "A practical preparation guide covering programming fundamentals, projects, resumes and interviews.",
+      "A practical guide to discovering internships and preparing applications as a computer science student.",
     category: "Career Growth",
     readTime: "8 min read",
-    published: "November 2026",
     introduction:
-      "Preparing for a technical internship is a combination of learning fundamentals, demonstrating practical ability and communicating your work clearly. The exact expectations vary by company and role.",
+      "Technical internships help students understand professional software development and apply their academic knowledge. Finding a suitable role requires preparation, research and consistent applications.",
     sections: [
       {
-        heading: "Strengthen programming fundamentals",
+        heading: "Build your fundamentals",
         paragraphs: [
-          "Practise one primary programming language and understand its core features.",
-          "Study data structures, algorithms, object-oriented programming and basic debugging.",
+          "Strengthen programming, data structures, algorithms, databases and object-oriented programming.",
+          "Choose additional topics based on the roles you want to pursue.",
         ],
       },
       {
-        heading: "Build relevant projects",
+        heading: "Create practical projects",
         paragraphs: [
-          "Create projects that demonstrate the skills required for the roles you are targeting.",
-          "Be prepared to explain design decisions, technical challenges and what you would improve.",
+          "Build projects that demonstrate your ability to solve problems and use relevant technologies.",
+          "Document your work and prepare to explain the decisions behind your implementation.",
+        ],
+      },
+      {
+        heading: "Use verified application sources",
+        paragraphs: [
+          "Check official company career pages, university placement channels and established internship platforms.",
+          "Verify eligibility, deadlines and application links before sharing personal information.",
         ],
       },
       {
         heading: "Prepare your resume",
         paragraphs: [
-          "Keep your resume concise and accurate. Describe your contributions and technologies clearly.",
-          "Include links to working projects and repositories when appropriate.",
+          "Keep your resume concise and accurate. Highlight relevant projects, technical skills and genuine achievements.",
+          "Use clear descriptions of what you personally implemented.",
         ],
       },
       {
-        heading: "Practise technical interviews",
+        heading: "Prepare for interviews",
         paragraphs: [
-          "Practise explaining your approach, analysing complexity and handling edge cases.",
-          "Review the fundamentals relevant to the role rather than trying to memorise every possible question.",
-        ],
-      },
-      {
-        heading: "Research the opportunity",
-        paragraphs: [
-          "Read the job description and understand the team's work before applying.",
-          "Check eligibility, deadlines and application instructions on official company channels.",
+          "Practise explaining your code, solving programming problems and discussing your projects.",
+          "Review the role requirements and prepare questions about the team and work.",
         ],
       },
     ],
     takeaway:
-      "A clear foundation, relevant projects and honest communication make internship applications stronger.",
+      "Build a strong foundation, create demonstrable projects and apply through verified channels.",
   },
   {
-    slug: "how-to-build-a-student-tech-community",
-    title: "How to Build a Student Technology Community",
+    slug: "24-hour-hackathon-survival-guide",
+    title: "The 24-Hour Hackathon Survival Guide",
     description:
-      "Learn how to create a useful student community through events, collaboration and consistent engagement.",
-    category: "Community",
+      "Plan your time, team responsibilities, development and final submission during a 24-hour event.",
+    category: "Hackathons",
     readTime: "7 min read",
-    published: "November 2026",
     introduction:
-      "A student technology community can help learners share knowledge, collaborate on projects and discover opportunities. Building a useful community requires consistency and trust.",
+      "A 24-hour hackathon requires careful time management. Teams must balance ideation, development, testing, documentation and presentation without spending too much time on any single activity.",
     sections: [
       {
-        heading: "Define the purpose",
+        heading: "Before the event",
         paragraphs: [
-          "Decide who the community serves and what members should gain from participating.",
-          "A clear focus helps members understand why the community exists.",
+          "Check the rules, schedule, submission format and permitted tools.",
+          "Ensure your development environment and communication channels are ready.",
         ],
       },
       {
-        heading: "Create useful activities",
+        heading: "First two hours: plan",
         paragraphs: [
-          "Organise study groups, project sessions, technical discussions, workshops and competitions.",
-          "Choose activities that match the interests and availability of members.",
+          "Understand the problem statement, choose a solution and define the minimum viable product.",
+          "Assign responsibilities and agree on the main features.",
         ],
       },
       {
-        heading: "Make participation accessible",
+        heading: "Development phase",
         paragraphs: [
-          "Share clear instructions, schedules and participation requirements.",
-          "Provide ways for beginners to contribute without requiring advanced technical knowledge.",
+          "Build the core functionality first. Integrate components regularly rather than waiting until the end.",
+          "Communicate blockers early and avoid adding unnecessary features.",
         ],
       },
       {
-        heading: "Encourage collaboration",
+        heading: "Testing and documentation",
         paragraphs: [
-          "Help members find teammates, share resources and learn from one another.",
-          "Recognise meaningful contributions and maintain respectful communication.",
+          "Reserve time to test the complete workflow, fix major bugs and prepare the required documentation.",
+          "Verify that the final submission meets the organiser's format and deadline.",
         ],
       },
       {
-        heading: "Build trust over time",
+        heading: "Final presentation",
         paragraphs: [
-          "Publish accurate information and communicate changes promptly.",
-          "Collect feedback and improve activities based on what members actually need.",
+          "Prepare a concise explanation and demonstrate the working features.",
+          "Keep a backup of your presentation and project files.",
         ],
       },
     ],
     takeaway:
-      "A strong student community is built through useful opportunities, reliable communication and consistent participation.",
+      "Plan your time around a working prototype, reliable testing and a complete submission—not endless feature additions.",
+  },
+  {
+    slug: "coding-roadmap-for-beginners",
+    title: "A Practical Coding Roadmap for Beginners",
+    description:
+      "A structured learning path covering programming fundamentals, problem-solving, DSA and projects.",
+    category: "Technology",
+    readTime: "8 min read",
+    introduction:
+      "Starting programming can feel confusing because there are many languages, frameworks and learning resources. A structured roadmap helps beginners focus on fundamentals before moving to advanced topics.",
+    sections: [
+      {
+        heading: "Stage 1: Learn programming fundamentals",
+        paragraphs: [
+          "Choose one programming language and learn variables, data types, operators, conditions, loops and functions.",
+          "Practise writing small programs without relying entirely on copied solutions.",
+        ],
+      },
+      {
+        heading: "Stage 2: Understand data structures",
+        paragraphs: [
+          "Study arrays, strings, linked lists, stacks, queues, trees, hash maps and graphs.",
+          "Understand how each structure stores and organises information.",
+        ],
+      },
+      {
+        heading: "Stage 3: Learn algorithms",
+        paragraphs: [
+          "Practise searching, sorting, recursion and common problem-solving patterns.",
+          "Learn to analyse time and space complexity.",
+        ],
+      },
+      {
+        heading: "Stage 4: Build projects",
+        paragraphs: [
+          "Create practical applications using the programming concepts you have learned.",
+          "Use Git to track your work and write documentation for each project.",
+        ],
+      },
+      {
+        heading: "Stage 5: Explore a specialisation",
+        paragraphs: [
+          "Once your fundamentals are stable, explore areas such as web development, artificial intelligence, cybersecurity or mobile development.",
+          "Choose a direction based on your interests and the kind of work you want to build.",
+        ],
+      },
+    ],
+    takeaway:
+      "Learn fundamentals first, practise consistently and use projects to turn theoretical knowledge into practical skills.",
   },
 ];
 
@@ -579,9 +577,10 @@ export default async function ArticlePage({
           <Link href="/" className="text-xl font-black tracking-[-0.06em]">
             STAMPERS<span className="text-[#D5A900]">.</span>
           </Link>
+
           <Link
             href="/resources"
-            className="flex items-center gap-2 text-sm font-semibold hover:opacity-60"
+            className="flex items-center gap-2 text-sm font-semibold transition hover:opacity-60"
           >
             <ArrowLeft size={16} />
             All resources
@@ -598,7 +597,7 @@ export default async function ArticlePage({
             <Clock3 size={14} />
             {article.readTime}
           </span>
-          <span>{article.published}</span>
+          <span>STAMPERS Resources</span>
         </div>
 
         <h1 className="max-w-4xl text-4xl font-black leading-[1.05] tracking-[-0.055em] md:text-6xl">
@@ -617,7 +616,7 @@ export default async function ArticlePage({
           </p>
 
           <div className="mt-14 space-y-12">
-            {article.sections.map((section, index) => (
+            {article.sections.map((section) => (
               <section key={section.heading}>
                 <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
                   {section.heading}
@@ -674,6 +673,7 @@ export default async function ArticlePage({
                 Discover more opportunities with STAMPERS.
               </h2>
             </div>
+
             <Link
               href="/resources"
               className="inline-flex items-center gap-3 self-start rounded-full bg-[#F2C94C] px-6 py-4 text-sm font-bold text-black transition hover:bg-white"
