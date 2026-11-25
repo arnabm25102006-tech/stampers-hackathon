@@ -329,6 +329,190 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* SNOWCODE HACKATHON 2026 */}
+      <section
+        id="snowcode"
+        className="relative overflow-hidden bg-[#101D3A] px-5 py-20 text-white md:px-10 md:py-28"
+      >
+        <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-[#398BFF]/25 blur-[110px]" />
+        <div className="pointer-events-none absolute -bottom-40 -right-20 h-96 w-96 rounded-full bg-[#7954D9]/25 blur-[110px]" />
+
+        <div className="relative mx-auto max-w-[1300px]">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+
+            {/* EVENT INFORMATION */}
+            <div>
+              <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-[#62C9FF]/30 bg-[#62C9FF]/10 px-5 py-3">
+                <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-[#62C9FF]" />
+                <span className="text-[10px] font-black uppercase tracking-[0.22em] text-[#8DDCFF] md:text-xs">
+                  UPCOMING EVENT · DECEMBER 2026
+                </span>
+              </div>
+
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-[#8DDCFF]">
+                STAMPERS PRESENTS · POWERED BY UNSTOP
+              </p>
+
+              <h2 className="font-[var(--font-stampers-display)] text-6xl font-extrabold leading-[0.95] tracking-[-0.07em] md:text-8xl">
+                SNOW<span className="text-[#62C9FF]">CODE</span>
+                <span className="text-white">.</span>
+              </h2>
+
+              <h3 className="mt-5 text-xl font-extrabold tracking-tight text-[#B8DFFF] md:text-3xl">
+                HACKATHON 2026
+              </h3>
+
+              <p className="mt-7 max-w-xl text-sm leading-8 text-white/70 md:text-base">
+                Get ready for an exciting 24-hour hackathon where creativity
+                meets technology. Bring your ideas, collaborate with
+                passionate minds and build innovative solutions.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-2">
+                {[
+                  "24 HOURS",
+                  "INNOVATION",
+                  "CODING",
+                  "COLLABORATION",
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[9px] font-bold tracking-wider text-white/80"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-10 flex flex-wrap gap-4">
+                <a
+                  href="https://chat.whatsapp.com/Gpz2tH65uYMJekVIfWVBOj?s=cl&p=a&iam=2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 rounded-full bg-[#62C9FF] px-7 py-4 text-sm font-extrabold text-[#101D3A] shadow-lg shadow-[#62C9FF]/15 transition duration-300 hover:-translate-y-1 hover:bg-white"
+                >
+                  Join Community
+                  <ArrowUpRight size={18} />
+                </a>
+
+                <a
+                  href="https://unstop.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 rounded-full border border-white/25 px-7 py-4 text-sm font-bold text-white transition duration-300 hover:-translate-y-1 hover:bg-white/10"
+                >
+                  Powered by Unstop
+                  <ArrowRight size={17} />
+                </a>
+              </div>
+            </div>
+
+            {/* SNOWCODE EVENT CARD */}
+            <div className="relative">
+              <div className="absolute -inset-5 rounded-[40px] bg-gradient-to-br from-[#398BFF]/30 via-transparent to-[#62C9FF]/20 blur-2xl" />
+
+              <div className="relative overflow-hidden rounded-[32px] border border-[#62C9FF]/25 bg-gradient-to-br from-[#183B70] via-[#10264B] to-[#101D3A] p-7 shadow-2xl md:rounded-[42px] md:p-10">
+
+                <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full border border-white/10" />
+                <div className="absolute -right-8 -top-8 h-48 w-48 rounded-full border border-white/10" />
+
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-[0.22em] text-[#8DDCFF]">
+                      SAVE THE DATE
+                    </span>
+                    <Sparkles size={25} className="text-[#8DDCFF]" />
+                  </div>
+
+                  <div className="py-14 text-center md:py-16">
+                    <Sparkles
+                      size={42}
+                      className="mx-auto mb-6 text-[#8DDCFF]"
+                      strokeWidth={1.4}
+                    />
+
+                    <h3 className="font-[var(--font-stampers-display)] text-5xl font-black tracking-[-0.07em] text-white md:text-7xl">
+                      SNOWCODE
+                    </h3>
+
+                    <p className="mt-4 text-xs font-bold uppercase tracking-[0.3em] text-[#8DDCFF]">
+                      HACKATHON 2026
+                    </p>
+
+                    <div className="mx-auto mt-8 h-px max-w-[180px] bg-gradient-to-r from-transparent via-[#62C9FF] to-transparent" />
+
+                    <div className="mt-8 grid grid-cols-2 gap-3">
+                      <div className="rounded-2xl border border-white/15 bg-white/5 p-4">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">
+                          START
+                        </p>
+                        <p className="mt-2 text-lg font-extrabold text-white md:text-xl">
+                          12 DEC
+                        </p>
+                        <p className="mt-1 text-xs text-[#8DDCFF]">
+                          12:00 AM
+                        </p>
+                      </div>
+
+                      <div className="rounded-2xl border border-white/15 bg-white/5 p-4">
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">
+                          END
+                        </p>
+                        <p className="mt-2 text-lg font-extrabold text-white md:text-xl">
+                          13 DEC
+                        </p>
+                        <p className="mt-1 text-xs text-[#8DDCFF]">
+                          12:00 AM
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#62C9FF]/25 bg-[#62C9FF]/10 px-5 py-3">
+                      <Code2 size={17} className="text-[#8DDCFF]" />
+                      <span className="text-xs font-bold tracking-wider text-[#B8DFFF]">
+                        24 HOURS OF INNOVATION
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-white/15 pt-6">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/50">
+                      ORGANIZED BY
+                    </span>
+                    <span className="text-sm font-black tracking-[0.2em] text-white">
+                      STAMPERS
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* EVENT TAGLINE */}
+          <div className="mt-12 flex flex-col justify-between gap-5 rounded-[25px] border border-[#62C9FF]/20 bg-white/[0.05] p-6 backdrop-blur md:flex-row md:items-center md:p-8">
+            <div>
+              <p className="text-lg font-extrabold text-white md:text-2xl">
+                Code in the Cold. Build the Future.
+              </p>
+              <p className="mt-2 text-sm leading-7 text-white/60">
+                Ideas. Innovation. Impact. Be part of the SnowCode experience.
+              </p>
+            </div>
+
+            <a
+              href="https://chat.whatsapp.com/Gpz2tH65uYMJekVIfWVBOj?s=cl&p=a&iam=2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex shrink-0 items-center justify-center gap-3 rounded-full border border-[#62C9FF]/50 px-6 py-4 text-sm font-bold text-[#8DDCFF] transition hover:bg-[#62C9FF] hover:text-[#101D3A]"
+            >
+              Join SnowCode
+              <ArrowUpRight size={18} />
+            </a>
+          </div>
+        </div>
+      </section>
+
+
       {/* STAMPERS APPROACH */}
       <section className="bg-[#F8F7F3] px-5 py-20 md:px-10 md:py-28">
         <div className="mx-auto max-w-[1300px]">
